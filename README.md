@@ -30,7 +30,3 @@ An online payment and billing platform built specifically for law firms, attorne
 - TypeScript
 - Vite
 - ESLint
-
-## Deployment
-
-Deployed to GitHub Pages via GitHub Actions (.github/workflows/deploy.yml) on push to main; base path `/pay-my-lawyer/`.
