@@ -3,7 +3,7 @@ import { defineConfig } from 'vite';
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/pay-my-lawyer-web/',
+  base: '/pay-my-lawyer/',
   plugins: [react()],
   server: {
     port: 3000,
