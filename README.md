@@ -2,7 +2,7 @@
 
 ## About
 
-An online payment and billing platform built specifically for law firms, attorneys, and legal professionals.
+Secure payment processing for law firms, and a simple way for clients to pay their attorney.
 
 ## Prerequisites
 

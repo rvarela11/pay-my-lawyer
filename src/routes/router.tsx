@@ -3,7 +3,7 @@ import { App } from '../App.tsx';
 import { About } from '../pages/About.tsx';
 import { Contact } from '../pages/Contact.tsx';
 import { ErrorPage } from '../pages/ErrorPage.tsx';
-import { Home } from '../pages/Home.tsx';
+import { Home } from '../pages/Home/Home.tsx';
 import { NotFound } from '../pages/NotFound.tsx';
 import { Products } from '../pages/Products.tsx';
 import { paths } from './paths.ts';

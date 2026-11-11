@@ -1,19 +1,21 @@
-import { NavLink, Outlet } from 'react-router';
-import './App.css';
-import { navItems } from './routes/nav.ts';
+import { Link } from '@mui/material';
+import { Outlet } from 'react-router';
+import styles from './App.module.css';
+import { Footer } from './components/Footer/Footer.tsx';
+import { Header } from './components/Header/Header.tsx';
 
 export const App = () => {
   return (
     <>
-      <nav className='main-nav'>
-        {navItems.map(({ label, to, end }) => (
-          <NavLink key={to} to={to} end={end}>
-            {label}
-          </NavLink>
-        ))}
-      </nav>
-
-      <Outlet />
+      {/* Skip link (WCAG 2.4.1): hidden until focused; lets keyboard users bypass the header. Targets <main tabIndex={-1}> so it can take focus. */}
+      <Link className={styles.skipLink} href='#main'>
+        Skip to content
+      </Link>
+      <Header />
+      <main id='main' tabIndex={-1}>
+        <Outlet />
+      </main>
+      <Footer />
     </>
   );
 };

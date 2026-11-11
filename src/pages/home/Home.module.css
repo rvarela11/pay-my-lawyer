@@ -1,0 +1,111 @@
+.hero {
+  background-color: var(--mui-palette-brand-cream);
+  padding-block: calc(var(--mui-spacing) * 5);
+}
+
+.heroTitle {
+  max-width: 14ch;
+}
+
+.lede {
+  margin-top: calc(var(--mui-spacing) * 3);
+  max-width: 52ch;
+}
+
+.audienceList {
+  border-top: 2px solid var(--mui-palette-primary-main);
+  margin-top: calc(var(--mui-spacing) * 5);
+  max-width: 560px;
+}
+
+.audience {
+  border-bottom: 1px solid var(--mui-palette-primary-main);
+  min-height: 44px;
+  padding-block: 18px;
+  padding-right: calc(var(--mui-spacing) * 7);
+}
+
+.audience::after {
+  border-right: 2.5px solid var(--mui-palette-primary-main);
+  border-top: 2.5px solid var(--mui-palette-primary-main);
+  content: '';
+  height: 14px;
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  width: 14px;
+}
+
+.products {
+  padding-block: calc(var(--mui-spacing) * 7);
+}
+
+.productsInner {
+  display: grid;
+  gap: calc(var(--mui-spacing) * 4);
+}
+
+.productList {
+  display: grid;
+  gap: calc(var(--mui-spacing) * 3) calc(var(--mui-spacing) * 5);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.product {
+  border-top: 2px solid var(--mui-palette-primary-main);
+  padding-top: calc(var(--mui-spacing) * 2);
+}
+
+.productName {
+  margin-bottom: var(--mui-spacing);
+}
+
+.cta {
+  background-color: var(--mui-palette-primary-main);
+  color: var(--mui-palette-primary-contrastText);
+  padding-block: calc(var(--mui-spacing) * 6);
+}
+
+.ctaInner {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px 48px;
+  justify-content: space-between;
+}
+
+.ctaText {
+  color: var(--mui-palette-brand-cream);
+  margin-top: calc(var(--mui-spacing) * 1.5);
+}
+
+@media (min-width: 600px) {
+  .productList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .hero {
+    padding-block: calc(var(--mui-spacing) * 13);
+  }
+
+  .products {
+    padding-block: calc(var(--mui-spacing) * 15);
+  }
+
+  .productsInner {
+    gap: calc(var(--mui-spacing) * 6);
+  }
+
+  .productList {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .cta {
+    padding-block: calc(var(--mui-spacing) * 12);
+  }
+}

@@ -1,0 +1,15 @@
+.skipLink {
+  background-color: var(--mui-palette-primary-main);
+  border-radius: var(--mui-shape-borderRadius);
+  color: var(--mui-palette-primary-contrastText);
+  left: 12px;
+  padding-block: calc(var(--mui-spacing) * 1.5);
+  padding-inline: calc(var(--mui-spacing) * 2);
+  position: absolute;
+  top: -100px;
+  z-index: var(--mui-zIndex-tooltip);
+}
+
+.skipLink:focus {
+  top: 12px;
+}

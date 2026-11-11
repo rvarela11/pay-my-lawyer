@@ -1,0 +1,12 @@
+.container {
+  margin-inline: auto;
+  max-width: 1200px;
+  padding-inline: calc(var(--mui-spacing) * 2);
+  width: 100%;
+}
+
+@media (min-width: 600px) {
+  .container {
+    padding-inline: calc(var(--mui-spacing) * 3);
+  }
+}
