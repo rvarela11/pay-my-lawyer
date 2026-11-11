@@ -26,7 +26,9 @@ An online payment and billing platform built specifically for law firms, attorne
 
 ## Technologies
 
-- React
-- TypeScript
 - Vite
+- TypeScript
+- React
+- React Router
+- Material UI
 - ESLint
