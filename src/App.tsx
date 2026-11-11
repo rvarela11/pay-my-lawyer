@@ -1,30 +1,19 @@
-import { NavLink, Route, Routes } from 'react-router';
+import { NavLink, Outlet } from 'react-router';
 import './App.css';
-import { About } from './pages/About.tsx';
-import { Contact } from './pages/Contact.tsx';
-import { Home } from './pages/Home.tsx';
-import { NotFound } from './pages/NotFound.tsx';
-import { Products } from './pages/Products.tsx';
+import { navItems } from './routes/nav.ts';
 
 export const App = () => {
   return (
     <>
       <nav className='main-nav'>
-        <NavLink to='/' end>
-          Home
-        </NavLink>
-        <NavLink to='/products'>Products</NavLink>
-        <NavLink to='/about-us'>About us</NavLink>
-        <NavLink to='/contact-us'>Contact us</NavLink>
+        {navItems.map(({ label, to, end }) => (
+          <NavLink key={to} to={to} end={end}>
+            {label}
+          </NavLink>
+        ))}
       </nav>
 
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/products' element={<Products />} />
-        <Route path='/about-us' element={<About />} />
-        <Route path='/contact-us' element={<Contact />} />
-        <Route path='*' element={<NotFound />} />
-      </Routes>
+      <Outlet />
     </>
   );
 };
