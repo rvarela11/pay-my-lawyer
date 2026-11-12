@@ -15,7 +15,7 @@ No test runner. Verify changes with `npx tsc -b && npm run lint && npm run build
 - CI (GitHub Pages deploy) runs on Linux, which is case-sensitive. Keep file and folder casing consistent and use `git mv` for case-only renames.
 - The site is served under `/pay-my-lawyer/`. `base` in `vite.config.ts` sets it, and the router basename reads `import.meta.env.BASE_URL`. Build static asset URLs from `import.meta.env.BASE_URL` (or `%BASE_URL%` in `index.html`).
 - The build copies `index.html` to `404.html` as the SPA fallback, so real routes return HTTP 404 on GitHub Pages.
-- Path constants live in `src/routes/paths.ts`. `/find-a-lawyer`, `/sign-in` and `/create-account` have no routes yet.
+- Path constants live in `src/routes/paths.ts`. `/sign-in` and `/create-account` have no routes yet.
 
 ## Styling
 

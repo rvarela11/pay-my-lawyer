@@ -119,10 +119,6 @@
 }
 
 @media (min-width: 600px) {
-  .audienceList {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   .productList {
     grid-template-columns: repeat(2, 1fr);
   }
