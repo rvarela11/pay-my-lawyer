@@ -17,6 +17,10 @@ No test runner. Verify changes with `npx tsc -b && npm run lint && npm run build
 - The build copies `index.html` to `404.html` as the SPA fallback, so real routes return HTTP 404 on GitHub Pages.
 - Path constants live in `src/routes/paths.ts`. `/sign-in` and `/create-account` have no routes yet.
 
+## Components
+
+- A props type that lives in the component's file and isn't exported is named `Props` (see `src/components/Section/Section.tsx`).
+
 ## Styling
 
 - Use MUI theme defaults (`src/theme.ts`); no custom font sizes in CSS.
