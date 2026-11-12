@@ -1,82 +1,80 @@
 .hero {
-  background-color: var(--mui-palette-brand-cream);
-  padding-block: calc(var(--mui-spacing) * 5);
+  background-color: var(--mui-palette-primary-main);
+  color: var(--mui-palette-brand-cream);
+  overflow: hidden;
 }
 
 .heroInner {
   display: grid;
-  gap: calc(var(--mui-spacing) * 5);
+  gap: calc(var(--mui-spacing) * 6);
+}
+
+.heroCopy,
+.heroDemo {
+  animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  min-width: 0;
+}
+
+.heroDemo {
+  animation-delay: 0.15s;
 }
 
 .heroTitle {
-  max-width: 14ch;
+  max-width: 12ch;
 }
 
 .lede {
   margin-top: calc(var(--mui-spacing) * 3);
-  max-width: 52ch;
+  max-width: 34ch;
 }
 
-.audienceList {
-  display: grid;
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
   gap: calc(var(--mui-spacing) * 2);
-  list-style: none;
-  margin: calc(var(--mui-spacing) * 5) 0 0;
-  max-width: 560px;
-  padding: 0;
+  margin-top: calc(var(--mui-spacing) * 4);
 }
 
-.audienceList li {
-  display: grid;
+.heroButton,
+.heroButtonQuiet {
+  min-height: 48px;
 }
 
-.audienceAction {
-  height: 100%;
+.heroButtonQuiet,
+.heroButtonQuiet:hover {
+  border-color: var(--mui-palette-brand-cream);
+  border-width: 2px;
+  color: var(--mui-palette-brand-cream);
 }
 
-.audienceTitle {
-  align-items: center;
-  background-color: var(--mui-palette-brand-sage);
-  color: var(--mui-palette-primary-main);
-  display: flex;
-  min-height: calc(var(--mui-spacing) * 12);
-  padding: calc(var(--mui-spacing) * 2);
+.heroButtonQuiet:hover {
+  background-color: transparent;
+  border-color: var(--mui-palette-brand-sage);
 }
 
-.audienceDetail {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
+.heroActions :focus-visible,
+.heroDemo :focus-visible {
+  outline: 3px solid var(--mui-palette-brand-sage);
+  outline-offset: 3px;
 }
 
-.audienceAction:is(:hover, :focus-visible) .audienceArrow {
-  animation: nudge 0.8s ease-in-out infinite;
-}
-
-@keyframes nudge {
-  0%,
-  100% {
-    transform: translateX(0);
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
   }
 
-  50% {
-    transform: translateX(6px);
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .audienceAction:is(:hover, :focus-visible) .audienceArrow {
+  .heroCopy,
+  .heroDemo {
     animation: none;
   }
-}
-
-.products {
-  padding-block: calc(var(--mui-spacing) * 7);
-}
-
-.productsInner {
-  display: grid;
-  gap: calc(var(--mui-spacing) * 4);
 }
 
 .productList {
@@ -102,7 +100,6 @@
 .cta {
   background-color: var(--mui-palette-primary-main);
   color: var(--mui-palette-primary-contrastText);
-  padding-block: calc(var(--mui-spacing) * 6);
 }
 
 .ctaInner {
@@ -125,24 +122,8 @@
 }
 
 @media (min-width: 900px) {
-  .hero {
-    padding-block: calc(var(--mui-spacing) * 13);
-  }
-
-  .products {
-    padding-block: calc(var(--mui-spacing) * 15);
-  }
-
-  .productsInner {
-    gap: calc(var(--mui-spacing) * 6);
-  }
-
   .productList {
     grid-template-columns: repeat(3, 1fr);
-  }
-
-  .cta {
-    padding-block: calc(var(--mui-spacing) * 12);
   }
 }
 
@@ -150,12 +131,6 @@
   .heroInner {
     align-items: center;
     gap: calc(var(--mui-spacing) * 8);
-    grid-template-columns: 7fr 5fr;
-  }
-
-  .audienceList {
-    grid-template-columns: 1fr;
-    margin-top: 0;
-    max-width: none;
+    grid-template-columns: minmax(0, 1fr) auto;
   }
 }

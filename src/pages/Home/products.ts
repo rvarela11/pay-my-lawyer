@@ -20,8 +20,8 @@ export const products = [
   {
     description: 'Keep client details and payment history in one place.',
     icon: InventoryIcon,
-    id: 'client-inventory',
-    name: 'Client inventory',
+    id: 'client-records',
+    name: 'Client records',
   },
   {
     description: 'Schedule meetings and court dates, and charge for paid ones.',
