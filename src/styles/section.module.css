@@ -1,0 +1,9 @@
+.section {
+  padding-block: calc(var(--mui-spacing) * 7);
+}
+
+@media (min-width: 900px) {
+  .section {
+    padding-block: calc(var(--mui-spacing) * 10);
+  }
+}

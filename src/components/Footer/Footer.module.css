@@ -1,6 +1,6 @@
 .footer {
+  composes: section from '../../styles/section.module.css';
   background-color: var(--mui-palette-brand-cream);
-  padding-block: calc(var(--mui-spacing) * 5);
 }
 
 .inner {
@@ -40,10 +40,6 @@
 }
 
 @media (min-width: 900px) {
-  .footer {
-    padding-block: calc(var(--mui-spacing) * 9);
-  }
-
   .inner {
     grid-template-columns: auto auto;
     justify-content: space-between;

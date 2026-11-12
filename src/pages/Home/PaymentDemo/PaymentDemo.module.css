@@ -1,6 +1,6 @@
 .demo {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
 }
 
 .client,
@@ -8,14 +8,13 @@
   min-width: 0;
 }
 
-.firm {
-  display: grid;
+.client {
+  width: min(100%, calc(var(--mui-spacing) * 33));
 }
 
-.client {
-  justify-self: center;
-  max-width: 300px;
-  width: 100%;
+.firm {
+  display: grid;
+  width: min(100%, calc(var(--mui-spacing) * 42));
 }
 
 .phone {
@@ -243,18 +242,23 @@
   }
 }
 
-@media (min-width: 600px) {
+@media (min-width: 900px) {
   .demo {
-    grid-template-columns: minmax(0, 5fr) auto minmax(0, 7fr);
+    grid-template-columns: auto auto auto;
+    justify-content: center;
   }
 
   .client {
-    max-width: none;
+    width: calc(var(--mui-spacing) * 33);
+  }
+
+  .firm {
+    width: calc(var(--mui-spacing) * 42);
   }
 
   .connector {
-    border-left: 0;
     align-self: start;
+    border-left: 0;
     border-top: 2px dashed var(--mui-palette-brand-sage);
     height: 0;
     margin-block: calc(var(--mui-spacing) * 17) 0;
