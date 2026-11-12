@@ -1,14 +1,18 @@
+import BalanceIcon from '@mui/icons-material/Balance';
+import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import { paths } from '../../routes/paths.ts';
 
 export const audiences = [
   {
-    title: 'I need a lawyer',
-    detail: 'See the attorney directory',
+    detail: 'Browse attorneys',
+    icon: ManageSearchIcon,
+    title: 'Find a lawyer',
     to: paths.findLawyer,
   },
   {
-    title: 'I’m a legal professional',
-    detail: 'Start accepting payments',
+    detail: 'Accept payments',
+    icon: BalanceIcon,
+    title: 'Legal professional',
     to: paths.createAccount,
   },
 ];

@@ -1,10 +1,9 @@
 import {
   Button,
+  Card,
+  CardActionArea,
+  CardContent,
   Link,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
   Typography,
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router';
@@ -18,39 +17,47 @@ export const Home = () => {
   return (
     <>
       <section aria-labelledby='hero-title' className={styles.hero}>
-        <Container>
-          <Typography className={styles.heroTitle} id='hero-title' variant='h1'>
-            Legal fees, paid without the chase.
-          </Typography>
-          <Typography className={styles.lede} variant='subtitle1'>
-            Streamline your practice, connect with clients, and grow your
-            network.
-          </Typography>
+        <Container className={styles.heroInner}>
+          <div>
+            <Typography
+              className={styles.heroTitle}
+              id='hero-title'
+              variant='h1'
+            >
+              Legal fees, paid without the chase.
+            </Typography>
+            <Typography className={styles.lede} variant='subtitle1'>
+              Streamline your practice, connect with clients, and grow your
+              network.
+            </Typography>
+          </div>
 
-          <List
+          <ul
             aria-label='Choose how you will use Pay My Lawyer'
             className={styles.audienceList}
-            disablePadding
           >
-            {audiences.map(({ title, detail, to }) => (
-              <ListItem disablePadding key={to}>
-                <ListItemButton
-                  className={styles.audience}
-                  component={RouterLink}
-                  to={to}
-                >
-                  <ListItemText
-                    primary={title}
-                    secondary={detail}
-                    slotProps={{
-                      primary: { component: 'span', variant: 'h3' },
-                      secondary: { variant: 'body1' },
-                    }}
-                  />
-                </ListItemButton>
-              </ListItem>
+            {audiences.map(({ detail, icon: Icon, title, to }) => (
+              <li key={to}>
+                <Card variant='outlined'>
+                  <CardActionArea
+                    className={styles.audienceAction}
+                    component={RouterLink}
+                    to={to}
+                  >
+                    <div className={styles.audienceIcon}>
+                      <Icon fontSize='large' />
+                    </div>
+                    <CardContent>
+                      <Typography component='h3' variant='h6'>
+                        {title}
+                      </Typography>
+                      <Typography>{detail}</Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </li>
             ))}
-          </List>
+          </ul>
         </Container>
       </section>
 
@@ -68,9 +75,7 @@ export const Home = () => {
                     {name}
                   </Link>
                 </Typography>
-                <Typography>
-                  {description}
-                </Typography>
+                <Typography>{description}</Typography>
               </li>
             ))}
           </ul>
