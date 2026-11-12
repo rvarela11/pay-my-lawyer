@@ -34,7 +34,7 @@ export const Header = () => {
       color='inherit'
       component='header'
       elevation={0}
-      position='static'
+      position='sticky'
     >
       <Container>
         <Toolbar className={styles.toolbar} disableGutters>
