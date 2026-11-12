@@ -20,6 +20,7 @@ No test runner. Verify changes with `npx tsc -b && npm run lint && npm run build
 ## Components
 
 - A props type that lives in the component's file and isn't exported is named `Props` (see `src/components/Section/Section.tsx`).
+- Name a function that handles an event `handle` + the event or action (`handleClose`, `handleSubmit`), and pass it to an `on`-prefixed prop (`onClose={handleClose}`). Callback props a component accepts keep the `on` prefix (`onClick`).
 
 ## Styling
 
