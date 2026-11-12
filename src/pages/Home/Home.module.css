@@ -20,13 +20,10 @@
 }
 
 .heroTitle {
-  font-weight: 300;
-  letter-spacing: -0.02em;
   max-width: 12ch;
 }
 
 .lede {
-  font-weight: 400;
   margin-top: calc(var(--mui-spacing) * 3);
   max-width: 34ch;
 }

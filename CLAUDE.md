@@ -23,7 +23,7 @@ No test runner. Verify changes with `npx tsc -b && npm run lint && npm run build
 
 ## Styling
 
-- Use MUI theme defaults (`src/theme.ts`); no custom font sizes in CSS.
+- Typography comes from MUI (`src/theme.ts` and `Typography` variants). Don't set `font-size`, `font-weight` or `letter-spacing` in CSS; pick a variant, or change the theme. `font-variant-numeric: tabular-nums` is fine for aligning numbers. Exception: the Header's bold current-page nav link.
 - CSS Modules with `className`. Read colors and spacing from `var(--mui-palette-*)` and `var(--mui-spacing)`.
 - Don't use CSS Modules `composes`. Share layout through components in `src/components`: `Container` sets the max width and side gutters, and `Section` sets the vertical padding for page sections and the footer (`component='footer'`).
 - Palette only: cream `#EDF1D6`, sage `#9DC08B`, green `#609966`, ink `#40513B`. No gradients.

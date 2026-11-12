@@ -21,7 +21,7 @@ export const Home = () => {
             >
               Legal fees, paid without the chase.
             </Typography>
-            <Typography className={styles.lede} component='p' variant='h6'>
+            <Typography className={styles.lede} component='p' variant='h5'>
               Streamline your practice, connect with clients, and grow your
               network.
             </Typography>

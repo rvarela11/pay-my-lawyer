@@ -100,7 +100,6 @@
   border-radius: 50%;
   color: var(--mui-palette-primary-main);
   display: flex;
-  font-weight: 700;
   height: 28px;
   justify-content: center;
   left: -15px;
@@ -168,7 +167,6 @@
   border: 1px dashed var(--mui-palette-primary-main);
   border-radius: 999px;
   display: inline-flex;
-  font-weight: 500;
   gap: calc(var(--mui-spacing) / 2);
   justify-content: center;
   min-width: calc(var(--mui-spacing) * 10);
