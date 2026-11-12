@@ -1,0 +1,23 @@
+.drawerPaper {
+  width: 100%;
+}
+
+.toolbar {
+  gap: calc(var(--mui-spacing) * 3);
+  justify-content: space-between;
+  padding-block: var(--mui-spacing);
+}
+
+.closeButton,
+.closeButton:hover {
+  border-width: 2px;
+}
+
+.mobileLink {
+  border-bottom: 1px solid var(--mui-palette-brand-sage);
+  min-height: 48px;
+}
+
+.mobileLink[aria-current='page'] :global(.MuiListItemText-primary) {
+  font-weight: 700;
+}

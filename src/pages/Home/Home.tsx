@@ -27,7 +27,6 @@ export const Home = () => {
             </Typography>
             <div className={styles.heroActions}>
               <Button
-                className={styles.heroButton}
                 color='secondary'
                 component={RouterLink}
                 size='large'

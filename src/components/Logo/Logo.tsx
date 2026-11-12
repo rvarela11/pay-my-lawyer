@@ -3,11 +3,16 @@ import { Link as RouterLink } from 'react-router';
 import { paths } from '../../routes/paths.ts';
 import styles from './Logo.module.css';
 
-export const Logo = () => (
+type Props = {
+  onClick?: () => void;
+};
+
+export const Logo = ({ onClick }: Props) => (
   <Link
     aria-label='Pay My Lawyer, home'
     className={styles.logo}
     component={RouterLink}
+    onClick={onClick}
     to={paths.home}
     underline='none'
   >

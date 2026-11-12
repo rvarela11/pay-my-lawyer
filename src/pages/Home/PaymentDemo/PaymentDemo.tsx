@@ -80,7 +80,7 @@ export const PaymentDemo = () => {
     setCollected(collectedBefore);
   };
 
-  const onButtonClick = () => {
+  const handleButtonClick = () => {
     if (status === 'due') pay();
     if (status === 'paid') reset();
   };
@@ -148,7 +148,8 @@ export const PaymentDemo = () => {
               [styles.payButtonHint]: !tried,
             })}
             fullWidth
-            onClick={onButtonClick}
+            onClick={handleButtonClick}
+            size='large'
             variant={paid ? 'outlined' : 'contained'}
           >
             {buttonLabel}
