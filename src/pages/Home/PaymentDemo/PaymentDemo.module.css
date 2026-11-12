@@ -77,6 +77,24 @@
   cursor: progress;
 }
 
+.payButtonHint::after {
+  animation: ring 1.2s ease-out 1.2s 3 both;
+  border: 2px solid var(--mui-palette-primary-main);
+  border-radius: inherit;
+  content: '';
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.hint {
+  color: var(--mui-palette-brand-cream);
+  margin-top: calc(var(--mui-spacing) * 2);
+  text-align: center;
+  width: min(100%, calc(var(--mui-spacing) * 33));
+}
+
 .secure {
   align-items: center;
   display: flex;
@@ -230,6 +248,22 @@
   }
 }
 
+@keyframes ring {
+  0% {
+    opacity: 0;
+    transform: scale(1);
+  }
+
+  15% {
+    opacity: 0.8;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.1, 1.45);
+  }
+}
+
 @keyframes settle {
   from {
     background-color: var(--mui-palette-brand-sage);
@@ -252,6 +286,11 @@
 
   .firm {
     width: calc(var(--mui-spacing) * 42);
+  }
+
+  .hint {
+    grid-column: 1;
+    grid-row: 2;
   }
 
   .connector {
@@ -278,5 +317,9 @@
   .demo[data-status='processing'] .token,
   .justPaid td {
     animation: none;
+  }
+
+  .payButtonHint::after {
+    display: none;
   }
 }

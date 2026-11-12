@@ -36,6 +36,7 @@ export const PaymentDemo = () => {
   const [status, setStatus] = useState<Status>('due');
   const [method, setMethod] = useState(paymentMethods[0].value);
   const [collected, setCollected] = useState(collectedBefore);
+  const [tried, setTried] = useState(false);
   const timeout = useRef(0);
   const frame = useRef(0);
 
@@ -62,6 +63,7 @@ export const PaymentDemo = () => {
   };
 
   const pay = () => {
+    setTried(true);
     setStatus('processing');
     timeout.current = window.setTimeout(
       () => {
@@ -140,8 +142,11 @@ export const PaymentDemo = () => {
           </div>
 
           <Button
+            aria-describedby='pay-hint'
             aria-disabled={status === 'processing'}
-            className={styles.payButton}
+            className={classNames(styles.payButton, {
+              [styles.payButtonHint]: !tried,
+            })}
             fullWidth
             onClick={onButtonClick}
             variant={paid ? 'outlined' : 'contained'}
@@ -154,6 +159,10 @@ export const PaymentDemo = () => {
           </Typography>
         </div>
       </section>
+
+      <Typography className={styles.hint} id='pay-hint' variant='body2'>
+        Pay the invoice to see both sides update.
+      </Typography>
 
       <div aria-hidden className={styles.connector}>
         <span className={styles.token}>$</span>
