@@ -35,11 +35,6 @@
   margin-top: calc(var(--mui-spacing) * 4);
 }
 
-.heroButton,
-.heroButtonQuiet {
-  min-height: 48px;
-}
-
 .heroButtonQuiet,
 .heroButtonQuiet:hover {
   border-color: var(--mui-palette-brand-cream);

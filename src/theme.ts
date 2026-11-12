@@ -25,6 +25,11 @@ export const theme = responsiveFontSizes(createTheme({
     fontFamily: '"IBM Plex Sans", "Helvetica", "Arial", sans-serif',
   },
   components: {
+    // MUI's medium button is ~36px tall; raise it to a 44px touch target (WCAG 2.5.5) so components don't set heights one by one.
+    MuiButton: {
+      styleOverrides: { root: { minHeight: 44 } },
+      variants: [{ props: { size: 'large' }, style: { minHeight: 48 } }],
+    },
     MuiCssBaseline: { styleOverrides: { 'main:focus': { outline: 'none' } } },
     MuiLink: { defaultProps: { underline: 'hover', color: 'inherit' } },
   },

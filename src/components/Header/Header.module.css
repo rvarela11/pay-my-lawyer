@@ -25,7 +25,6 @@
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-radius: 0;
-  min-height: 44px;
   padding-inline: calc(var(--mui-spacing) * 1.5);
 }
 
@@ -42,10 +41,6 @@
 .menuButton,
 .menuButton:hover {
   border-width: 2px;
-}
-
-.menuButton {
-  min-height: 44px;
 }
 
 @media (min-width: 900px) {

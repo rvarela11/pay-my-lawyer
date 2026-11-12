@@ -69,10 +69,6 @@
   color: var(--mui-palette-primary-main);
 }
 
-.payButton {
-  min-height: 48px;
-}
-
 .payButton[aria-disabled='true'] {
   cursor: progress;
 }

@@ -28,6 +28,7 @@ No test runner. Verify changes with `npx tsc -b && npm run lint && npm run build
 - CSS Modules with `className`. Read colors and spacing from `var(--mui-palette-*)` and `var(--mui-spacing)`.
 - Don't use CSS Modules `composes`. Share layout through components in `src/components`: `Container` sets the max width and side gutters, and `Section` sets the vertical padding for page sections and the footer (`component='footer'`).
 - Palette only: cream `#EDF1D6`, sage `#9DC08B`, green `#609966`, ink `#40513B`. No gradients.
+- Button heights come from the theme (`src/theme.ts`): 44px, or 48px with `size='large'`. Don't set `min-height` on a `Button` in CSS.
 - Sage and green fail AA as body text on ink or white. Use them for large text, borders and decoration only.
 - Declarations in alphabetical order; literal breakpoints at 600, 900 and 1200px.
 - Meet WCAG 2.1 AA, stay responsive down to 320px, and respect `prefers-reduced-motion`.

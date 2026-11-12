@@ -149,6 +149,7 @@ export const PaymentDemo = () => {
             })}
             fullWidth
             onClick={handleButtonClick}
+            size='large'
             variant={paid ? 'outlined' : 'contained'}
           >
             {buttonLabel}
