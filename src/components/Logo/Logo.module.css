@@ -4,3 +4,8 @@
   gap: 12px;
 }
 
+.image {
+  display: block;
+  height: calc(var(--mui-spacing) * 7);
+  width: auto;
+}
