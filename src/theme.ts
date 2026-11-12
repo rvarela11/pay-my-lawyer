@@ -20,7 +20,10 @@ export const theme = responsiveFontSizes(createTheme({
     text: { primary: ink, secondary: ink },
     brand,
   },
-  typography: { button: { textTransform: 'none' } },
+  typography: {
+    button: { textTransform: 'none' },
+    fontFamily: '"IBM Plex Sans", "Helvetica", "Arial", sans-serif',
+  },
   components: {
     MuiCssBaseline: { styleOverrides: { 'main:focus': { outline: 'none' } } },
     MuiLink: { defaultProps: { underline: 'hover', color: 'inherit' } },
