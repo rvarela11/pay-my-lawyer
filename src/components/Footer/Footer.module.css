@@ -25,6 +25,16 @@
   font-style: normal;
 }
 
+.contactList {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--mui-spacing) * 2) calc(var(--mui-spacing) * 3);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 .addressLine {
   padding-block: var(--mui-spacing);
 }
@@ -35,7 +45,7 @@
   }
 
   .inner {
-    column-gap: calc(var(--mui-spacing) * 8);
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: auto auto;
+    justify-content: space-between;
   }
 }
