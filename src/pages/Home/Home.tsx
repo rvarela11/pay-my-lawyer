@@ -69,13 +69,14 @@ export const Home = () => {
       <section className={styles.products}>
         <Container className={styles.productsInner}>
           <ul className={styles.productList}>
-            {products.map(({ description, id, name }) => (
+            {products.map(({ description, icon: Icon, id, name }) => (
               <li className={styles.product} key={id}>
                 <Typography
                   className={styles.productName}
                   component='h3'
-                  variant='h4'
+                  variant='h5'
                 >
+                  <Icon aria-hidden fontSize='inherit' />
                   <Link component={RouterLink} to={`${paths.products}#${id}`}>
                     {name}
                   </Link>

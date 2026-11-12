@@ -93,6 +93,9 @@
 }
 
 .productName {
+  align-items: center;
+  display: flex;
+  gap: calc(var(--mui-spacing) * 1.5);
   margin-bottom: var(--mui-spacing);
 }
 
