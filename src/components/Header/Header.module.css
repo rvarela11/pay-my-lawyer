@@ -1,6 +1,5 @@
 .header {
   background-color: var(--mui-palette-background-default);
-  border-bottom: 2px solid var(--mui-palette-brand-sage);
 }
 
 .toolbar {
