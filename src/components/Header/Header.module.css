@@ -48,21 +48,6 @@
   min-height: 44px;
 }
 
-.mobileNav {
-  max-height: calc(100vh - 80px);
-  overflow-y: auto;
-  padding-bottom: calc(var(--mui-spacing) * 3);
-}
-
-.mobileLink {
-  border-bottom: 1px solid var(--mui-palette-brand-sage);
-  min-height: 48px;
-}
-
-.mobileLink[aria-current='page'] :global(.MuiListItemText-primary) {
-  font-weight: 700;
-}
-
 @media (min-width: 900px) {
   .desktopNav {
     align-items: center;
@@ -70,8 +55,7 @@
     gap: calc(var(--mui-spacing) * 3);
   }
 
-  .menuButton,
-  .mobileNav {
+  .menuButton {
     display: none;
   }
 }

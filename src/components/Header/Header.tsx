@@ -1,32 +1,19 @@
-import {
-  AppBar,
-  Button,
-  Collapse,
-  List,
-  ListItemButton,
-  ListItemText,
-  Toolbar,
-} from '@mui/material';
-import { useEffect, useState } from 'react';
+import { AppBar, Button, Toolbar, useMediaQuery } from '@mui/material';
+import { useState } from 'react';
 import { NavLink } from 'react-router';
 import { navItems } from '../../routes/nav.ts';
 import { paths } from '../../routes/paths.ts';
 import { Container } from '../Container/Container.tsx';
 import styles from './Header.module.css';
 import { Logo } from '../Logo/Logo.tsx';
+import { MobileMenu } from './MobileMenu/MobileMenu.tsx';
 
 export const Header = () => {
-  const [open, setOpen] = useState(false);
-  const close = () => setOpen(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const desktop = useMediaQuery('(min-width: 900px)');
+  const open = menuOpen && !desktop;
 
-  useEffect(() => {
-    if (!open) return;
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setOpen(false);
-    };
-    document.addEventListener('keydown', onKeyDown);
-    return () => document.removeEventListener('keydown', onKeyDown);
-  }, [open]);
+  const handleClose = () => setMenuOpen(false);
 
   return (
     <AppBar
@@ -65,38 +52,15 @@ export const Header = () => {
             aria-controls='mobile-nav'
             aria-expanded={open}
             className={styles.menuButton}
-            onClick={() => setOpen((value) => !value)}
+            onClick={() => setMenuOpen(true)}
             variant='outlined'
           >
-            {open ? 'Close' : 'Menu'}
+            Menu
           </Button>
         </Toolbar>
-
-        <Collapse
-          className={styles.mobileNav}
-          in={open}
-          timeout='auto'
-          unmountOnExit
-        >
-          <nav aria-label='Primary' id='mobile-nav'>
-            <List disablePadding>
-              {[...navItems, { label: 'Sign in', to: paths.signIn }].map(
-                ({ label, to }) => (
-                  <ListItemButton
-                    className={styles.mobileLink}
-                    component={NavLink}
-                    key={to}
-                    onClick={close}
-                    to={to}
-                  >
-                    <ListItemText primary={label} />
-                  </ListItemButton>
-                ),
-              )}
-            </List>
-          </nav>
-        </Collapse>
       </Container>
+
+      <MobileMenu onClose={handleClose} open={open} />
     </AppBar>
   );
 };
