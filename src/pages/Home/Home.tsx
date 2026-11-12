@@ -1,17 +1,9 @@
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import {
-  Button,
-  Card,
-  CardActionArea,
-  CardContent,
-  Link,
-  Typography,
-} from '@mui/material';
+import { Button, Link, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router';
 import { Container } from '../../components/Container/Container.tsx';
 import { paths } from '../../routes/paths.ts';
-import { audiences } from './audiences.ts';
 import styles from './Home.module.css';
+import { PaymentDemo } from './PaymentDemo/PaymentDemo.tsx';
 import { products } from './products.ts';
 
 export const Home = () => {
@@ -19,61 +11,56 @@ export const Home = () => {
     <>
       <section aria-labelledby='hero-title' className={styles.hero}>
         <Container className={styles.heroInner}>
-          <div>
+          <div className={styles.heroCopy}>
             <Typography
               className={styles.heroTitle}
+              component='h1'
               id='hero-title'
-              variant='h1'
+              variant='h2'
             >
               Legal fees, paid without the chase.
             </Typography>
-            <Typography className={styles.lede} variant='subtitle1'>
+            <Typography className={styles.lede} variant='h6'>
               Streamline your practice, connect with clients, and grow your
               network.
             </Typography>
+            <div className={styles.heroActions}>
+              <Button
+                className={styles.heroButton}
+                color='secondary'
+                component={RouterLink}
+                size='large'
+                to={paths.createAccount}
+                variant='contained'
+              >
+                Create account
+              </Button>
+              <Button
+                className={styles.heroButtonQuiet}
+                component={RouterLink}
+                size='large'
+                to={paths.products}
+                variant='outlined'
+              >
+                See products
+              </Button>
+            </div>
           </div>
 
-          <ul
-            aria-label='Choose how you will use Pay My Lawyer'
-            className={styles.audienceList}
-          >
-            {audiences.map(({ detail, title, to }) => (
-              <li key={to}>
-                <Card variant='outlined'>
-                  <CardActionArea
-                    className={styles.audienceAction}
-                    component={RouterLink}
-                    to={to}
-                  >
-                    <div className={styles.audienceTitle}>
-                      <Typography component='h3' variant='h5'>
-                        {title}
-                      </Typography>
-                    </div>
-                    <CardContent className={styles.audienceDetail}>
-                      <Typography>{detail}</Typography>
-                      <ArrowForwardIcon
-                        aria-hidden
-                        className={styles.audienceArrow}
-                        fontSize='small'
-                      />
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              </li>
-            ))}
-          </ul>
+          <div className={styles.heroDemo}>
+            <PaymentDemo />
+          </div>
         </Container>
       </section>
 
-      <section className={styles.products}>
-        <Container className={styles.productsInner}>
+      <section aria-label='Products' className={styles.products}>
+        <Container>
           <ul className={styles.productList}>
             {products.map(({ description, icon: Icon, id, name }) => (
               <li className={styles.product} key={id}>
                 <Typography
                   className={styles.productName}
-                  component='h3'
+                  component='h2'
                   variant='h5'
                 >
                   <Icon aria-hidden fontSize='inherit' />
@@ -92,7 +79,7 @@ export const Home = () => {
         <Container className={styles.ctaInner}>
           <div>
             <Typography id='cta-title' variant='h2'>
-              Your payment is just a click away.
+              Start accepting payments from your clients.
             </Typography>
             <Typography className={styles.ctaText}>
               Services are only offered to licensed attorneys within the United
