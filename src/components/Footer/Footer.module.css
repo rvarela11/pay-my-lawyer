@@ -1,5 +1,4 @@
 .footer {
-  composes: section from '../../styles/section.module.css';
   background-color: var(--mui-palette-brand-cream);
 }
 

@@ -1,6 +1,7 @@
 import { Button, Link, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router';
 import { Container } from '../../components/Container/Container.tsx';
+import { Section } from '../../components/Section/Section.tsx';
 import { paths } from '../../routes/paths.ts';
 import styles from './Home.module.css';
 import { PaymentDemo } from './PaymentDemo/PaymentDemo.tsx';
@@ -9,7 +10,7 @@ import { products } from './products.ts';
 export const Home = () => {
   return (
     <>
-      <section aria-labelledby='hero-title' className={styles.hero}>
+      <Section aria-labelledby='hero-title' className={styles.hero}>
         <Container className={styles.heroInner}>
           <div className={styles.heroCopy}>
             <Typography
@@ -51,9 +52,9 @@ export const Home = () => {
             <PaymentDemo />
           </div>
         </Container>
-      </section>
+      </Section>
 
-      <section aria-label='Products' className={styles.products}>
+      <Section aria-label='Products'>
         <Container>
           <ul className={styles.productList}>
             {products.map(({ description, icon: Icon, id, name }) => (
@@ -73,9 +74,9 @@ export const Home = () => {
             ))}
           </ul>
         </Container>
-      </section>
+      </Section>
 
-      <section aria-labelledby='cta-title' className={styles.cta}>
+      <Section aria-labelledby='cta-title' className={styles.cta}>
         <Container className={styles.ctaInner}>
           <div>
             <Typography id='cta-title' variant='h2'>
@@ -96,7 +97,7 @@ export const Home = () => {
             Create account
           </Button>
         </Container>
-      </section>
+      </Section>
     </>
   );
 };

@@ -1,5 +1,4 @@
 .hero {
-  composes: section from '../../styles/section.module.css';
   background-color: var(--mui-palette-primary-main);
   color: var(--mui-palette-brand-cream);
   overflow: hidden;
@@ -81,10 +80,6 @@
   }
 }
 
-.products {
-  composes: section from '../../styles/section.module.css';
-}
-
 .productList {
   display: grid;
   gap: calc(var(--mui-spacing) * 3) calc(var(--mui-spacing) * 5);
@@ -106,7 +101,6 @@
 }
 
 .cta {
-  composes: section from '../../styles/section.module.css';
   background-color: var(--mui-palette-primary-main);
   color: var(--mui-palette-primary-contrastText);
 }

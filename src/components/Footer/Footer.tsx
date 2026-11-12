@@ -2,9 +2,10 @@ import { Divider, Link, Typography } from '@mui/material';
 import { Container } from '../Container/Container.tsx';
 import styles from './Footer.module.css';
 import { Logo } from '../Logo/Logo.tsx';
+import { Section } from '../Section/Section.tsx';
 
 export const Footer = () => (
-  <footer className={styles.footer}>
+  <Section className={styles.footer} component='footer'>
     <Container className={styles.inner}>
       <div className={styles.about}>
         <Logo />
@@ -43,5 +44,5 @@ export const Footer = () => (
         </address>
       </div>
     </Container>
-  </footer>
+  </Section>
 );
