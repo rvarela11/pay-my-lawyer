@@ -1,3 +1,4 @@
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import {
   Button,
   Card,
@@ -36,7 +37,7 @@ export const Home = () => {
             aria-label='Choose how you will use Pay My Lawyer'
             className={styles.audienceList}
           >
-            {audiences.map(({ detail, icon: Icon, title, to }) => (
+            {audiences.map(({ detail, title, to }) => (
               <li key={to}>
                 <Card variant='outlined'>
                   <CardActionArea
@@ -44,14 +45,18 @@ export const Home = () => {
                     component={RouterLink}
                     to={to}
                   >
-                    <div className={styles.audienceIcon}>
-                      <Icon fontSize='large' />
-                    </div>
-                    <CardContent>
-                      <Typography component='h3' variant='h6'>
+                    <div className={styles.audienceTitle}>
+                      <Typography component='h3' variant='h5'>
                         {title}
                       </Typography>
+                    </div>
+                    <CardContent className={styles.audienceDetail}>
                       <Typography>{detail}</Typography>
+                      <ArrowForwardIcon
+                        aria-hidden
+                        className={styles.audienceArrow}
+                        fontSize='small'
+                      />
                     </CardContent>
                   </CardActionArea>
                 </Card>

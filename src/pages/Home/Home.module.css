@@ -34,13 +34,40 @@
   height: 100%;
 }
 
-.audienceIcon {
+.audienceTitle {
   align-items: center;
   background-color: var(--mui-palette-brand-sage);
   color: var(--mui-palette-primary-main);
   display: flex;
-  justify-content: center;
-  padding-block: calc(var(--mui-spacing) * 4);
+  min-height: calc(var(--mui-spacing) * 12);
+  padding: calc(var(--mui-spacing) * 2);
+}
+
+.audienceDetail {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.audienceAction:is(:hover, :focus-visible) .audienceArrow {
+  animation: nudge 0.8s ease-in-out infinite;
+}
+
+@keyframes nudge {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .audienceAction:is(:hover, :focus-visible) .audienceArrow {
+    animation: none;
+  }
 }
 
 .products {
@@ -128,6 +155,7 @@
   }
 
   .audienceList {
+    grid-template-columns: 1fr;
     margin-top: 0;
     max-width: none;
   }
