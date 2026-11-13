@@ -11,7 +11,7 @@ Secure payment processing for law firms, and a simple way for clients to pay the
 
 ## Getting Started
 
-1. `git clone git@github.com:rvarela11/pay-my-lawyer-web.git`
+1. `git clone git@github.com:rvarela11/pay-my-lawyer.git`
 2. `npm install`
 3. `npm run dev` (serves at http://localhost:3000)
 
