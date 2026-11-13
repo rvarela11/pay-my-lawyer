@@ -41,10 +41,12 @@ All meta, Open Graph and JSON-LD tags are static in `index.html` (link-preview c
 
 ### Launch checklist
 
-1. In `index.html`, replace `https://rvarela11.github.io/pay-my-lawyer` with `https://paymylawyer.cc` (canonical, `og:url`, `og:image`, `twitter:image`, JSON-LD `url` and `logo`).
-2. Set `base: '/'` in `vite.config.ts`.
-3. Remove the `noindex` meta tag.
-4. `robots.txt`: allow all and add a `Sitemap:` line; add `sitemap.xml`.
+1. Before launch, the build must write an HTML file per route (`dist/products/index.html`, …), each with its own canonical, `og:url` and `<title>`. Otherwise GitHub Pages serves real routes from `404.html` with HTTP 404 and crawlers won't index them.
+2. In `index.html`, replace `https://rvarela11.github.io/pay-my-lawyer` with `https://paymylawyer.cc` (canonical, `og:url`, `og:image`, `twitter:image`, JSON-LD `url` and `logo`).
+3. Set `base: '/'` in `vite.config.ts`.
+4. Remove the `noindex` meta tag.
+5. `robots.txt`: allow all and add a `Sitemap:` line; add `sitemap.xml`.
+6. Point `paymylawyer.cc` DNS at GitHub Pages, set the custom domain in the repo's Pages settings, and enable Enforce HTTPS. Deploys use Actions, so no `CNAME` file is needed.
 
 ## Rules
 
