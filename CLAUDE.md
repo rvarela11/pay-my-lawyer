@@ -9,7 +9,7 @@ npm run lint     # ESLint
 npm test         # Vitest (watch mode; `npm test -- --run` runs once)
 ```
 
-Verify changes with `npx tsc -b && npm run lint && npm test -- --run && npm run build`. CI runs the tests before the build.
+Verify changes with `npx tsc -b && npm run lint && npm test -- --run && npm run build`. Every pull request runs lint, tests and the build (`ci.yml`). Deploys run the tests and the build (`deploy.yml`).
 
 ## Tests
 
