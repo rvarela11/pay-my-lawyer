@@ -6,7 +6,7 @@ export type CreateAccountResponse = {
   status: number;
 };
 
-const DELAY_MS = 800;
+export const DELAY_MS = 800;
 
 export const submitCreateAccount = async (
   values: CreateAccountValues,

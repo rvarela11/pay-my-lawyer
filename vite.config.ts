@@ -1,3 +1,5 @@
+// Adds Vitest's types so the `test` block below type-checks (TypeScript only, no runtime effect).
+/// <reference types="vitest/config" />
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
@@ -13,5 +15,11 @@ export default defineConfig({
   server: {
     port: 3000,
     strictPort: true,
+  },
+  test: {
+    environment: 'jsdom',
+    // MUI must go through Vite so the styled-engine alias above applies in tests.
+    server: { deps: { inline: [/@mui\//] } },
+    setupFiles: ['./src/test/setup.ts'],
   },
 });
