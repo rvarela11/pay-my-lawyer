@@ -9,16 +9,16 @@ declare module '@mui/material/styles' {
   }
 }
 
-const ink = '#40513b';
-const brand = { green: '#609966', sage: '#9dc08b', cream: '#edf1d6' };
+const INK = '#40513b';
+const BRAND = { green: '#609966', sage: '#9dc08b', cream: '#edf1d6' };
 
 export const theme = responsiveFontSizes(createTheme({
   cssVariables: true,
   palette: {
-    primary: { main: ink, contrastText: '#fff' },
-    secondary: { main: brand.cream, contrastText: ink },
-    text: { primary: ink, secondary: ink },
-    brand,
+    primary: { main: INK, contrastText: '#fff' },
+    secondary: { main: BRAND.cream, contrastText: INK },
+    text: { primary: INK, secondary: INK },
+    brand: BRAND,
   },
   typography: {
     button: { textTransform: 'none' },

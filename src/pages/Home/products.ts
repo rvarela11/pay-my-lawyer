@@ -4,7 +4,7 @@ import PaymentsIcon from '@mui/icons-material/Payments';
 import PeopleIcon from '@mui/icons-material/People';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 
-export const products = [
+export const PRODUCTS = [
   {
     description: 'Accept cash, card, check, or digital transfers in one app.',
     icon: PaymentsIcon,

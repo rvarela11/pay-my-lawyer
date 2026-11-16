@@ -2,10 +2,10 @@ import { Button, Link, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router';
 import { Container } from '../../components/Container/Container.tsx';
 import { Section } from '../../components/Section/Section.tsx';
-import { paths } from '../../routes/paths.ts';
+import { PATHS } from '../../routes/paths.ts';
 import styles from './Home.module.css';
 import { PaymentDemo } from './PaymentDemo/PaymentDemo.tsx';
-import { products } from './products.ts';
+import { PRODUCTS } from './products.ts';
 
 export const Home = () => {
   return (
@@ -30,7 +30,7 @@ export const Home = () => {
                 color='secondary'
                 component={RouterLink}
                 size='large'
-                to={paths.createAccount}
+                to={PATHS.createAccount}
                 variant='contained'
               >
                 Create account
@@ -39,7 +39,7 @@ export const Home = () => {
                 className={styles.heroButtonQuiet}
                 component={RouterLink}
                 size='large'
-                to={paths.products}
+                to={PATHS.products}
                 variant='outlined'
               >
                 See products
@@ -56,7 +56,7 @@ export const Home = () => {
       <Section aria-label='Products'>
         <Container>
           <ul className={styles.productList}>
-            {products.map(({ description, icon: Icon, id, name }) => (
+            {PRODUCTS.map(({ description, icon: Icon, id, name }) => (
               <li className={styles.product} key={id}>
                 <Typography
                   className={styles.productName}
@@ -64,7 +64,7 @@ export const Home = () => {
                   variant='h5'
                 >
                   <Icon aria-hidden fontSize='inherit' />
-                  <Link component={RouterLink} to={`${paths.products}#${id}`}>
+                  <Link component={RouterLink} to={`${PATHS.products}#${id}`}>
                     {name}
                   </Link>
                 </Typography>
@@ -90,7 +90,7 @@ export const Home = () => {
             className={styles.ctaButton}
             color='secondary'
             component={RouterLink}
-            to={paths.createAccount}
+            to={PATHS.createAccount}
             variant='contained'
           >
             Create account

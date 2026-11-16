@@ -12,10 +12,10 @@ import {
 import classNames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
 import {
-  collectedBefore,
-  demoInvoice,
-  paidInvoices,
-  paymentMethods,
+  COLLECTED_BEFORE,
+  DEMO_INVOICE,
+  PAID_INVOICES,
+  PAYMENT_METHODS,
 } from './demo.ts';
 import styles from './PaymentDemo.module.css';
 
@@ -26,16 +26,16 @@ const usd = new Intl.NumberFormat('en-US', {
   style: 'currency',
 });
 
-const travelMs = 1100;
-const countUpMs = 900;
+const TRAVEL_MS = 1100;
+const COUNT_UP_MS = 900;
 
 const reducedMotion = () =>
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 export const PaymentDemo = () => {
   const [status, setStatus] = useState<Status>('due');
-  const [method, setMethod] = useState(paymentMethods[0].value);
-  const [collected, setCollected] = useState(collectedBefore);
+  const [method, setMethod] = useState(PAYMENT_METHODS[0].value);
+  const [collected, setCollected] = useState(COLLECTED_BEFORE);
   const [tried, setTried] = useState(false);
   const timeout = useRef(0);
   const frame = useRef(0);
@@ -55,7 +55,7 @@ export const PaymentDemo = () => {
     }
     const start = performance.now();
     const tick = (now: number) => {
-      const progress = Math.min((now - start) / countUpMs, 1);
+      const progress = Math.min((now - start) / COUNT_UP_MS, 1);
       setCollected(from + (to - from) * (1 - (1 - progress) ** 3));
       if (progress < 1) frame.current = requestAnimationFrame(tick);
     };
@@ -68,16 +68,16 @@ export const PaymentDemo = () => {
     timeout.current = window.setTimeout(
       () => {
         setStatus('paid');
-        countUp(collectedBefore, collectedBefore + demoInvoice.amount);
+        countUp(COLLECTED_BEFORE, COLLECTED_BEFORE + DEMO_INVOICE.amount);
       },
-      reducedMotion() ? 0 : travelMs,
+      reducedMotion() ? 0 : TRAVEL_MS,
     );
   };
 
   const reset = () => {
     cancelAnimationFrame(frame.current);
     setStatus('due');
-    setCollected(collectedBefore);
+    setCollected(COLLECTED_BEFORE);
   };
 
   const handleButtonClick = () => {
@@ -86,7 +86,7 @@ export const PaymentDemo = () => {
   };
 
   const paid = status === 'paid';
-  const amount = usd.format(demoInvoice.amount);
+  const amount = usd.format(DEMO_INVOICE.amount);
   const buttonLabel = {
     due: `Pay ${amount}`,
     paid: 'Run it again',
@@ -98,10 +98,10 @@ export const PaymentDemo = () => {
       <section aria-label='Client' className={styles.client}>
         <div className={styles.phone}>
           <Typography component='p' variant='h6'>
-            {demoInvoice.firm}
+            {DEMO_INVOICE.firm}
           </Typography>
           <Typography variant='body2'>
-            Invoice {demoInvoice.id}
+            Invoice {DEMO_INVOICE.id}
           </Typography>
           <Typography className={styles.amount} component='p' variant='h4'>
             {amount}
@@ -119,7 +119,7 @@ export const PaymentDemo = () => {
                 onChange={(event) => setMethod(event.target.value)}
                 value={method}
               >
-                {paymentMethods.map(({ label, value }) => (
+                {PAYMENT_METHODS.map(({ label, value }) => (
                   <FormControlLabel
                     control={<Radio size='small' />}
                     key={value}
@@ -190,7 +190,7 @@ export const PaymentDemo = () => {
               <tr className={classNames({ [styles.justPaid]: paid })}>
                 <td>
                   <Typography component='span' variant='body2'>
-                    {demoInvoice.client}
+                    {DEMO_INVOICE.client}
                   </Typography>
                 </td>
                 <td className={styles.money}>
@@ -211,7 +211,7 @@ export const PaymentDemo = () => {
                   </Typography>
                 </td>
               </tr>
-              {paidInvoices.map(({ amount: paidAmount, client, id }) => (
+              {PAID_INVOICES.map(({ amount: paidAmount, client, id }) => (
                 <tr key={id}>
                   <td>
                     <Typography component='span' variant='body2'>
@@ -242,7 +242,7 @@ export const PaymentDemo = () => {
 
       <p className={styles.visuallyHidden} role='status'>
         {paid &&
-          `Payment received. Invoice ${demoInvoice.id} now shows as paid. Total collected is ${usd.format(collectedBefore + demoInvoice.amount)}.`}
+          `Payment received. Invoice ${DEMO_INVOICE.id} now shows as paid. Total collected is ${usd.format(COLLECTED_BEFORE + DEMO_INVOICE.amount)}.`}
       </p>
     </div>
   );
