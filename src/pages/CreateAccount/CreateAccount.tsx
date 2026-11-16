@@ -1,19 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import {
-  Alert,
-  Button,
-  IconButton,
-  InputAdornment,
-  Link,
-  TextField,
-  Typography,
-} from '@mui/material';
-import { useEffect, useRef, useState } from 'react';
+import { Alert, Button, Link, TextField, Typography } from '@mui/material';
+import { useEffect, useRef } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Link as RouterLink, useNavigate } from 'react-router';
 import { Container } from '../../components/Container/Container.tsx';
+import { PasswordField } from '../../components/PasswordField/PasswordField.tsx';
 import { Section } from '../../components/Section/Section.tsx';
 import { PATHS } from '../../routes/paths.ts';
 import styles from './CreateAccount.module.css';
@@ -25,11 +16,7 @@ import {
   PASSWORD_MIN_LENGTH,
 } from './validation.ts';
 
-const SERVER_ERROR_MESSAGE =
-  'We could not create your account. Try again in a moment.';
-
 export const CreateAccount = () => {
-  const [showPassword, setShowPassword] = useState(false);
   const alertRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
@@ -47,11 +34,10 @@ export const CreateAccount = () => {
 
   const serverError = errors.root?.serverError;
 
-  const handleTogglePassword = () => {
-    setShowPassword((shown) => !shown);
-  };
-
   const handleCreateAccount = async (values: CreateAccountValues) => {
+    const SERVER_ERROR_MESSAGE =
+      'We could not create your account. Try again later.';
+
     try {
       const { status } = await submitCreateAccount(values);
 
@@ -148,7 +134,7 @@ export const CreateAccount = () => {
               control={control}
               name={FIELDS.password}
               render={({ field: { ref, ...field }, fieldState: { error } }) => (
-                <TextField
+                <PasswordField
                   {...field}
                   autoComplete='new-password'
                   error={!!error}
@@ -159,24 +145,6 @@ export const CreateAccount = () => {
                   }
                   inputRef={ref}
                   label='Password'
-                  slotProps={{
-                    input: {
-                      endAdornment: (
-                        <InputAdornment position='end'>
-                          <IconButton
-                            aria-label={
-                              showPassword ? 'Hide password' : 'Show password'
-                            }
-                            edge='end'
-                            onClick={handleTogglePassword}
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    },
-                  }}
-                  type={showPassword ? 'text' : 'password'}
                 />
               )}
             />

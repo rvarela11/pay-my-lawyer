@@ -18,12 +18,6 @@
   margin-top: calc(var(--mui-spacing) * 3);
 }
 
-.form
-  :global(.MuiOutlinedInput-root:not(:hover, .Mui-disabled, .Mui-error, .Mui-focused))
-  :global(.MuiOutlinedInput-notchedOutline) {
-  border-color: rgb(var(--mui-palette-text-primaryChannel) / 0.7);
-}
-
 .agreement {
   color: var(--mui-palette-text-secondary);
   text-align: center;

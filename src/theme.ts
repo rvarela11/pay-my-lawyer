@@ -32,5 +32,25 @@ export const theme = responsiveFontSizes(createTheme({
     },
     MuiCssBaseline: { styleOverrides: { 'main:focus': { outline: 'none' } } },
     MuiLink: { defaultProps: { underline: 'hover', color: 'inherit' } },
+    // MUI's idle outline is ~1.5:1 on white; darken it to ink at 70% to meet the 3:1 non-text contrast (WCAG 1.4.11). Hover, focus, error and disabled keep MUI's colors.
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: ({ theme }) => {
+          const borderColor = `rgb(${theme.vars?.palette.text.primaryChannel} / 0.7)`;
+
+          return {
+            '&:not(:hover, .Mui-disabled, .Mui-error, .Mui-focused) .MuiOutlinedInput-notchedOutline': {
+              borderColor,
+            },
+            // Touch browsers keep :hover on the last tapped field, where MUI falls back to its faint outline.
+            '@media (hover: none)': {
+              '&:not(.Mui-disabled, .Mui-error, .Mui-focused) .MuiOutlinedInput-notchedOutline': {
+                borderColor,
+              },
+            },
+          };
+        },
+      },
+    },
   },
 }));
