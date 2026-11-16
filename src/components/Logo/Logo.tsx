@@ -1,6 +1,6 @@
 import { Link, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router';
-import { paths } from '../../routes/paths.ts';
+import { PATHS } from '../../routes/paths.ts';
 import styles from './Logo.module.css';
 
 type Props = {
@@ -13,7 +13,7 @@ export const Logo = ({ onClick }: Props) => (
     className={styles.logo}
     component={RouterLink}
     onClick={onClick}
-    to={paths.home}
+    to={PATHS.home}
     underline='none'
   >
     <img

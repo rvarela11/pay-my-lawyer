@@ -1,8 +1,8 @@
-import { paths } from './paths.ts';
+import { PATHS } from './paths.ts';
 
-export const navItems = [
-  { label: 'Home', to: paths.home, end: true },
-  { label: 'Products', to: paths.products },
-  { label: 'About us', to: paths.aboutUs },
-  { label: 'Contact us', to: paths.contactUs },
+export const NAV_ITEMS = [
+  { label: 'Home', to: PATHS.home, end: true },
+  { label: 'Products', to: PATHS.products },
+  { label: 'About us', to: PATHS.aboutUs },
+  { label: 'Contact us', to: PATHS.contactUs },
 ];

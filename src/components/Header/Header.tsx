@@ -1,8 +1,8 @@
 import { AppBar, Button, Toolbar, useMediaQuery } from '@mui/material';
 import { useState } from 'react';
 import { NavLink } from 'react-router';
-import { navItems } from '../../routes/nav.ts';
-import { paths } from '../../routes/paths.ts';
+import { NAV_ITEMS } from '../../routes/nav.ts';
+import { PATHS } from '../../routes/paths.ts';
 import { Container } from '../Container/Container.tsx';
 import styles from './Header.module.css';
 import { Logo } from '../Logo/Logo.tsx';
@@ -29,7 +29,7 @@ export const Header = () => {
 
           <nav aria-label='Primary' className={styles.desktopNav}>
             <ul className={styles.navList}>
-              {navItems.map(({ label, to, end }) => (
+              {NAV_ITEMS.map(({ label, to, end }) => (
                 <li key={to}>
                   <Button
                     className={styles.navLink}
@@ -43,7 +43,7 @@ export const Header = () => {
                 </li>
               ))}
             </ul>
-            <Button component={NavLink} to={paths.signIn} variant='contained'>
+            <Button component={NavLink} to={PATHS.signIn} variant='contained'>
               Sign in
             </Button>
           </nav>

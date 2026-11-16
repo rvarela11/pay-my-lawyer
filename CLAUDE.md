@@ -15,10 +15,11 @@ No test runner. Verify changes with `npx tsc -b && npm run lint && npm run build
 - CI (GitHub Pages deploy) runs on Linux, which is case-sensitive. Keep file and folder casing consistent and use `git mv` for case-only renames.
 - The site is served under `/pay-my-lawyer/`. `base` in `vite.config.ts` sets it, and the router basename reads `import.meta.env.BASE_URL`. Build static asset URLs from `import.meta.env.BASE_URL` (or `%BASE_URL%` in `index.html`).
 - The build copies `index.html` to `404.html` as the SPA fallback, so real routes return HTTP 404 on GitHub Pages.
-- Path constants live in `src/routes/paths.ts`. `/sign-in` and `/create-account` have no routes yet.
+- Path constants live in `src/routes/paths.ts` (`PATHS`). `/sign-in` has no route yet.
 
 ## Components
 
+- Module-level constants that never change (fixed numbers and strings, data objects, `as const` maps) use `CONSTANT_CASE`: `PATHS`, `NAV_ITEMS`, `TRAVEL_MS`. Values built at runtime (`theme`, `router`) and anything inside a function stay camelCase. This follows the Google TypeScript Style Guide.
 - A props type that lives in the component's file and isn't exported is named `Props` (see `src/components/Section/Section.tsx`).
 - Name a function that handles an event `handle` + the event or action (`handleClose`, `handleSubmit`), and pass it to an `on`-prefixed prop (`onClose={handleClose}`). Callback props a component accepts keep the `on` prefix (`onClick`).
 

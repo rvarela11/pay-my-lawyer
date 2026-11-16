@@ -8,8 +8,8 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import { NavLink } from 'react-router';
-import { navItems } from '../../../routes/nav.ts';
-import { paths } from '../../../routes/paths.ts';
+import { NAV_ITEMS } from '../../../routes/nav.ts';
+import { PATHS } from '../../../routes/paths.ts';
 import { Container } from '../../Container/Container.tsx';
 import { Logo } from '../../Logo/Logo.tsx';
 import styles from './MobileMenu.module.css';
@@ -46,7 +46,7 @@ export const MobileMenu = ({ onClose, open }: Props) => {
         </Container>
         <Container>
           <List disablePadding>
-            {[...navItems, { label: 'Sign in', to: paths.signIn }].map(
+            {[...NAV_ITEMS, { label: 'Sign in', to: PATHS.signIn }].map(
               ({ label, to }) => (
                 <ListItemButton
                   className={styles.mobileLink}
