@@ -6,9 +6,17 @@
 npm run dev      # Vite dev server on localhost:3000
 npm run build    # tsc -b && vite build && cp dist/index.html dist/404.html
 npm run lint     # ESLint
+npm test         # Vitest (watch mode; `npm test -- --run` runs once)
 ```
 
-No test runner. Verify changes with `npx tsc -b && npm run lint && npm run build`.
+Verify changes with `npx tsc -b && npm run lint && npm test -- --run && npm run build`. CI runs the tests before the build.
+
+## Tests
+
+- Vitest + React Testing Library + user-event on jsdom. Test files sit beside the code they test (`CreateAccount.test.tsx` next to `CreateAccount.tsx`).
+- Test what the user sees and does: query by role or label, interact with `user-event`, and assert with jest-dom matchers (`toHaveFocus`, `toHaveAccessibleDescription`). Don't test implementation details.
+- Prefer page-level tests through the UI. Unit-test a schema or helper only when it has its own logic (conditional `.when()`, cross-field rules, custom `.test()`), not to re-test Yup or temporary JSON fakes.
+- Use the real router (`createMemoryRouter`) and the real JSON responses. For delays, use fake timers with `shouldAdvanceTime`.
 
 ## Gotchas
 
