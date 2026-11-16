@@ -17,23 +17,24 @@ Secure payment processing for law firms, and a simple way for clients to pay the
 
 ## Scripts
 
-| Command           | Description                     |
-| ----------------- | ------------------------------- |
-| `npm run dev`     | Start the dev server            |
-| `npm run build`   | Type-check and build to `dist/` |
-| `npm run lint`    | Run ESLint                      |
-| `npm run preview` | Preview the production build    |
+| Command           | Description                                                 |
+| ----------------- | ----------------------------------------------------------- |
+| `npm run dev`     | Start the dev server                                        |
+| `npm run build`   | Type-check and build to `dist/`                             |
+| `npm run lint`    | Run ESLint                                                  |
+| `npm test`        | Run the tests in watch mode (`npm test -- --run` runs once) |
+| `npm run preview` | Preview the production build                                |
 
 ## Deployment
 
-Pushes to `main` deploy to GitHub Pages through `.github/workflows/deploy.yml`.
+Every pull request runs lint, tests and the build (`.github/workflows/ci.yml`).
+Pushes to `main` run the tests and deploy to GitHub Pages (`.github/workflows/deploy.yml`).
 
-## Technologies
+## Stack
 
 - Vite
-- TypeScript
 - React
+- TypeScript
 - React Router
 - Material UI
-- CSS Modules
-- ESLint
+- See `package.json` for everything else
