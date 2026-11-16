@@ -12,6 +12,9 @@ import styles from './SignIn.module.css';
 import { submitSignIn } from './submitSignIn.ts';
 import { type SignInValues, signInSchema } from './validation.ts';
 
+const SERVER_ERROR_MESSAGE = 'We could not sign you in. Try again later.';
+const WRONG_CREDENTIALS_MESSAGE = 'Wrong email or password.';
+
 export const SignIn = () => {
   const alertRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
@@ -31,9 +34,6 @@ export const SignIn = () => {
   const serverError = errors.root?.serverError;
 
   const handleSignIn = async (values: SignInValues) => {
-    const SERVER_ERROR_MESSAGE = 'We could not sign you in. Try again later.';
-    const WRONG_CREDENTIALS_MESSAGE = 'Wrong email or password.';
-
     try {
       const { status, subdomain } = await submitSignIn(values);
 

@@ -16,6 +16,9 @@ import {
   PASSWORD_MIN_LENGTH,
 } from './validation.ts';
 
+const SERVER_ERROR_MESSAGE =
+  'We could not create your account. Try again later.';
+
 export const CreateAccount = () => {
   const alertRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
@@ -35,9 +38,6 @@ export const CreateAccount = () => {
   const serverError = errors.root?.serverError;
 
   const handleCreateAccount = async (values: CreateAccountValues) => {
-    const SERVER_ERROR_MESSAGE =
-      'We could not create your account. Try again later.';
-
     try {
       const { status } = await submitCreateAccount(values);
 
