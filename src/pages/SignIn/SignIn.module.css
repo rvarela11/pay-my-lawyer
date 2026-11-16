@@ -1,0 +1,28 @@
+.column {
+  margin-inline: auto;
+  max-width: 28rem;
+  min-width: 0;
+}
+
+.alert {
+  margin-top: calc(var(--mui-spacing) * 3);
+}
+
+.form {
+  display: grid;
+  gap: calc(var(--mui-spacing) * 3);
+  margin-top: calc(var(--mui-spacing) * 4);
+}
+
+.alert + .form {
+  margin-top: calc(var(--mui-spacing) * 3);
+}
+
+.forgotPassword {
+  justify-self: end;
+  margin-top: calc(var(--mui-spacing) * -2);
+}
+
+.subtitle {
+  margin-top: calc(var(--mui-spacing) * 1);
+}

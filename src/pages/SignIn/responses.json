@@ -1,0 +1,8 @@
+{
+  "domain": { "body": "demo-law", "status": 200 },
+  "login": {
+    "serverError": { "body": "Internal error", "status": 500 },
+    "success": { "body": "OK", "status": 200 },
+    "wrong": { "body": "Wrong email or password, please verify your credentials", "status": 401 }
+  }
+}

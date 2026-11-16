@@ -8,6 +8,8 @@ import { ErrorPage } from '../pages/ErrorPage.tsx';
 import { Home } from '../pages/Home/Home.tsx';
 import { NotFound } from '../pages/NotFound.tsx';
 import { Products } from '../pages/Products.tsx';
+import { SignIn } from '../pages/SignIn/SignIn.tsx';
+import { SignInVerify } from '../pages/SignInVerify/SignInVerify.tsx';
 import { PATHS } from './paths.ts';
 
 export const router = createBrowserRouter(
@@ -23,6 +25,8 @@ export const router = createBrowserRouter(
         { path: PATHS.contactUs, element: <Contact /> },
         { path: PATHS.createAccount, element: <CreateAccount /> },
         { path: PATHS.createAccountSetup, element: <CreateAccountSetup /> },
+        { path: PATHS.signIn, element: <SignIn /> },
+        { path: PATHS.signInVerify, element: <SignInVerify /> },
         { path: '*', element: <NotFound /> },
       ],
     },
