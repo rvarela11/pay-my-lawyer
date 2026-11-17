@@ -4,8 +4,21 @@ import { act } from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { PATHS } from '../../routes/paths.ts';
-import { DELAY_MS } from './data/getSetupProgress.ts';
+import {
+  DELAY_MS,
+  getSetupProgress,
+  type SetupProgress,
+} from './data/getSetupProgress.ts';
+import responses from './data/responses.json';
 import { CREATE_ACCOUNT_SETUP_ROUTE } from './createAccountSetupRoute.tsx';
+
+// The real progress source by default; a test can override one call to resume a saved draft.
+vi.mock('./data/getSetupProgress.ts', async (importOriginal) => {
+  const actual =
+    await importOriginal<typeof import('./data/getSetupProgress.ts')>();
+
+  return { ...actual, getSetupProgress: vi.fn(actual.getSetupProgress) };
+});
 
 const PROVIDER_HEADING = 'How would you like to get paid?';
 
@@ -45,6 +58,7 @@ describe('CreateAccountSetup', () => {
   });
 
   afterEach(() => {
+    vi.clearAllMocks();
     vi.useRealTimers();
   });
 
@@ -199,6 +213,7 @@ describe('CreateAccountSetup', () => {
 
     expect(await heading(PROVIDER_HEADING)).toBeInTheDocument();
   });
+
   describe('step indicator', () => {
     const STEP_TEXT = /^Step \d of \d/;
 
@@ -258,6 +273,7 @@ describe('CreateAccountSetup', () => {
       ).toBeTruthy();
     });
   });
+
   describe('progress', () => {
     const KEY = 'pml.setupProgress';
 
@@ -300,6 +316,30 @@ describe('CreateAccountSetup', () => {
       expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
         'Agreement',
       );
+    });
+
+    it('opens a saved draft at its screen with its answers filled in', async () => {
+      vi.mocked(getSetupProgress).mockResolvedValueOnce(
+        responses.draft as SetupProgress,
+      );
+      const { user } = await renderWizard();
+
+      expect(await heading('Review & submit')).toBeInTheDocument();
+
+      await clickBack(user);
+      await heading('Business details');
+
+      expect(screen.getByLabelText('Legal business name')).toHaveValue(
+        'Demo Law PLLC',
+      );
+
+      await clickBack(user);
+
+      expect(
+        await screen.findByRole('alertdialog', {
+          name: 'Change payment method?',
+        }),
+      ).toBeInTheDocument();
     });
 
     it('redirects a screen past the furthest one reached', async () => {
@@ -382,6 +422,7 @@ describe('CreateAccountSetup', () => {
       });
     });
   });
+
   describe('start over', () => {
     const toBusinessWithAnswer = async () => {
       const wizard = await renderWizard();
