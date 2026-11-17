@@ -1,8 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, CircularProgress, Typography } from '@mui/material';
 import {
-  type FormEvent,
   type MouseEvent,
+  type SubmitEvent,
   useLayoutEffect,
   useRef,
 } from 'react';
@@ -58,7 +58,7 @@ export const CreateAccountSetup = () => {
     }
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     void goNext();
   };
