@@ -4,13 +4,13 @@ import { act } from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { PATHS } from '../../routes/paths.ts';
+import { CREATE_ACCOUNT_SETUP_ROUTE } from './createAccountSetupRoute.tsx';
 import {
   DELAY_MS,
   getSetupProgress,
   type SetupProgress,
 } from './data/getSetupProgress.ts';
 import responses from './data/responses.json';
-import { CREATE_ACCOUNT_SETUP_ROUTE } from './createAccountSetupRoute.tsx';
 
 // The real progress source by default; a test can override one call to resume a saved draft.
 vi.mock('./data/getSetupProgress.ts', async (importOriginal) => {

@@ -10,19 +10,13 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { Navigate, Outlet, useLocation } from 'react-router';
 import { Container } from '../../components/Container/Container.tsx';
 import { Section } from '../../components/Section/Section.tsx';
+import { StartOverDialog } from './components/StartOverDialog/StartOverDialog.tsx';
+import { StepIndicator } from './components/StepIndicator/StepIndicator.tsx';
 import styles from './CreateAccountSetup.module.css';
 import { useSetupProgress } from './hooks/useSetupProgress.ts';
 import { useWizardNavigation } from './hooks/useWizardNavigation.ts';
-import { TITLE_ID } from './ids.ts';
-import { StartOverDialog } from './components/StartOverDialog/StartOverDialog.tsx';
-import { StepIndicator } from './components/StepIndicator/StepIndicator.tsx';
-import {
-  getScreenByPath,
-  getStagePosition,
-  SCREENS,
-  type ScreenId,
-  STAGES,
-} from './steps.ts';
+import { SCREEN_IDS, type ScreenId, TITLE_ID } from './ids.ts';
+import { getScreenByPath, getStagePosition, SCREENS, STAGES } from './steps.ts';
 import { type SetupValues, setupSchema } from './validation.ts';
 
 export const CreateAccountSetup = () => {
@@ -125,12 +119,12 @@ export const CreateAccountSetup = () => {
             <form className={styles.form} noValidate onSubmit={handleSubmit}>
               <Outlet />
               <div className={styles.actions}>
-                {screen !== 'provider' && (
+                {screen !== SCREEN_IDS.provider && (
                   <Button onClick={goBack} size='large' variant='outlined'>
                     Back
                   </Button>
                 )}
-                {screen !== 'portal' && (
+                {screen !== SCREEN_IDS.portal && (
                   <Button
                     className={styles.next}
                     onClick={handleNextClick}

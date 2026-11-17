@@ -1,7 +1,7 @@
 import type { RouteObject } from 'react-router';
 import { PATHS } from '../../routes/paths.ts';
-import { BusinessScreen } from './screens/BusinessScreen/BusinessScreen.tsx';
 import { CreateAccountSetup } from './CreateAccountSetup.tsx';
+import { BusinessScreen } from './screens/BusinessScreen/BusinessScreen.tsx';
 import { PlaceholderScreen } from './screens/PlaceholderScreen/PlaceholderScreen.tsx';
 import { ProviderScreen } from './screens/ProviderScreen/ProviderScreen.tsx';
 import { SCREENS } from './steps.ts';

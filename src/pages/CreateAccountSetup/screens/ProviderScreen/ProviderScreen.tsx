@@ -8,9 +8,17 @@ import {
 } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
 import { FIELDS } from '../../fields.ts';
-import { TITLE_ID } from '../../ids.ts';
+import { PROVIDER_IDS, TITLE_ID } from '../../ids.ts';
 import type { SetupValues } from '../../validation.ts';
 import styles from './ProviderScreen.module.css';
+
+const ERROR_ID = 'provider-error';
+
+const LATER = {
+  label: 'Set up payments later',
+  needs: 'Create your portal now and add payments later.',
+  value: PROVIDER_IDS.later,
+} as const;
 
 // "accepts" and "needs" answer the same two questions for each provider, so they're easy to compare.
 // Usio's "No ID documents needed" depends on #21's decision; update it if Usio applicants need IDs.
@@ -19,24 +27,16 @@ const PROVIDER_OPTIONS = [
     accepts: 'Cards and ACH',
     label: 'Usio',
     needs: 'Short application. No ID documents needed.',
-    value: 'usio',
+    value: PROVIDER_IDS.usio,
   },
   {
     accepts: 'Bank transfers',
     label: 'Dwolla',
     needs:
       'Needs ownership details, an ID for each owner and a linked bank account.',
-    value: 'dwolla',
+    value: PROVIDER_IDS.dwolla,
   },
 ] as const;
-
-const LATER = {
-  label: 'Set up payments later',
-  needs: 'Create your portal now and add payments later.',
-  value: 'later',
-} as const;
-
-const ERROR_ID = 'provider-error';
 
 export const ProviderScreen = () => {
   const { control } = useFormContext<SetupValues>();

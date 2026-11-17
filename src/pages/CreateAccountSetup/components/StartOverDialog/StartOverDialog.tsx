@@ -14,8 +14,8 @@ type Props = {
   open: boolean;
 };
 
-const TITLE_ID = 'start-over-title';
 const TEXT_ID = 'start-over-text';
+const TITLE_ID = 'start-over-title';
 
 export const StartOverDialog = ({ onCancel, onConfirm, open }: Props) => (
   <Dialog

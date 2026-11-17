@@ -2,12 +2,8 @@ import { useState } from 'react';
 import type { UseFormReturn } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { FIELDS } from '../fields.ts';
-import {
-  getScreenOrder,
-  isProvider,
-  SCREENS,
-  type ScreenId,
-} from '../steps.ts';
+import { SCREEN_IDS, type ScreenId } from '../ids.ts';
+import { getScreenOrder, isProvider, SCREENS } from '../steps.ts';
 import { type SetupValues, setupSchema } from '../validation.ts';
 import type { useSetupProgress } from './useSetupProgress.ts';
 
@@ -25,7 +21,7 @@ export const useWizardNavigation = ({ form, progress, screen }: Options) => {
 
   const order = provider ? getScreenOrder(provider) : [];
   const isReachable =
-    screen === 'provider' ||
+    screen === SCREEN_IDS.provider ||
     (screen !== null &&
       order.includes(screen) &&
       order.indexOf(screen) <= order.indexOf(furthest));
@@ -47,7 +43,7 @@ export const useWizardNavigation = ({ form, progress, screen }: Options) => {
     let nextProvider = provider;
     let nextFurthest = furthest;
 
-    if (screen === 'provider') {
+    if (screen === SCREEN_IDS.provider) {
       const chosen = form.getValues(FIELDS.provider);
 
       if (!isProvider(chosen)) {
@@ -66,7 +62,7 @@ export const useWizardNavigation = ({ form, progress, screen }: Options) => {
 
     const nextOrder = getScreenOrder(nextProvider);
     const next =
-      screen === 'provider'
+      screen === SCREEN_IDS.provider
         ? nextOrder[0]
         : nextOrder[nextOrder.indexOf(screen) + 1];
 
@@ -94,14 +90,14 @@ export const useWizardNavigation = ({ form, progress, screen }: Options) => {
   };
 
   const goBack = () => {
-    if (!screen || screen === 'provider' || !provider) {
+    if (!screen || screen === SCREEN_IDS.provider || !provider) {
       return;
     }
 
     const index = order.indexOf(screen);
-    const previous = index > 0 ? order[index - 1] : 'provider';
+    const previous = index > 0 ? order[index - 1] : SCREEN_IDS.provider;
 
-    if (previous === 'provider' && hasAnswers()) {
+    if (previous === SCREEN_IDS.provider && hasAnswers()) {
       setIsStartOverOpen(true);
       return;
     }

@@ -10,14 +10,8 @@ import {
   readLocalProgress,
   writeLocalProgress,
 } from '../data/localProgress.ts';
-import {
-  getScreenOrder,
-  isProvider,
-  isScreenId,
-  type Provider,
-  SCREENS,
-  type ScreenId,
-} from '../steps.ts';
+import { type Provider, SCREEN_IDS, type ScreenId } from '../ids.ts';
+import { getScreenOrder, isProvider, isScreenId, SCREENS } from '../steps.ts';
 import { type SetupValues, setupSchema } from '../validation.ts';
 
 // The local record keeps only how far someone got, not their answers. Without a backend draft,
@@ -47,7 +41,7 @@ const getFirstIncomplete = (
 // Loads it once (a backend draft wins over the browser record) and keeps the browser record in sync.
 export const useSetupProgress = (reset: UseFormReset<SetupValues>) => {
   const [provider, setProvider] = useState<Provider | null>(null);
-  const [furthest, setFurthest] = useState<ScreenId>('provider');
+  const [furthest, setFurthest] = useState<ScreenId>(SCREEN_IDS.provider);
   const [isLoaded, setIsLoaded] = useState(false);
 
   const saveProgress = (progress: LocalProgress) => {
@@ -58,7 +52,7 @@ export const useSetupProgress = (reset: UseFormReset<SetupValues>) => {
 
   const clearProgress = () => {
     setProvider(null);
-    setFurthest('provider');
+    setFurthest(SCREEN_IDS.provider);
     clearLocalProgress();
   };
 
@@ -101,7 +95,7 @@ export const useSetupProgress = (reset: UseFormReset<SetupValues>) => {
       ) {
         reset({ ...setupSchema.getDefault(), provider: progress.provider });
         setProvider(progress.provider);
-        setFurthest('portal');
+        setFurthest(SCREEN_IDS.portal);
       } else {
         const local = readLocalProgress();
 
