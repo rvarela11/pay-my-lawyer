@@ -1,6 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, CircularProgress, Typography } from '@mui/material';
-import { type FormEvent, type MouseEvent, useEffect, useRef } from 'react';
+import {
+  type FormEvent,
+  type MouseEvent,
+  useLayoutEffect,
+  useRef,
+} from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Navigate, Outlet, useLocation } from 'react-router';
 import { Container } from '../../components/Container/Container.tsx';
@@ -60,7 +65,9 @@ export const CreateAccountSetup = () => {
 
   // Move focus to the new heading on every screen change, but not on the first screen shown,
   // so screen readers announce where the user is now (WCAG 2.4.3).
-  useEffect(() => {
+  // A layout effect, so focus moves before anything can interact with the new screen; a late
+  // passive effect could steal focus from a field the user had already clicked.
+  useLayoutEffect(() => {
     if (!screen || !isShowing) {
       return;
     }
