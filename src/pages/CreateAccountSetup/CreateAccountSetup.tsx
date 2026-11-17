@@ -1,15 +1,148 @@
-import { Typography } from '@mui/material';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Button, CircularProgress, Typography } from '@mui/material';
+import { type FormEvent, type MouseEvent, useEffect, useRef } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { Navigate, Outlet, useLocation } from 'react-router';
 import { Container } from '../../components/Container/Container.tsx';
 import { Section } from '../../components/Section/Section.tsx';
+import styles from './CreateAccountSetup.module.css';
+import { useSetupProgress } from './hooks/useSetupProgress.ts';
+import { useWizardNavigation } from './hooks/useWizardNavigation.ts';
+import { TITLE_ID } from './ids.ts';
+import { StartOverDialog } from './components/StartOverDialog/StartOverDialog.tsx';
+import { StepIndicator } from './components/StepIndicator/StepIndicator.tsx';
+import {
+  getScreenByPath,
+  getStagePosition,
+  SCREENS,
+  type ScreenId,
+  STAGES,
+} from './steps.ts';
+import { type SetupValues, setupSchema } from './validation.ts';
 
 export const CreateAccountSetup = () => {
+  const { pathname } = useLocation();
+  const screen = getScreenByPath(pathname);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const shownScreen = useRef<ScreenId | null>(null);
+
+  const form = useForm<SetupValues>({
+    defaultValues: setupSchema.getDefault(),
+    mode: 'onTouched',
+    resolver: yupResolver(setupSchema),
+    reValidateMode: 'onChange',
+  });
+  const progress = useSetupProgress(form.reset);
+  const { furthest, isLoaded, provider } = progress;
+  const {
+    goBack,
+    goNext,
+    handleStartOver,
+    handleStartOverCancel,
+    isReachable,
+    isStartOverOpen,
+  } = useWizardNavigation({ form, progress, screen });
+
+  const isShowing = isLoaded && isReachable;
+  const position = screen ? getStagePosition(provider, screen) : null;
+
+  // The second click of a double-click (detail 2) would skip the screen that just opened.
+  const handleNextClick = (event: MouseEvent<HTMLButtonElement>) => {
+    if (event.detail > 1) {
+      event.preventDefault();
+    }
+  };
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    void goNext();
+  };
+
+  // Move focus to the new heading on every screen change, but not on the first screen shown,
+  // so screen readers announce where the user is now (WCAG 2.4.3).
+  useEffect(() => {
+    if (!screen || !isShowing) {
+      return;
+    }
+
+    if (shownScreen.current && shownScreen.current !== screen) {
+      titleRef.current?.focus();
+    }
+
+    shownScreen.current = screen;
+  }, [isShowing, screen]);
+
+  if (!isLoaded) {
+    return (
+      <Section>
+        <Container>
+          <div className={styles.loading}>
+            <CircularProgress aria-label='Loading your setup' />
+          </div>
+        </Container>
+      </Section>
+    );
+  }
+
+  if (!screen || !isReachable) {
+    return <Navigate replace to={SCREENS[furthest].path} />;
+  }
+
   return (
-    <Section aria-labelledby='create-account-setup-title'>
+    <Section aria-labelledby={TITLE_ID}>
       <Container>
-        <Typography component='h1' id='create-account-setup-title' variant='h4'>
-          Account setup
-        </Typography>
-        <Typography component='p'>Account setup is coming next.</Typography>
+        <div className={styles.column}>
+          <FormProvider {...form}>
+            {provider && position && (
+              <StepIndicator
+                labels={STAGES[provider].map((stage) => stage.label)}
+                number={position.number}
+                total={position.total}
+              />
+            )}
+            <Typography
+              className={styles.title}
+              component='h1'
+              id={TITLE_ID}
+              ref={titleRef}
+              tabIndex={-1}
+              variant='h4'
+            >
+              {SCREENS[screen].title}
+            </Typography>
+            {provider && position && (
+              <Typography className={styles.step} component='p' variant='body2'>
+                Step {position.number} of {position.total}: {position.label}
+              </Typography>
+            )}
+            <form className={styles.form} noValidate onSubmit={handleSubmit}>
+              <Outlet />
+              <div className={styles.actions}>
+                {screen !== 'provider' && (
+                  <Button onClick={goBack} size='large' variant='outlined'>
+                    Back
+                  </Button>
+                )}
+                {screen !== 'portal' && (
+                  <Button
+                    className={styles.next}
+                    onClick={handleNextClick}
+                    size='large'
+                    type='submit'
+                    variant='contained'
+                  >
+                    Next
+                  </Button>
+                )}
+              </div>
+            </form>
+            <StartOverDialog
+              onCancel={handleStartOverCancel}
+              onConfirm={handleStartOver}
+              open={isStartOverOpen}
+            />
+          </FormProvider>
+        </div>
       </Container>
     </Section>
   );

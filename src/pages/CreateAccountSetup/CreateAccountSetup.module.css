@@ -1,0 +1,34 @@
+.column {
+  margin-inline: auto;
+  max-width: 40rem;
+  min-width: 0;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+}
+
+.title:focus {
+  outline: none;
+}
+
+.step {
+  color: var(--mui-palette-text-secondary);
+  margin-top: calc(var(--mui-spacing) * 1);
+}
+
+.form {
+  display: grid;
+  gap: calc(var(--mui-spacing) * 4);
+  margin-top: calc(var(--mui-spacing) * 4);
+}
+
+.actions {
+  display: flex;
+  gap: calc(var(--mui-spacing) * 2);
+}
+
+.next {
+  margin-inline-start: auto;
+}

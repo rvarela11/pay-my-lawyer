@@ -3,7 +3,7 @@ import { App } from '../App.tsx';
 import { About } from '../pages/About.tsx';
 import { Contact } from '../pages/Contact.tsx';
 import { CreateAccount } from '../pages/CreateAccount/CreateAccount.tsx';
-import { CreateAccountSetup } from '../pages/CreateAccountSetup/CreateAccountSetup.tsx';
+import { CREATE_ACCOUNT_SETUP_ROUTE } from '../pages/CreateAccountSetup/createAccountSetupRoute.tsx';
 import { ErrorPage } from '../pages/ErrorPage.tsx';
 import { Home } from '../pages/Home/Home.tsx';
 import { NotFound } from '../pages/NotFound.tsx';
@@ -24,7 +24,7 @@ export const router = createBrowserRouter(
         { path: PATHS.aboutUs, element: <About /> },
         { path: PATHS.contactUs, element: <Contact /> },
         { path: PATHS.createAccount, element: <CreateAccount /> },
-        { path: PATHS.createAccountSetup, element: <CreateAccountSetup /> },
+        CREATE_ACCOUNT_SETUP_ROUTE,
         { path: PATHS.signIn, element: <SignIn /> },
         { path: PATHS.signInVerify, element: <SignInVerify /> },
         { path: '*', element: <NotFound /> },

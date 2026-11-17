@@ -29,6 +29,8 @@ Verify changes with `npx tsc -b && npm run lint && npm test -- --run && npm run 
 
 - Module-level constants that never change (fixed numbers and strings, data objects, `as const` maps) use `CONSTANT_CASE`: `PATHS`, `NAV_ITEMS`, `TRAVEL_MS`. Values built at runtime (`theme`, `router`) and anything inside a function stay camelCase. This follows the Google TypeScript Style Guide.
 - A props type that lives in the component's file and isn't exported is named `Props` (see `src/components/Section/Section.tsx`).
+- Keep components focused on rendering. Move stateful logic (data loading, persistence, multi-step navigation, anything with its own state and effects) into custom hooks in a `hooks/` folder beside the component (`src/pages/CreateAccountSetup/hooks/useSetupProgress.ts`). DOM event handlers (`handleSubmit`, `handleClick`) stay in the component. Don't use container components.
+- Order a component body: hooks and state, then derived values, then handlers, then `useEffect`s, then early returns (loading states, `<Navigate>` redirects) directly above the main `return`. Nothing goes between the early returns and the main `return`.
 - Name a function that handles an event `handle` + the event or action (`handleClose`, `handleSubmit`), and pass it to an `on`-prefixed prop (`onClose={handleClose}`). Callback props a component accepts keep the `on` prefix (`onClick`).
 
 ## Styling
@@ -42,6 +44,7 @@ Verify changes with `npx tsc -b && npm run lint && npm test -- --run && npm run 
 - Declarations in alphabetical order; literal breakpoints at 600, 900 and 1200px.
 - Meet WCAG 2.1 AA, stay responsive down to 320px, and respect `prefers-reduced-motion`.
 - A page-specific component gets its own folder under the page (`src/pages/Home/PaymentDemo/`).
+- When a page grows, group its files by role: `screens/` (one per route), `components/`, `hooks/` and `data/` (JSON files and fetch/storage boundaries). Config files (`fields.ts`, `validation.ts`) stay at the page root (see `src/pages/CreateAccountSetup/`).
 - Data sits in a file beside the page or component that uses it (`products.ts`, `PaymentDemo/demo.ts`).
 
 ## SEO
