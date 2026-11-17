@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { PATHS } from '../../routes/paths.ts';
-import { CreateAccountSetup } from '../CreateAccountSetup/CreateAccountSetup.tsx';
+import { CREATE_ACCOUNT_SETUP_ROUTE } from '../CreateAccountSetup/createAccountSetupRoute.tsx';
 import { CreateAccount } from './CreateAccount.tsx';
 import { DELAY_MS } from './submitCreateAccount.ts';
 
@@ -11,7 +11,7 @@ const renderPage = () => {
   const router = createMemoryRouter(
     [
       { element: <CreateAccount />, path: PATHS.createAccount },
-      { element: <CreateAccountSetup />, path: PATHS.createAccountSetup },
+      CREATE_ACCOUNT_SETUP_ROUTE,
     ],
     { initialEntries: [PATHS.createAccount] },
   );
@@ -177,7 +177,9 @@ describe('CreateAccount', () => {
     await vi.advanceTimersByTimeAsync(DELAY_MS);
 
     expect(
-      await screen.findByRole('heading', { name: 'Account setup' }),
+      await screen.findByRole('heading', {
+        name: 'How would you like to get paid?',
+      }),
     ).toBeInTheDocument();
   });
 });

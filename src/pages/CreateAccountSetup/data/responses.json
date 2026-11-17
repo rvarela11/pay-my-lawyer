@@ -1,0 +1,10 @@
+{
+  "draft": {
+    "furthest": "review",
+    "provider": "usio",
+    "status": "draft",
+    "values": { "legalBusinessName": "Demo Law PLLC" }
+  },
+  "none": { "status": "none" },
+  "submitted": { "provider": "usio", "status": "submitted" }
+}

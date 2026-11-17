@@ -1,0 +1,62 @@
+.screen {
+  display: grid;
+  gap: calc(var(--mui-spacing) * 3);
+  margin-top: calc(var(--mui-spacing) * -2);
+}
+
+.groupError {
+  border-inline-start: 4px solid var(--mui-palette-error-main);
+  padding-inline-start: calc(var(--mui-spacing) * 2);
+}
+
+.error {
+  align-items: center;
+  color: var(--mui-palette-error-main);
+  display: flex;
+  gap: calc(var(--mui-spacing) * 1);
+  margin-bottom: calc(var(--mui-spacing) * 2);
+}
+
+.options {
+  display: grid;
+  gap: calc(var(--mui-spacing) * 2);
+}
+
+/* The whole row is the radio's label, so clicking anywhere selects it. */
+.option {
+  align-items: flex-start;
+  border: 1px solid rgb(var(--mui-palette-text-primaryChannel) / 0.7);
+  border-radius: var(--mui-shape-borderRadius);
+  margin: 0;
+  padding: calc(var(--mui-spacing) * 2) calc(var(--mui-spacing) * 2)
+    calc(var(--mui-spacing) * 2) calc(var(--mui-spacing) * 1);
+}
+
+.option:has(input:checked) {
+  background-color: var(--mui-palette-brand-cream);
+  border-color: var(--mui-palette-primary-main);
+  box-shadow: inset 0 0 0 1px var(--mui-palette-primary-main);
+}
+
+.option:has(input:focus-visible),
+.later:has(input:focus-visible) {
+  outline: 2px solid var(--mui-palette-primary-main);
+  outline-offset: 2px;
+}
+
+.later {
+  align-items: flex-start;
+  border-radius: var(--mui-shape-borderRadius);
+  margin: calc(var(--mui-spacing) * 1) 0 0;
+  padding-inline-end: calc(var(--mui-spacing) * 2);
+}
+
+.text {
+  display: grid;
+  gap: calc(var(--mui-spacing) * 0.5);
+  padding-top: calc(var(--mui-spacing) * 1);
+}
+
+.intro {
+  margin: 0;
+}
