@@ -4,11 +4,6 @@
   min-width: 0;
 }
 
-.loading {
-  display: flex;
-  justify-content: center;
-}
-
 .title:focus {
   outline: none;
 }

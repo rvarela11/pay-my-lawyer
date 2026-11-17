@@ -1,35 +1,20 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { PATHS } from '../../routes/paths.ts';
 import { CREATE_ACCOUNT_SETUP_ROUTE } from './createAccountSetupRoute.tsx';
-import {
-  DELAY_MS,
-  getSetupProgress,
-  type SetupProgress,
-} from './data/getSetupProgress.ts';
-import responses from './data/responses.json';
-
-// The real progress source by default; a test can override one call to resume a saved draft.
-vi.mock('./data/getSetupProgress.ts', async (importOriginal) => {
-  const actual =
-    await importOriginal<typeof import('./data/getSetupProgress.ts')>();
-
-  return { ...actual, getSetupProgress: vi.fn(actual.getSetupProgress) };
-});
 
 const PROVIDER_HEADING = 'How would you like to get paid?';
 
-const renderWizard = async (initialPath: string = PATHS.createAccountSetup) => {
+const renderWizard = (initialPath: string = PATHS.createAccountSetup) => {
   const router = createMemoryRouter([CREATE_ACCOUNT_SETUP_ROUTE], {
     initialEntries: [initialPath],
   });
   const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
 
   render(<RouterProvider router={router} />);
-  await vi.advanceTimersByTimeAsync(DELAY_MS);
 
   return { router, user };
 };
@@ -54,22 +39,20 @@ const chooseProvider = async (
 describe('CreateAccountSetup', () => {
   beforeEach(() => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
-    localStorage.clear();
   });
 
   afterEach(() => {
-    vi.clearAllMocks();
     vi.useRealTimers();
   });
 
   it('opens on the provider choice without moving focus', async () => {
-    await renderWizard();
+    renderWizard();
 
     expect(await heading(PROVIDER_HEADING)).not.toHaveFocus();
   });
 
   it('describes what each payment option involves', async () => {
-    await renderWizard();
+    renderWizard();
     await heading(PROVIDER_HEADING);
 
     expect(
@@ -95,7 +78,7 @@ describe('CreateAccountSetup', () => {
   });
 
   it('requires a provider choice', async () => {
-    const { user } = await renderWizard();
+    const { user } = renderWizard();
 
     await heading(PROVIDER_HEADING);
     await clickNext(user);
@@ -115,7 +98,7 @@ describe('CreateAccountSetup', () => {
   });
 
   it('goes to Business details with focus on its heading', async () => {
-    const { user } = await renderWizard();
+    const { user } = renderWizard();
 
     await chooseProvider(user, 'Usio');
 
@@ -125,7 +108,7 @@ describe('CreateAccountSetup', () => {
   });
 
   it('blocks Next on an empty required field and focuses it', async () => {
-    const { user } = await renderWizard();
+    const { user } = renderWizard();
 
     await chooseProvider(user, 'Usio');
     await heading('Business details');
@@ -140,7 +123,7 @@ describe('CreateAccountSetup', () => {
   });
 
   it('keeps values after Next and Back', async () => {
-    const { user } = await renderWizard();
+    const { user } = renderWizard();
 
     await chooseProvider(user, 'Usio');
     await heading('Business details');
@@ -159,7 +142,7 @@ describe('CreateAccountSetup', () => {
   });
 
   it('keeps values after the browser Back button', async () => {
-    const { router, user } = await renderWizard();
+    const { router, user } = renderWizard();
 
     await chooseProvider(user, 'Usio');
     await heading('Business details');
@@ -178,7 +161,7 @@ describe('CreateAccountSetup', () => {
   });
 
   it('walks every Dwolla screen in order', async () => {
-    const { user } = await renderWizard();
+    const { user } = renderWizard();
 
     await chooseProvider(user, 'Dwolla');
     await heading('Business details');
@@ -205,7 +188,7 @@ describe('CreateAccountSetup', () => {
   });
 
   it('sends Configure later straight to Portal and back', async () => {
-    const { user } = await renderWizard();
+    const { user } = renderWizard();
 
     await chooseProvider(user, 'Set up payments later');
     await heading('Portal');
@@ -242,7 +225,7 @@ describe('CreateAccountSetup', () => {
     };
 
     it('is hidden on the provider choice and on Configure later', async () => {
-      const { user } = await renderWizard();
+      const { user } = renderWizard();
 
       await heading(PROVIDER_HEADING);
       expect(screen.queryByText(STEP_TEXT)).not.toBeInTheDocument();
@@ -259,7 +242,7 @@ describe('CreateAccountSetup', () => {
       ['Dwolla', 'ID documents', 'Step 2 of 5: Ownership & ID'],
       ['Dwolla', 'Portal', 'Step 5 of 5: Portal'],
     ])('%s on %s shows "%s"', async (provider, target, text) => {
-      const { user } = await renderWizard();
+      const { user } = renderWizard();
 
       await walkTo(user, provider, target);
 
@@ -274,32 +257,50 @@ describe('CreateAccountSetup', () => {
     });
   });
 
-  describe('progress', () => {
-    const KEY = 'pml.setupProgress';
+  describe('navigation guard', () => {
+    it.each([PATHS.setupBusiness, PATHS.setupReview])(
+      'opens %s on the provider choice',
+      async (path) => {
+        renderWizard(path);
 
-    const saveProgress = (value: unknown) =>
-      localStorage.setItem(KEY, JSON.stringify(value));
+        expect(await heading(PROVIDER_HEADING)).toBeInTheDocument();
+      },
+    );
 
-    it('resumes at the first screen whose answers are missing', async () => {
-      saveProgress({ furthest: 'review', provider: 'usio' });
-      await renderWizard();
+    it('starts at the provider choice again on a later visit', async () => {
+      const { user } = renderWizard();
+
+      await chooseProvider(user, 'Usio');
+      await heading('Business details');
+      cleanup();
+      renderWizard();
+
+      expect(await heading(PROVIDER_HEADING)).toBeInTheDocument();
+      expect(screen.getByRole('radio', { name: 'Usio' })).not.toBeChecked();
+    });
+
+    it('redirects a screen past the furthest one reached', async () => {
+      const { router, user } = renderWizard();
+
+      await chooseProvider(user, 'Usio');
+      await heading('Business details');
+      await act(() => router.navigate(PATHS.setupReview));
 
       expect(await heading('Business details')).toBeInTheDocument();
     });
 
-    it('restores the provider choice from the local record', async () => {
-      saveProgress({ furthest: 'business', provider: 'usio' });
-      const { user } = await renderWizard();
+    it('redirects a screen that is not on the chosen path', async () => {
+      const { router, user } = renderWizard();
 
+      await chooseProvider(user, 'Usio');
       await heading('Business details');
-      await clickBack(user);
-      await heading(PROVIDER_HEADING);
+      await act(() => router.navigate(PATHS.setupBankAccount));
 
-      expect(screen.getByRole('radio', { name: 'Usio' })).toBeChecked();
+      expect(await heading('Business details')).toBeInTheDocument();
     });
 
     it('moves one screen per double-click on Next', async () => {
-      const { user } = await renderWizard();
+      const { user } = renderWizard();
 
       await chooseProvider(user, 'Usio');
       await heading('Business details');
@@ -318,87 +319,8 @@ describe('CreateAccountSetup', () => {
       );
     });
 
-    it('opens a saved draft at its screen with its answers filled in', async () => {
-      vi.mocked(getSetupProgress).mockResolvedValueOnce(
-        responses.draft as SetupProgress,
-      );
-      const { user } = await renderWizard();
-
-      expect(await heading('Review & submit')).toBeInTheDocument();
-
-      await clickBack(user);
-      await heading('Business details');
-
-      expect(screen.getByLabelText('Legal business name')).toHaveValue(
-        'Demo Law PLLC',
-      );
-
-      await clickBack(user);
-
-      expect(
-        await screen.findByRole('alertdialog', {
-          name: 'Change payment method?',
-        }),
-      ).toBeInTheDocument();
-    });
-
-    it('redirects a screen past the furthest one reached', async () => {
-      saveProgress({ furthest: 'business', provider: 'usio' });
-      await renderWizard(PATHS.setupReview);
-
-      expect(await heading('Business details')).toBeInTheDocument();
-    });
-
-    it('redirects a screen that is not on the chosen path', async () => {
-      saveProgress({ furthest: 'business', provider: 'usio' });
-      await renderWizard(PATHS.setupBankAccount);
-
-      expect(await heading('Business details')).toBeInTheDocument();
-    });
-
-    it('sends a later screen to the provider choice when nothing is saved', async () => {
-      await renderWizard(PATHS.setupBusiness);
-
-      expect(await heading(PROVIDER_HEADING)).toBeInTheDocument();
-    });
-
-    it.each([
-      ['bad JSON', 'not json'],
-      [
-        'an unknown provider',
-        JSON.stringify({ furthest: 'review', provider: 'paypal' }),
-      ],
-      [
-        'a screen off the path',
-        JSON.stringify({ furthest: 'bankAccount', provider: 'usio' }),
-      ],
-    ])('ignores a local record with %s', async (_, raw) => {
-      localStorage.setItem(KEY, raw);
-      await renderWizard(PATHS.setupReview);
-
-      expect(await heading(PROVIDER_HEADING)).toBeInTheDocument();
-    });
-
-    it('stores only the provider and furthest screen', async () => {
-      const { user } = await renderWizard();
-
-      await chooseProvider(user, 'Usio');
-      await heading('Business details');
-      await user.type(
-        screen.getByLabelText('Legal business name'),
-        'Demo Law PLLC',
-      );
-      await clickNext(user);
-      await heading('Review & submit');
-
-      expect(JSON.parse(localStorage.getItem(KEY) ?? '')).toEqual({
-        furthest: 'review',
-        provider: 'usio',
-      });
-    });
-
     it('restarts progress when the provider changes', async () => {
-      const { router, user } = await renderWizard();
+      const { router, user } = renderWizard();
 
       await chooseProvider(user, 'Usio');
       await heading('Business details');
@@ -416,16 +338,12 @@ describe('CreateAccountSetup', () => {
       await act(() => router.navigate(PATHS.setupOwners));
 
       expect(await heading('Business details')).toBeInTheDocument();
-      expect(JSON.parse(localStorage.getItem(KEY) ?? '')).toEqual({
-        furthest: 'business',
-        provider: 'dwolla',
-      });
     });
   });
 
   describe('start over', () => {
     const toBusinessWithAnswer = async () => {
-      const wizard = await renderWizard();
+      const wizard = renderWizard();
 
       await chooseProvider(wizard.user, 'Usio');
       await heading('Business details');
@@ -478,7 +396,6 @@ describe('CreateAccountSetup', () => {
       for (const radio of screen.getAllByRole('radio')) {
         expect(radio).not.toBeChecked();
       }
-      expect(localStorage.getItem('pml.setupProgress')).toBeNull();
 
       await clickNext(user);
 
@@ -488,7 +405,7 @@ describe('CreateAccountSetup', () => {
     });
 
     it('goes straight back when nothing was typed', async () => {
-      const { user } = await renderWizard();
+      const { user } = renderWizard();
 
       await chooseProvider(user, 'Usio');
       await heading('Business details');
