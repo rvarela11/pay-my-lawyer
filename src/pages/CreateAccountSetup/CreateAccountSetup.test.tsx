@@ -89,6 +89,15 @@ describe('CreateAccountSetup', () => {
     expect(screen.getByRole('radiogroup')).toHaveAccessibleDescription(
       'Choose how you want to get paid',
     );
+
+    const usio = screen.getByRole('radio', { name: 'Usio' });
+    const error = screen.getByText('Choose how you want to get paid');
+
+    expect(usio).toHaveFocus();
+    // Shown under the question, before the options.
+    expect(
+      error.compareDocumentPosition(usio) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
   });
 
   it('goes to Business details with focus on its heading', async () => {

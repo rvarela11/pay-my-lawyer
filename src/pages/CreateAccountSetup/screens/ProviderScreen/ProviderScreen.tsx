@@ -1,7 +1,7 @@
+import ErrorOutlineOutlined from '@mui/icons-material/ErrorOutlineOutlined';
 import {
   FormControl,
   FormControlLabel,
-  FormHelperText,
   Radio,
   RadioGroup,
   Typography,
@@ -50,52 +50,64 @@ export const ProviderScreen = () => {
         control={control}
         name={FIELDS.provider}
         render={({ field: { ref, ...field }, fieldState: { error } }) => (
-          <FormControl error={!!error}>
+          <FormControl
+            className={error ? styles.groupError : undefined}
+            error={!!error}
+          >
+            {error && (
+              <Typography className={styles.error} id={ERROR_ID}>
+                <ErrorOutlineOutlined aria-hidden='true' fontSize='small' />
+                {error.message}
+              </Typography>
+            )}
             <RadioGroup
               {...field}
               aria-describedby={error ? ERROR_ID : undefined}
               aria-labelledby={TITLE_ID}
               className={styles.options}
-              ref={ref}
             >
-              {PROVIDER_OPTIONS.map(({ accepts, label, needs, value }) => (
-                <FormControlLabel
-                  className={styles.option}
-                  control={
-                    <Radio
-                      slotProps={{
-                        input: {
-                          'aria-describedby': `${value}-accepts ${value}-needs`,
-                          'aria-labelledby': `${value}-label`,
-                        },
-                      }}
-                    />
-                  }
-                  key={value}
-                  label={
-                    <span className={styles.text}>
-                      <Typography
-                        component='span'
-                        id={`${value}-label`}
-                        variant='h6'
-                      >
-                        {label}
-                      </Typography>
-                      <Typography component='span' id={`${value}-accepts`}>
-                        {accepts}
-                      </Typography>
-                      <Typography
-                        component='span'
-                        id={`${value}-needs`}
-                        variant='body2'
-                      >
-                        {needs}
-                      </Typography>
-                    </span>
-                  }
-                  value={value}
-                />
-              ))}
+              {PROVIDER_OPTIONS.map(
+                ({ accepts, label, needs, value }, index) => (
+                  <FormControlLabel
+                    className={styles.option}
+                    control={
+                      <Radio
+                        // The form focuses the first option when Next is pressed without a choice.
+                        slotProps={{
+                          input: {
+                            ref: index === 0 ? ref : undefined,
+                            'aria-describedby': `${value}-accepts ${value}-needs`,
+                            'aria-labelledby': `${value}-label`,
+                          },
+                        }}
+                      />
+                    }
+                    key={value}
+                    label={
+                      <span className={styles.text}>
+                        <Typography
+                          component='span'
+                          id={`${value}-label`}
+                          variant='h6'
+                        >
+                          {label}
+                        </Typography>
+                        <Typography component='span' id={`${value}-accepts`}>
+                          {accepts}
+                        </Typography>
+                        <Typography
+                          component='span'
+                          id={`${value}-needs`}
+                          variant='body2'
+                        >
+                          {needs}
+                        </Typography>
+                      </span>
+                    }
+                    value={value}
+                  />
+                ),
+              )}
               <FormControlLabel
                 className={styles.later}
                 control={
@@ -125,9 +137,6 @@ export const ProviderScreen = () => {
                 value={LATER.value}
               />
             </RadioGroup>
-            {error && (
-              <FormHelperText id={ERROR_ID}>{error.message}</FormHelperText>
-            )}
           </FormControl>
         )}
       />
