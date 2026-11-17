@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, CircularProgress, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import {
   type MouseEvent,
   type SubmitEvent,
@@ -31,8 +31,8 @@ export const CreateAccountSetup = () => {
     resolver: yupResolver(setupSchema),
     reValidateMode: 'onChange',
   });
-  const progress = useSetupProgress(form.reset);
-  const { furthest, isLoaded, provider } = progress;
+  const progress = useSetupProgress();
+  const { furthest, provider } = progress;
   const {
     goBack,
     goNext,
@@ -42,7 +42,6 @@ export const CreateAccountSetup = () => {
     isStartOverOpen,
   } = useWizardNavigation({ form, progress, screen });
 
-  const isShowing = isLoaded && isReachable;
   const position = screen ? getStagePosition(provider, screen) : null;
 
   // The second click of a double-click (detail 2) would skip the screen that just opened.
@@ -62,7 +61,7 @@ export const CreateAccountSetup = () => {
   // A layout effect, so focus moves before anything can interact with the new screen; a late
   // passive effect could steal focus from a field the user had already clicked.
   useLayoutEffect(() => {
-    if (!screen || !isShowing) {
+    if (!screen || !isReachable) {
       return;
     }
 
@@ -71,19 +70,7 @@ export const CreateAccountSetup = () => {
     }
 
     shownScreen.current = screen;
-  }, [isShowing, screen]);
-
-  if (!isLoaded) {
-    return (
-      <Section>
-        <Container>
-          <div className={styles.loading}>
-            <CircularProgress aria-label='Loading your setup' />
-          </div>
-        </Container>
-      </Section>
-    );
-  }
+  }, [isReachable, screen]);
 
   if (!screen || !isReachable) {
     return <Navigate replace to={SCREENS[furthest].path} />;

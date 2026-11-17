@@ -11,7 +11,7 @@ const SCREEN_ELEMENTS = {
   provider: <ProviderScreen />,
 };
 
-// The layout handles the index URL by redirecting to where the user should resume.
+// The layout handles the index URL by redirecting to the provider choice.
 export const CREATE_ACCOUNT_SETUP_ROUTE: RouteObject = {
   children: [
     { index: true },
