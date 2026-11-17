@@ -22,7 +22,5 @@ export default defineConfig({
     // MUI must go through Vite so the styled-engine alias above applies in tests.
     server: { deps: { inline: [/@mui\//] } },
     setupFiles: ['./src/test/setup.ts'],
-    // Longer than the 5s default so multi-screen wizard walks pass on slow CI runners.
-    testTimeout: 15000,
   },
 });
