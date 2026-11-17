@@ -1,7 +1,6 @@
 .screen {
   display: grid;
   gap: calc(var(--mui-spacing) * 3);
-  margin-top: calc(var(--mui-spacing) * -2);
 }
 
 .groupError {
@@ -55,8 +54,4 @@
   display: grid;
   gap: calc(var(--mui-spacing) * 0.5);
   padding-top: calc(var(--mui-spacing) * 1);
-}
-
-.intro {
-  margin: 0;
 }
