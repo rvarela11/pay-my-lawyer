@@ -56,11 +56,6 @@ describe('CreateAccountSetup', () => {
     await heading(PROVIDER_HEADING);
 
     expect(
-      screen.getByText(
-        'You can start using your portal now and set this up later.',
-      ),
-    ).toBeInTheDocument();
-    expect(
       screen.getByRole('radio', { name: 'Usio' }),
     ).toHaveAccessibleDescription(
       'Cards and ACH Short application. No ID documents needed.',

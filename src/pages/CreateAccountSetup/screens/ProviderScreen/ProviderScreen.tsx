@@ -43,9 +43,6 @@ export const ProviderScreen = () => {
 
   return (
     <div className={styles.screen}>
-      <Typography className={styles.intro} component='p'>
-        You can start using your portal now and set this up later.
-      </Typography>
       <Controller
         control={control}
         name={FIELDS.provider}
