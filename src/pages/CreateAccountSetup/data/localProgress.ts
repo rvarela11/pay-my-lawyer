@@ -1,9 +1,8 @@
-// Only the provider and the furthest screen are kept in the browser. Field values never are:
-// they include SSN and date of birth, and come back from the backend draft instead.
-
 import type { Provider, ScreenId } from '../ids.ts';
 import { getScreenOrder, isProvider, isScreenId } from '../steps.ts';
 
+// Only the provider and the furthest screen are kept in the browser. Field values never are:
+// they include SSN and date of birth, and come back from the backend draft instead.
 export type LocalProgress = { furthest: ScreenId; provider: Provider };
 
 const KEY = 'pml.setupProgress';
