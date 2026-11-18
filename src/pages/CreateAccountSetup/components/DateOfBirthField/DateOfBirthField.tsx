@@ -6,7 +6,7 @@ import { useController, useFormContext } from 'react-hook-form';
 
 type Props = { name: string };
 
-// Starts empty (legacy pre-filled a date 18 years ago). The date can be typed, and the
+// Starts empty, so nobody submits a date they didn't choose. The date can be typed, and the
 // calendar opens on the years so nobody pages back decades.
 export const DateOfBirthField = ({ name }: Props) => {
   const { control } = useFormContext();
