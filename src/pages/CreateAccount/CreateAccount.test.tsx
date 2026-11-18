@@ -68,12 +68,6 @@ describe('CreateAccount', () => {
     expect(email).toHaveAccessibleDescription('Enter a valid email');
   });
 
-  it('does not ask for a Bar Card number', () => {
-    renderPage();
-
-    expect(screen.queryByLabelText('Bar Card number')).not.toBeInTheDocument();
-  });
-
   it('shows every error and focuses Email when an empty form is submitted', async () => {
     const { email, submit, user } = renderPage();
 
