@@ -135,6 +135,22 @@ export const DwollaOwnersScreen = () => {
     );
   };
 
+  // One label/value pair in a card: muted label, ink value, lined up in two columns.
+  const detail = (
+    label: string,
+    value: string,
+    variant: 'body2' | 'subtitle2' = 'body2',
+  ) => (
+    <>
+      <Typography className={styles.term} component='dt' variant={variant}>
+        {label}
+      </Typography>
+      <Typography className={styles.value} component='dd' variant={variant}>
+        {value}
+      </Typography>
+    </>
+  );
+
   const handleAdd = () => {
     setDialogOwner(null);
     setIsDialogOpen(true);
@@ -203,6 +219,14 @@ export const DwollaOwnersScreen = () => {
           {totalError}
         </Alert>
       )}
+      {/* Top right, above the list, where it stays in view however many owners there are. */}
+      {total < 100 && (
+        <div className={styles.toolbar}>
+          <Button onClick={handleAdd} ref={addRef} startIcon={<Add />}>
+            Add owner
+          </Button>
+        </div>
+      )}
       {wide ? (
         <Table
           aria-label='Beneficial owners'
@@ -214,7 +238,11 @@ export const DwollaOwnersScreen = () => {
             <TableRow>
               <TableCell>Name</TableCell>
               <TableCell className={styles.nowrap}>Bar Card #</TableCell>
-              <TableCell className={styles.nowrap}>Date of birth</TableCell>
+              <TableCell className={styles.nowrap}>
+                <abbr className={styles.abbr} title='Date of birth'>
+                  DOB
+                </abbr>
+              </TableCell>
               <TableCell>Title</TableCell>
               <TableCell align='right'>Ownership</TableCell>
               <TableCell>
@@ -267,33 +295,26 @@ export const DwollaOwnersScreen = () => {
         >
           {rows.map((row) => (
             <li className={styles.card} key={row.id}>
-              <Typography component='p' variant='subtitle1'>
-                {row.name}
-              </Typography>
-              <Typography component='p' variant='body2'>
-                {`Bar Card #: ${row.barNumber}`}
-              </Typography>
-              <Typography component='p' variant='body2'>
-                {row.dateOfBirth}
-              </Typography>
-              <Typography component='p' variant='body2'>
-                {`Title: ${row.title}`}
-              </Typography>
-              <Typography component='p' variant='body2'>
-                {`${row.ownership}%`}
-              </Typography>
-              {actions(row)}
+              <div className={styles.cardHeader}>
+                <Typography component='p' variant='subtitle1'>
+                  {row.name}
+                </Typography>
+                {actions(row)}
+              </div>
+              <dl className={styles.details}>
+                {detail('Ownership', `${row.ownership}%`)}
+                {detail('Bar Card #', row.barNumber)}
+                {detail('DOB', row.dateOfBirth)}
+                {detail('Title', row.title)}
+              </dl>
             </li>
           ))}
         </ul>
       )}
-      {!wide && <Typography component='p'>{`Total: ${total}%`}</Typography>}
-      {total < 100 && (
-        <div>
-          <Button onClick={handleAdd} ref={addRef} startIcon={<Add />}>
-            Add owner
-          </Button>
-        </div>
+      {!wide && (
+        <dl className={styles.details}>
+          {detail('Total ownership', `${total}%`, 'subtitle2')}
+        </dl>
       )}
       <OwnerDialog
         onCancel={handleDialogCancel}

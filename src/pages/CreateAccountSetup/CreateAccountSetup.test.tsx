@@ -34,6 +34,12 @@ const renderWizard = (initialPath: string = PATHS.createAccountSetup) => {
 
 const heading = (name: string) => screen.findByRole('heading', { name });
 
+// The values shown next to a label in the owners list (its <dt>/<dd> pairs), one per owner.
+const detailValues = (label: string) =>
+  screen
+    .getAllByText(label, { selector: 'dt' })
+    .map((term) => term.nextElementSibling?.textContent);
+
 const clickNext = (user: ReturnType<typeof userEvent.setup>) =>
   user.click(screen.getByRole('button', { name: 'Next' }));
 
@@ -725,10 +731,10 @@ describe('CreateAccountSetup', () => {
 
       expect(screen.getByText('Ana Ng')).toBeInTheDocument();
       expect(screen.queryByText(/\(you\)/)).not.toBeInTheDocument();
-      expect(screen.getByText('Bar Card #: 12345')).toBeInTheDocument();
-      expect(screen.getByText('Title: Owner')).toBeInTheDocument();
-      expect(screen.getByText('60%')).toBeInTheDocument();
-      expect(screen.getByText('Total: 60%')).toBeInTheDocument();
+      expect(detailValues('Bar Card #')).toContain('12345');
+      expect(detailValues('Title')).toContain('Owner');
+      expect(detailValues('Ownership')).toEqual(['60%']);
+      expect(detailValues('Total ownership')).toEqual(['60%']);
       expect(
         screen.getByRole('button', { name: 'Edit your details' }),
       ).toBeInTheDocument();
@@ -751,8 +757,8 @@ describe('CreateAccountSetup', () => {
 
       await addOwner(user, '40', '');
 
-      expect(screen.getByText('Bar Card #: —')).toBeInTheDocument();
-      expect(screen.getByText('Bar Card #: 12345')).toBeInTheDocument();
+      expect(detailValues('Bar Card #')).toContain('—');
+      expect(detailValues('Bar Card #')).toContain('12345');
     });
 
     it('adds an owner', async () => {
@@ -762,10 +768,10 @@ describe('CreateAccountSetup', () => {
 
       expect(screen.getByText('Ben Ortiz')).toBeInTheDocument();
       expect(screen.getByText('40%')).toBeInTheDocument();
-      expect(screen.getByText('02/03/1979')).toBeInTheDocument();
-      expect(screen.getByText('Bar Card #: 67890')).toBeInTheDocument();
-      expect(screen.getByText('Title: Partner')).toBeInTheDocument();
-      expect(screen.getByText('Total: 100%')).toBeInTheDocument();
+      expect(detailValues('DOB')).toContain('02/03/1979');
+      expect(detailValues('Bar Card #')).toContain('67890');
+      expect(detailValues('Title')).toContain('Partner');
+      expect(detailValues('Total ownership')).toEqual(['100%']);
       expect(
         screen.queryByRole('button', { name: 'Add owner' }),
       ).not.toBeInTheDocument();
@@ -806,7 +812,7 @@ describe('CreateAccountSetup', () => {
       await closed();
 
       expect(screen.getByText('40%')).toBeInTheDocument();
-      expect(screen.getByText('Total: 100%')).toBeInTheDocument();
+      expect(detailValues('Total ownership')).toEqual(['100%']);
     });
 
     it('saves an owner unchanged at a full total', async () => {
@@ -821,7 +827,7 @@ describe('CreateAccountSetup', () => {
       await user.click(within(dialog).getByRole('button', { name: 'Save' }));
       await closed();
 
-      expect(screen.getByText('Total: 100%')).toBeInTheDocument();
+      expect(detailValues('Total ownership')).toEqual(['100%']);
     });
 
     it('requires a job title for an owner', async () => {
@@ -1062,7 +1068,7 @@ describe('CreateAccountSetup', () => {
       await heading('Beneficial owners');
 
       expect(screen.queryByText('Ben Ortiz')).not.toBeInTheDocument();
-      expect(screen.getByText('Total: 60%')).toBeInTheDocument();
+      expect(detailValues('Total ownership')).toEqual(['60%']);
     });
   });
 
