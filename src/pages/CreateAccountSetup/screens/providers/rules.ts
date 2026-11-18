@@ -2,7 +2,6 @@ import dayjs, { type Dayjs } from 'dayjs';
 import { mixed, string } from 'yup';
 import { BUSINESS_TYPES } from '../../components/BusinessTypeSelect/businessTypes.ts';
 import { US_STATES } from '../../components/StateSelect/usStates.ts';
-import { normalizeWebsite } from '../../components/WebsiteField/normalizeWebsite.ts';
 
 // Rules shared by every provider's field set. Each starts empty, so nothing shows on load.
 export const BUSINESS_ADDRESS_RULE = string()
@@ -104,12 +103,14 @@ export const WEBSITE_RULE = string()
   .test(
     'website',
     'Enter a web address, like https://yourfirm.com',
+    // Optional. With or without http(s)://, then a domain like yourfirm.com and an optional path.
     (value) =>
       !value?.trim() ||
-      /^https?:\/\/[^\s.]+\.[^\s]+$/i.test(normalizeWebsite(value)),
+      /^(https?:\/\/)?[a-z0-9-]+(\.[a-z0-9-]+)+(\/\S*)?$/i.test(value.trim()),
   );
 
 export const ZIP_RULE = string()
+  .trim()
   .default('')
   .matches(/^\d{5}$/, 'Enter a 5-digit ZIP code');
 

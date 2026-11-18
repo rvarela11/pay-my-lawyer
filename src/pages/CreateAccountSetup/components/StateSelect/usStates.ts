@@ -51,5 +51,3 @@ export const US_STATES = [
   { code: 'WI', name: 'Wisconsin' },
   { code: 'WY', name: 'Wyoming' },
 ] as const;
-
-export type UsStateCode = (typeof US_STATES)[number]['code'];

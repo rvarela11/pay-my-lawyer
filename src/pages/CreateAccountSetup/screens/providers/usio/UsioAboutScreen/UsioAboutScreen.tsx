@@ -1,5 +1,9 @@
 import { Typography } from '@mui/material';
 import { DateOfBirthField } from '../../../../components/DateOfBirthField/DateOfBirthField.tsx';
+import {
+  FormGrid,
+  FormGridFullRow,
+} from '../../../../components/FormGrid/FormGrid.tsx';
 import { FormTextField } from '../../../../components/FormTextField/FormTextField.tsx';
 import { SsnField } from '../../../../components/SsnField/SsnField.tsx';
 import { StateSelect } from '../../../../components/StateSelect/StateSelect.tsx';
@@ -9,14 +13,15 @@ import styles from './UsioAboutScreen.module.css';
 export const UsioAboutScreen = () => (
   <div className={styles.screen}>
     <Typography component='p'>We use this to verify your identity.</Typography>
-    <div className={styles.grid}>
-      <FormTextField
-        autoComplete='email'
-        className={styles.wide}
-        label='Email'
-        name={USIO_FIELDS.email}
-        type='email'
-      />
+    <FormGrid>
+      <FormGridFullRow>
+        <FormTextField
+          autoComplete='email'
+          label='Email'
+          name={USIO_FIELDS.email}
+          type='email'
+        />
+      </FormGridFullRow>
       <FormTextField
         autoComplete='given-name'
         label='First name'
@@ -40,12 +45,13 @@ export const UsioAboutScreen = () => (
       />
       <DateOfBirthField name={USIO_FIELDS.dateOfBirth} />
       <SsnField name={USIO_FIELDS.ssn} />
-      <FormTextField
-        autoComplete='address-line1'
-        className={styles.wide}
-        label='Home address'
-        name={USIO_FIELDS.homeAddress1}
-      />
+      <FormGridFullRow>
+        <FormTextField
+          autoComplete='address-line1'
+          label='Home address'
+          name={USIO_FIELDS.homeAddress1}
+        />
+      </FormGridFullRow>
       <FormTextField
         autoComplete='address-line2'
         label='Address 2 (optional)'
@@ -67,6 +73,6 @@ export const UsioAboutScreen = () => (
         name={USIO_FIELDS.homeZip}
         slotProps={{ htmlInput: { inputMode: 'numeric' } }}
       />
-    </div>
+    </FormGrid>
   </div>
 );

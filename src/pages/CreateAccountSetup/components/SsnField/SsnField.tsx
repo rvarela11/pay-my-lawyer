@@ -1,8 +1,8 @@
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { IconButton, InputAdornment, TextField } from '@mui/material';
+import { IconButton, InputAdornment } from '@mui/material';
 import { useState } from 'react';
-import { useController, useFormContext } from 'react-hook-form';
+import { FormTextField } from '../FormTextField/FormTextField.tsx';
 import styles from './SsnField.module.css';
 
 type Props = { name: string };
@@ -10,26 +10,17 @@ type Props = { name: string };
 // A text input with the digits masked by CSS, not type='password': password managers
 // ignore autoComplete='off' on password fields and could fill a saved password here.
 export const SsnField = ({ name }: Props) => {
-  const { control } = useFormContext();
   const [isShown, setIsShown] = useState(false);
-  const {
-    field: { ref, value, ...field },
-    fieldState: { error },
-  } = useController({ control, name });
 
   const handleToggle = () => {
     setIsShown((shown) => !shown);
   };
 
   return (
-    <TextField
-      {...field}
+    <FormTextField
       autoComplete='off'
-      error={!!error}
-      fullWidth
-      helperText={error?.message}
-      inputRef={ref}
       label='SSN'
+      name={name}
       slotProps={{
         htmlInput: {
           className: styles.input,
@@ -50,8 +41,6 @@ export const SsnField = ({ name }: Props) => {
           ),
         },
       }}
-      type='text'
-      value={value ?? ''}
     />
   );
 };

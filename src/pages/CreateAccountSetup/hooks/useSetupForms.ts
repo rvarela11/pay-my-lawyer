@@ -21,6 +21,14 @@ import { type ProviderValues, providerSchema } from '../validation.ts';
 
 const FORM_OPTIONS = { mode: 'onTouched', reValidateMode: 'onChange' } as const;
 
+const formOptions = <Values extends FieldValues>(
+  schema: AnyObjectSchema,
+): UseFormProps<Values> => ({
+  ...FORM_OPTIONS,
+  defaultValues: schema.getDefault(),
+  resolver: yupResolver(schema),
+});
+
 // One form for the provider choice and one per provider, so providers never share a field.
 // They live in the layout, so each provider's answers survive switching back and forth.
 // React's rules of hooks need one useForm call per provider; everything else is a lookup.
@@ -64,11 +72,3 @@ export const useSetupForms = () => {
 
   return { getForm, hasAnswers, providerForm, resetAll };
 };
-
-const formOptions = <Values extends FieldValues>(
-  schema: AnyObjectSchema,
-): UseFormProps<Values> => ({
-  ...FORM_OPTIONS,
-  defaultValues: schema.getDefault(),
-  resolver: yupResolver(schema),
-});

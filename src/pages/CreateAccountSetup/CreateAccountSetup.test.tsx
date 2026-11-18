@@ -298,18 +298,40 @@ describe('CreateAccountSetup', () => {
       expect(screen.getByLabelText('EIN')).toHaveValue('12-3456789');
     });
 
-    it("adds https:// to the website when it's left", async () => {
+    it('keeps the website as typed', async () => {
       const { user } = await toBusiness();
-      const website = screen.getByLabelText('Website (optional)');
 
       await paste(user, 'Website (optional)', 'yourfirm.com');
       await user.tab();
-      expect(website).toHaveValue('https://yourfirm.com');
 
-      await user.clear(website);
-      await user.paste('http://x.com');
+      expect(screen.getByLabelText('Website (optional)')).toHaveValue(
+        'yourfirm.com',
+      );
+      expect(
+        screen.queryByText('Enter a web address, like https://yourfirm.com'),
+      ).not.toBeInTheDocument();
+    });
+
+    it('rejects a website that is not http or https', async () => {
+      const { user } = await toBusiness();
+
+      await paste(user, 'Website (optional)', 'ftp://files.example.com');
       await user.tab();
-      expect(website).toHaveValue('http://x.com');
+
+      expect(
+        screen.getByText('Enter a web address, like https://yourfirm.com'),
+      ).toBeInTheDocument();
+    });
+
+    it('accepts a ZIP code with spaces around it', async () => {
+      const { user } = await toBusiness();
+
+      await paste(user, 'ZIP code', ' 78701 ');
+      await user.tab();
+
+      expect(
+        screen.queryByText('Enter a 5-digit ZIP code'),
+      ).not.toBeInTheDocument();
     });
 
     it('rejects an invalid website', async () => {
@@ -408,6 +430,17 @@ describe('CreateAccountSetup', () => {
       expect(
         screen.getByRole('group', { name: 'Date of birth' }),
       ).toHaveTextContent('MM/DD/YYYY');
+    });
+
+    it('shows no date error while the calendar is open', async () => {
+      const { user } = await toAbout();
+
+      await user.click(screen.getByRole('button', { name: /choose date/i }));
+      await screen.findByRole('dialog');
+
+      expect(
+        screen.queryByText('Enter your full date of birth'),
+      ).not.toBeInTheDocument();
     });
 
     it('rejects someone under 18', async () => {

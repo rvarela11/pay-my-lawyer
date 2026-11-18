@@ -1,14 +1,16 @@
 import { BusinessTypeSelect } from '../../../../components/BusinessTypeSelect/BusinessTypeSelect.tsx';
 import { EinField } from '../../../../components/EinField/EinField.tsx';
+import {
+  FormGrid,
+  FormGridFullRow,
+} from '../../../../components/FormGrid/FormGrid.tsx';
 import { FormTextField } from '../../../../components/FormTextField/FormTextField.tsx';
 import { PhoneField } from '../../../../components/PhoneField/PhoneField.tsx';
 import { StateSelect } from '../../../../components/StateSelect/StateSelect.tsx';
-import { WebsiteField } from '../../../../components/WebsiteField/WebsiteField.tsx';
 import { USIO_FIELDS } from '../fields.ts';
-import styles from './UsioBusinessScreen.module.css';
 
 export const UsioBusinessScreen = () => (
-  <div className={styles.grid}>
+  <FormGrid>
     <BusinessTypeSelect name={USIO_FIELDS.businessType} />
     <FormTextField
       autoComplete='organization'
@@ -20,12 +22,13 @@ export const UsioBusinessScreen = () => (
       name={USIO_FIELDS.dba}
     />
     <EinField name={USIO_FIELDS.ein} />
-    <FormTextField
-      autoComplete='address-line1'
-      className={styles.wide}
-      label='Address'
-      name={USIO_FIELDS.address1}
-    />
+    <FormGridFullRow>
+      <FormTextField
+        autoComplete='address-line1'
+        label='Address'
+        name={USIO_FIELDS.address1}
+      />
+    </FormGridFullRow>
     <FormTextField
       autoComplete='address-line2'
       label='Address 2 (optional)'
@@ -48,6 +51,10 @@ export const UsioBusinessScreen = () => (
       slotProps={{ htmlInput: { inputMode: 'numeric' } }}
     />
     <PhoneField label='Phone' name={USIO_FIELDS.phone} />
-    <WebsiteField name={USIO_FIELDS.website} />
-  </div>
+    <FormTextField
+      autoComplete='url'
+      label='Website (optional)'
+      name={USIO_FIELDS.website}
+    />
+  </FormGrid>
 );

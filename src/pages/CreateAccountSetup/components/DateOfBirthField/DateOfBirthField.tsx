@@ -18,7 +18,6 @@ export const DateOfBirthField = ({ name }: Props) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker
-        disableFuture
         label='Date of birth'
         maxDate={dayjs().subtract(18, 'year')}
         onChange={onChange}
