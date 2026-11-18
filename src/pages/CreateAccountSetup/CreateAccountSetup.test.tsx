@@ -683,10 +683,16 @@ describe('CreateAccountSetup', () => {
     const fillOwner = async (
       user: ReturnType<typeof userEvent.setup>,
       ownership: string,
+      barNumber = '67890',
     ) => {
       await paste(user, 'First name', 'Ben');
       await paste(user, 'Last name', 'Ortiz');
       await paste(user, 'Job title', 'Partner');
+
+      if (barNumber) {
+        await paste(user, 'Bar Card number', barNumber);
+      }
+
       await typeDate(user, '02031979');
       await paste(user, 'Ownership (%)', ownership);
       await paste(user, 'SSN', '987654321');
@@ -704,11 +710,12 @@ describe('CreateAccountSetup', () => {
     const addOwner = async (
       user: ReturnType<typeof userEvent.setup>,
       ownership: string,
+      barNumber?: string,
     ) => {
       await user.click(screen.getByRole('button', { name: 'Add owner' }));
       const dialog = await screen.findByRole('dialog', { name: 'Add owner' });
 
-      await fillOwner(user, ownership);
+      await fillOwner(user, ownership, barNumber);
       await user.click(within(dialog).getByRole('button', { name: 'Save' }));
       await closed();
     };
@@ -718,6 +725,7 @@ describe('CreateAccountSetup', () => {
 
       expect(screen.getByText('Ana Ng')).toBeInTheDocument();
       expect(screen.queryByText(/\(you\)/)).not.toBeInTheDocument();
+      expect(screen.getByText('Bar Card #: 12345')).toBeInTheDocument();
       expect(screen.getByText('Title: Owner')).toBeInTheDocument();
       expect(screen.getByText('60%')).toBeInTheDocument();
       expect(screen.getByText('Total: 60%')).toBeInTheDocument();
@@ -729,6 +737,24 @@ describe('CreateAccountSetup', () => {
       ).not.toBeInTheDocument();
     });
 
+    it('starts Add owner with an empty bar number', async () => {
+      const { user } = await toOwners();
+
+      await user.click(screen.getByRole('button', { name: 'Add owner' }));
+      const dialog = await screen.findByRole('dialog', { name: 'Add owner' });
+
+      expect(within(dialog).getByLabelText('Bar Card number')).toHaveValue('');
+    });
+
+    it("leaves an owner's bar number blank", async () => {
+      const { user } = await toOwners();
+
+      await addOwner(user, '40', '');
+
+      expect(screen.getByText('Bar Card #: —')).toBeInTheDocument();
+      expect(screen.getByText('Bar Card #: 12345')).toBeInTheDocument();
+    });
+
     it('adds an owner', async () => {
       const { user } = await toOwners();
 
@@ -737,6 +763,7 @@ describe('CreateAccountSetup', () => {
       expect(screen.getByText('Ben Ortiz')).toBeInTheDocument();
       expect(screen.getByText('40%')).toBeInTheDocument();
       expect(screen.getByText('02/03/1979')).toBeInTheDocument();
+      expect(screen.getByText('Bar Card #: 67890')).toBeInTheDocument();
       expect(screen.getByText('Title: Partner')).toBeInTheDocument();
       expect(screen.getByText('Total: 100%')).toBeInTheDocument();
       expect(

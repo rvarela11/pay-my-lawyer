@@ -3,10 +3,11 @@
   gap: calc(var(--mui-spacing) * 3);
 }
 
+/* Edit and Remove side by side, so every row keeps the same height. */
 .actions {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--mui-spacing);
+  gap: calc(var(--mui-spacing) / 2);
+  justify-content: flex-end;
 }
 
 .cards {
@@ -25,10 +26,26 @@
   padding: calc(var(--mui-spacing) * 2);
 }
 
-.footer {
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  gap: calc(var(--mui-spacing) * 2);
-  justify-content: space-between;
+.nowrap {
+  white-space: nowrap;
+}
+
+/* Percentages line up digit by digit. */
+.number {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.total {
+  border-bottom: none;
+  color: var(--mui-palette-text-primary);
+}
+
+.visuallyHidden {
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }

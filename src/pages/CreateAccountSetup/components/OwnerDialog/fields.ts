@@ -1,4 +1,5 @@
 export const OWNER_FIELDS = {
+  barNumber: 'barNumber',
   dateOfBirth: 'dateOfBirth',
   firstName: 'firstName',
   homeAddress1: 'homeAddress1',

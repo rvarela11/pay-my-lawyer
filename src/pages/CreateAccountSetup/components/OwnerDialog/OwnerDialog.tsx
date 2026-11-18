@@ -93,6 +93,11 @@ export const OwnerDialog = ({
                 label='Job title'
                 name={OWNER_FIELDS.jobTitle}
               />
+              <FormTextField
+                autoComplete='off'
+                label='Bar Card number'
+                name={OWNER_FIELDS.barNumber}
+              />
               <DateOfBirthField name={OWNER_FIELDS.dateOfBirth} />
               <FormTextField
                 autoComplete='off'

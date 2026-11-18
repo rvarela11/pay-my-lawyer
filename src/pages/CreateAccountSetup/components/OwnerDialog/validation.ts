@@ -17,6 +17,7 @@ import { OWNER_FIELDS } from './fields.ts';
 // One beneficial owner other than the applicant. The dialog passes `remaining` (the % nobody
 // else owns) as the Yup context, so an owner can't push the total over 100%.
 export const ownerSchema = object({
+  [OWNER_FIELDS.barNumber]: OPTIONAL_TEXT_RULE,
   [OWNER_FIELDS.dateOfBirth]: DATE_OF_BIRTH_RULE,
   [OWNER_FIELDS.firstName]: FIRST_NAME_RULE,
   [OWNER_FIELDS.homeAddress1]: HOME_ADDRESS_RULE,

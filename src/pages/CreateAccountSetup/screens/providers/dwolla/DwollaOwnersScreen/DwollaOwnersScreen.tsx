@@ -1,11 +1,17 @@
+import Add from '@mui/icons-material/Add';
+import DeleteOutlined from '@mui/icons-material/DeleteOutlined';
+import EditOutlined from '@mui/icons-material/EditOutlined';
 import {
   Alert,
   Button,
+  IconButton,
   Table,
   TableBody,
   TableCell,
+  TableFooter,
   TableHead,
   TableRow,
+  Tooltip,
   Typography,
   useMediaQuery,
 } from '@mui/material';
@@ -23,6 +29,7 @@ import styles from './DwollaOwnersScreen.module.css';
 type OwnersError = { message?: string; root?: { message?: string } };
 
 type Row = {
+  barNumber: string;
   dateOfBirth: string;
   id: string;
   name: string;
@@ -30,6 +37,9 @@ type Row = {
   ownership: number;
   title: string;
 };
+
+// Shown for a blank Bar Card number.
+const DASH = '—';
 
 const formatDate = (date: Dayjs | null) => date?.format('MM/DD/YYYY') ?? '';
 
@@ -49,16 +59,18 @@ export const DwollaOwnersScreen = () => {
     keyName: 'key',
     name: DWOLLA_FIELDS.owners,
   });
-  const [firstName, lastName, dateOfBirth, jobTitle, ownership] = useWatch({
-    control,
-    name: [
-      DWOLLA_FIELDS.firstName,
-      DWOLLA_FIELDS.lastName,
-      DWOLLA_FIELDS.dateOfBirth,
-      DWOLLA_FIELDS.jobTitle,
-      DWOLLA_FIELDS.ownership,
-    ],
-  }) as [string, string, Dayjs | null, string, string];
+  const [firstName, lastName, barNumber, dateOfBirth, jobTitle, ownership] =
+    useWatch({
+      control,
+      name: [
+        DWOLLA_FIELDS.firstName,
+        DWOLLA_FIELDS.lastName,
+        DWOLLA_FIELDS.barNumber,
+        DWOLLA_FIELDS.dateOfBirth,
+        DWOLLA_FIELDS.jobTitle,
+        DWOLLA_FIELDS.ownership,
+      ],
+    }) as [string, string, string, Dayjs | null, string, string];
   // Read the values, not useFieldArray's fields, so RHF's own row key never reaches the dialog.
   const owners = useWatch({ control, name: DWOLLA_FIELDS.owners }) as Owner[];
   const [dialogOwner, setDialogOwner] = useState<Owner | null>(null);
@@ -70,6 +82,7 @@ export const DwollaOwnersScreen = () => {
 
   const rows: Row[] = [
     {
+      barNumber: barNumber || DASH,
       dateOfBirth: formatDate(dateOfBirth),
       id: 'you',
       name: fullName(firstName, lastName),
@@ -78,6 +91,7 @@ export const DwollaOwnersScreen = () => {
       title: jobTitle,
     },
     ...owners.map((owner) => ({
+      barNumber: owner.barNumber || DASH,
       dateOfBirth: formatDate(owner.dateOfBirth ?? null),
       id: owner.id,
       name: fullName(owner.firstName, owner.lastName),
@@ -92,27 +106,34 @@ export const DwollaOwnersScreen = () => {
   const ownersError = errors[DWOLLA_FIELDS.owners] as OwnersError | undefined;
   const totalError = ownersError?.message ?? ownersError?.root?.message;
 
-  const actions = (row: Row) => (
-    <div className={styles.actions}>
-      <Button
-        aria-label={row.owner ? `Edit ${row.name}` : 'Edit your details'}
-        onClick={() => handleEdit(row.owner)}
-        size='small'
-      >
-        Edit
-      </Button>
-      {row.owner && (
-        <Button
-          aria-label={`Remove ${row.name}`}
-          color='error'
-          onClick={() => setRemoving(row.owner)}
-          size='small'
-        >
-          Remove
-        </Button>
-      )}
-    </div>
-  );
+  // Icon buttons keep every row one line high; the tooltip shows each button's name.
+  const actions = (row: Row) => {
+    const editLabel = row.owner ? `Edit ${row.name}` : 'Edit your details';
+    const removeLabel = `Remove ${row.name}`;
+
+    return (
+      <div className={styles.actions}>
+        <Tooltip title={editLabel}>
+          <IconButton
+            aria-label={editLabel}
+            onClick={() => handleEdit(row.owner)}
+          >
+            <EditOutlined />
+          </IconButton>
+        </Tooltip>
+        {row.owner && (
+          <Tooltip title={removeLabel}>
+            <IconButton
+              aria-label={removeLabel}
+              onClick={() => setRemoving(row.owner)}
+            >
+              <DeleteOutlined />
+            </IconButton>
+          </Tooltip>
+        )}
+      </div>
+    );
+  };
 
   const handleAdd = () => {
     setDialogOwner(null);
@@ -183,27 +204,59 @@ export const DwollaOwnersScreen = () => {
         </Alert>
       )}
       {wide ? (
-        <Table aria-label='Beneficial owners' ref={listRef} tabIndex={-1}>
+        <Table
+          aria-label='Beneficial owners'
+          ref={listRef}
+          size='small'
+          tabIndex={-1}
+        >
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>
-              <TableCell>Date of birth</TableCell>
+              <TableCell className={styles.nowrap}>Bar Card #</TableCell>
+              <TableCell className={styles.nowrap}>Date of birth</TableCell>
               <TableCell>Title</TableCell>
-              <TableCell>Ownership</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell align='right'>Ownership</TableCell>
+              <TableCell>
+                <span className={styles.visuallyHidden}>Actions</span>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.map((row) => (
               <TableRow key={row.id}>
                 <TableCell>{row.name}</TableCell>
-                <TableCell>{row.dateOfBirth}</TableCell>
+                <TableCell className={styles.nowrap}>{row.barNumber}</TableCell>
+                <TableCell className={styles.nowrap}>
+                  {row.dateOfBirth}
+                </TableCell>
                 <TableCell>{row.title}</TableCell>
-                <TableCell>{`${row.ownership}%`}</TableCell>
+                <TableCell align='right' className={styles.number}>
+                  {`${row.ownership}%`}
+                </TableCell>
                 <TableCell>{actions(row)}</TableCell>
               </TableRow>
             ))}
           </TableBody>
+          {/* The total sits under the Ownership column it adds up. */}
+          <TableFooter>
+            <TableRow>
+              <TableCell className={styles.total} colSpan={4}>
+                <Typography component='span' variant='subtitle2'>
+                  Total
+                </Typography>
+              </TableCell>
+              <TableCell
+                align='right'
+                className={`${styles.number} ${styles.total}`}
+              >
+                <Typography component='span' variant='subtitle2'>
+                  {`${total}%`}
+                </Typography>
+              </TableCell>
+              <TableCell className={styles.total} />
+            </TableRow>
+          </TableFooter>
         </Table>
       ) : (
         <ul
@@ -216,6 +269,9 @@ export const DwollaOwnersScreen = () => {
             <li className={styles.card} key={row.id}>
               <Typography component='p' variant='subtitle1'>
                 {row.name}
+              </Typography>
+              <Typography component='p' variant='body2'>
+                {`Bar Card #: ${row.barNumber}`}
               </Typography>
               <Typography component='p' variant='body2'>
                 {row.dateOfBirth}
@@ -231,14 +287,14 @@ export const DwollaOwnersScreen = () => {
           ))}
         </ul>
       )}
-      <div className={styles.footer}>
-        <Typography component='p'>{`Total: ${total}%`}</Typography>
-        {total < 100 && (
-          <Button onClick={handleAdd} ref={addRef} variant='outlined'>
+      {!wide && <Typography component='p'>{`Total: ${total}%`}</Typography>}
+      {total < 100 && (
+        <div>
+          <Button onClick={handleAdd} ref={addRef} startIcon={<Add />}>
             Add owner
           </Button>
-        )}
-      </div>
+        </div>
+      )}
       <OwnerDialog
         onCancel={handleDialogCancel}
         onClosed={handleDialogClosed}
