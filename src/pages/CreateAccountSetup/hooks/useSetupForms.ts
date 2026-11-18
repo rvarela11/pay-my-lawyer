@@ -58,8 +58,10 @@ export const useSetupForms = () => {
 
     const defaults: FieldValues = PROVIDER_SCHEMAS[provider].getDefault();
 
+    // A list (owners) starts empty but is a new array each time, so it counts once it has items.
     return Object.entries(providerForms[provider].getValues()).some(
-      ([name, value]) => value !== defaults[name],
+      ([name, value]) =>
+        Array.isArray(value) ? value.length > 0 : value !== defaults[name],
     );
   };
 

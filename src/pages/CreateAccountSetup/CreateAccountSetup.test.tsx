@@ -15,7 +15,9 @@ import { CREATE_ACCOUNT_SETUP_ROUTE } from './createAccountSetupRoute.tsx';
 // The About you screens load on demand. Importing them here loads their code before any test
 // runs, so the first test to reach one doesn't wait on that load.
 import './screens/providers/dwolla/DwollaAboutScreen/DwollaAboutScreen.tsx';
+import './screens/providers/dwolla/DwollaOwnersScreen/DwollaOwnersScreen.tsx';
 import './screens/providers/usio/UsioAboutScreen/UsioAboutScreen.tsx';
+import './screens/providers/usio/UsioOwnersScreen/UsioOwnersScreen.tsx';
 
 const PROVIDER_HEADING = 'How would you like to get paid?';
 
@@ -80,13 +82,16 @@ const typeDate = async (
 };
 
 // Fills every required field on the provider's About you screen.
-const fillAbout = async (user: ReturnType<typeof userEvent.setup>) => {
+const fillAbout = async (
+  user: ReturnType<typeof userEvent.setup>,
+  ownership = '100',
+) => {
   await heading('About you');
   await paste(user, 'Email', 'lawyer@example.com');
   await paste(user, 'First name', 'Ana');
   await paste(user, 'Last name', 'Ng');
   await paste(user, 'Job title', 'Owner');
-  await paste(user, 'Ownership (%)', '100');
+  await paste(user, 'Ownership (%)', ownership);
   await typeDate(user, '04281985');
   await paste(user, 'SSN', '123456789');
   await paste(user, 'Home address', '2 Oak St');
@@ -422,7 +427,7 @@ describe('CreateAccountSetup', () => {
   });
 
   describe.each([
-    ['Usio', 'Review & submit'],
+    ['Usio', 'Beneficial owners'],
     ['Dwolla', 'Beneficial owners'],
   ])('%s about you', (provider, nextHeading) => {
     const toAbout = async () => {
@@ -462,7 +467,7 @@ describe('CreateAccountSetup', () => {
       await screen.findByRole('dialog');
 
       expect(
-        screen.queryByText('Enter your full date of birth'),
+        screen.queryByText('Enter full date of birth'),
       ).not.toBeInTheDocument();
     });
 
@@ -473,7 +478,7 @@ describe('CreateAccountSetup', () => {
       await user.tab();
 
       expect(
-        await screen.findByText('You must be 18 or older'),
+        await screen.findByText('Must be 18 or older'),
       ).toBeInTheDocument();
     });
 
@@ -484,9 +489,7 @@ describe('CreateAccountSetup', () => {
       await user.tab();
       await clickNext(user);
 
-      expect(
-        screen.queryByText('You must be 18 or older'),
-      ).not.toBeInTheDocument();
+      expect(screen.queryByText('Must be 18 or older')).not.toBeInTheDocument();
 
       await typeDate(
         user,
@@ -495,7 +498,7 @@ describe('CreateAccountSetup', () => {
       await user.tab();
 
       expect(
-        await screen.findByText('You must be 18 or older'),
+        await screen.findByText('Must be 18 or older'),
       ).toBeInTheDocument();
     });
 
@@ -506,7 +509,7 @@ describe('CreateAccountSetup', () => {
       await user.tab();
 
       expect(
-        await screen.findByText('Enter your full date of birth'),
+        await screen.findByText('Enter full date of birth'),
       ).toBeInTheDocument();
     });
 
@@ -556,10 +559,10 @@ describe('CreateAccountSetup', () => {
     });
 
     it.each([
-      ['24', true],
+      ['0', true],
       ['101', true],
-      ['25.5', true],
-      ['25', false],
+      ['12.5', true],
+      ['1', false],
       ['100', false],
     ])('checks the ownership %s', async (value, isInvalid) => {
       const { user } = await toAbout();
@@ -567,9 +570,9 @@ describe('CreateAccountSetup', () => {
       await paste(user, 'Ownership (%)', value);
       await user.tab();
 
-      expect(screen.queryByText('Enter a number from 25 to 100') !== null).toBe(
-        isInvalid,
-      );
+      expect(
+        screen.queryByText('Enter a whole number from 1 to 100') !== null,
+      ).toBe(isInvalid);
     });
 
     it('does not mention additional owners', async () => {
@@ -635,6 +638,293 @@ describe('CreateAccountSetup', () => {
     });
   });
 
+  describe.each([
+    ['Usio', 'Review & submit'],
+    ['Dwolla', 'ID documents'],
+  ])('%s beneficial owners', (provider, nextHeading) => {
+    // Walks to the owners screen with the applicant owning 60%.
+    const toOwners = async () => {
+      const wizard = renderWizard();
+
+      await chooseProvider(wizard.user, provider);
+      await heading('Business details');
+      await fillBusiness(wizard.user);
+      await clickNext(wizard.user);
+      await fillAbout(wizard.user, '60');
+      await clickNext(wizard.user);
+      await heading('Beneficial owners');
+
+      return wizard;
+    };
+
+    const fillOwner = async (
+      user: ReturnType<typeof userEvent.setup>,
+      ownership: string,
+    ) => {
+      await paste(user, 'First name', 'Ben');
+      await paste(user, 'Last name', 'Ortiz');
+      await typeDate(user, '02031979');
+      await paste(user, 'Ownership (%)', ownership);
+      await paste(user, 'SSN', '987654321');
+      await paste(user, 'Home address', '3 Elm St');
+      await paste(user, 'City', 'Austin');
+      await choose(user, 'State', 'Texas');
+      await paste(user, 'ZIP code', '78703');
+    };
+
+    const closed = () =>
+      waitFor(() =>
+        expect(screen.queryByRole('dialog')).not.toBeInTheDocument(),
+      );
+
+    const addOwner = async (
+      user: ReturnType<typeof userEvent.setup>,
+      ownership: string,
+    ) => {
+      await user.click(screen.getByRole('button', { name: 'Add owner' }));
+      const dialog = await screen.findByRole('dialog', { name: 'Add owner' });
+
+      await fillOwner(user, ownership);
+      await user.click(within(dialog).getByRole('button', { name: 'Save' }));
+      await closed();
+    };
+
+    it('shows you from About you', async () => {
+      await toOwners();
+
+      expect(
+        screen.getByText('List everyone who owns 25% or more of the firm.'),
+      ).toBeInTheDocument();
+      expect(screen.getByText('Ana Ng (you)')).toBeInTheDocument();
+      expect(screen.getByText('60%')).toBeInTheDocument();
+      expect(screen.getByText('Total: 60%')).toBeInTheDocument();
+      expect(
+        screen.getByRole('button', { name: 'Edit your details' }),
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByRole('button', { name: /^Remove/ }),
+      ).not.toBeInTheDocument();
+    });
+
+    it('adds an owner', async () => {
+      const { user } = await toOwners();
+
+      await addOwner(user, '40');
+
+      expect(screen.getByText('Ben Ortiz')).toBeInTheDocument();
+      expect(screen.getByText('40%')).toBeInTheDocument();
+      expect(screen.getByText('02/03/1979')).toBeInTheDocument();
+      expect(screen.getByText('Total: 100%')).toBeInTheDocument();
+      expect(
+        screen.queryByRole('button', { name: 'Add owner' }),
+      ).not.toBeInTheDocument();
+      expect(screen.queryByText(/987/)).not.toBeInTheDocument();
+    });
+
+    it('saves an owner with Enter without leaving the screen', async () => {
+      const { user } = await toOwners();
+
+      await user.click(screen.getByRole('button', { name: 'Add owner' }));
+      await screen.findByRole('dialog', { name: 'Add owner' });
+      await fillOwner(user, '40');
+      await user.click(screen.getByLabelText('ZIP code'));
+      await user.keyboard('{Enter}');
+      await closed();
+
+      expect(screen.getByText('Ben Ortiz')).toBeInTheDocument();
+      expect(
+        screen.getByRole('heading', { level: 1, name: 'Beneficial owners' }),
+      ).toBeInTheDocument();
+    });
+
+    it('edits an owner', async () => {
+      const { user } = await toOwners();
+
+      await addOwner(user, '30');
+      await user.click(screen.getByRole('button', { name: 'Edit Ben Ortiz' }));
+      const dialog = await screen.findByRole('dialog', {
+        name: 'Edit owner',
+      });
+
+      expect(within(dialog).getByLabelText('First name')).toHaveValue('Ben');
+      expect(within(dialog).getByLabelText('Ownership (%)')).toHaveValue('30');
+
+      await user.clear(within(dialog).getByLabelText('Ownership (%)'));
+      await paste(user, 'Ownership (%)', '40');
+      await user.click(within(dialog).getByRole('button', { name: 'Save' }));
+      await closed();
+
+      expect(screen.getByText('40%')).toBeInTheDocument();
+      expect(screen.getByText('Total: 100%')).toBeInTheDocument();
+    });
+
+    it('saves an owner unchanged at a full total', async () => {
+      const { user } = await toOwners();
+
+      await addOwner(user, '40');
+      await user.click(screen.getByRole('button', { name: 'Edit Ben Ortiz' }));
+      const dialog = await screen.findByRole('dialog', {
+        name: 'Edit owner',
+      });
+
+      await user.click(within(dialog).getByRole('button', { name: 'Save' }));
+      await closed();
+
+      expect(screen.getByText('Total: 100%')).toBeInTheDocument();
+    });
+
+    it('limits an owner to what is left', async () => {
+      const { user } = await toOwners();
+
+      await user.click(screen.getByRole('button', { name: 'Add owner' }));
+      await screen.findByRole('dialog', { name: 'Add owner' });
+      await paste(user, 'Ownership (%)', '41');
+      await user.tab();
+
+      expect(await screen.findByText('Enter 40% or less')).toBeInTheDocument();
+    });
+
+    it('removes only the chosen owner', async () => {
+      const { user } = await toOwners();
+
+      await addOwner(user, '10');
+      await addOwner(user, '20');
+      await user.click(
+        screen.getAllByRole('button', { name: 'Remove Ben Ortiz' })[0],
+      );
+      const confirm = await screen.findByRole('alertdialog', {
+        name: 'Remove Ben Ortiz?',
+      });
+
+      await user.click(within(confirm).getByRole('button', { name: 'Remove' }));
+      await waitFor(() =>
+        expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument(),
+      );
+
+      expect(screen.getAllByText('Ben Ortiz')).toHaveLength(1);
+      expect(screen.getByText('20%')).toBeInTheDocument();
+      expect(screen.queryByText('10%')).not.toBeInTheDocument();
+    });
+
+    it('keeps the owner when removal is cancelled', async () => {
+      const { user } = await toOwners();
+
+      await addOwner(user, '40');
+      await user.click(
+        screen.getByRole('button', { name: 'Remove Ben Ortiz' }),
+      );
+      const confirm = await screen.findByRole('alertdialog', {
+        name: 'Remove Ben Ortiz?',
+      });
+
+      await user.click(within(confirm).getByRole('button', { name: 'Keep' }));
+      await waitFor(() =>
+        expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument(),
+      );
+
+      expect(screen.getByText('Ben Ortiz')).toBeInTheDocument();
+    });
+
+    it('blocks a total over 100% on Next', async () => {
+      const { user } = await toOwners();
+
+      await addOwner(user, '40');
+      await clickBack(user);
+      await heading('About you');
+      await user.clear(screen.getByLabelText('Ownership (%)'));
+      await paste(user, 'Ownership (%)', '70');
+      await clickNext(user);
+      await heading('Beneficial owners');
+      await clickNext(user);
+
+      const alert = await screen.findByRole('alert');
+
+      expect(alert).toHaveTextContent(
+        "Total ownership is 110%. It can't be over 100%.",
+      );
+      expect(alert).toHaveFocus();
+      expect(
+        screen.getByRole('heading', { level: 1, name: 'Beneficial owners' }),
+      ).toBeInTheDocument();
+    });
+
+    it('goes on with a total under 100%', async () => {
+      const { user } = await toOwners();
+
+      await clickNext(user);
+
+      expect(await heading(nextHeading)).toBeInTheDocument();
+    });
+
+    it('edit your details goes to About you', async () => {
+      const { user } = await toOwners();
+
+      await user.click(
+        screen.getByRole('button', { name: 'Edit your details' }),
+      );
+
+      expect(await heading('About you')).toBeInTheDocument();
+    });
+
+    it("keeps each provider's owners apart", async () => {
+      const { router, user } = await toOwners();
+      const other = provider === 'Usio' ? 'Dwolla' : 'Usio';
+      const toProviderChoice = async () => {
+        await act(() => router.navigate(-1));
+        await heading('About you');
+        await act(() => router.navigate(-1));
+        await heading('Business details');
+        await act(() => router.navigate(-1));
+      };
+
+      await addOwner(user, '40');
+      await toProviderChoice();
+      await chooseProvider(user, other);
+      await heading('Business details');
+      await fillBusiness(user);
+      await clickNext(user);
+      await fillAbout(user, '60');
+      await clickNext(user);
+      await heading('Beneficial owners');
+
+      expect(screen.queryByText('Ben Ortiz')).not.toBeInTheDocument();
+
+      await toProviderChoice();
+      await chooseProvider(user, provider);
+      await heading('Business details');
+      await clickNext(user);
+      await heading('About you');
+      await clickNext(user);
+      await heading('Beneficial owners');
+
+      expect(screen.getByText('Ben Ortiz')).toBeInTheDocument();
+    });
+
+    it('start over clears owners', async () => {
+      const { user } = await toOwners();
+
+      await addOwner(user, '40');
+      await clickBack(user);
+      await heading('About you');
+      await clickBack(user);
+      await heading('Business details');
+      await clickBack(user);
+      await user.click(
+        await screen.findByRole('button', { name: 'Start over' }),
+      );
+      await chooseProvider(user, provider);
+      await heading('Business details');
+      await fillBusiness(user);
+      await clickNext(user);
+      await fillAbout(user, '60');
+      await clickNext(user);
+      await heading('Beneficial owners');
+
+      expect(screen.queryByText('Ben Ortiz')).not.toBeInTheDocument();
+      expect(screen.getByText('Total: 60%')).toBeInTheDocument();
+    });
+  });
+
   describe('step indicator', () => {
     const STEP_TEXT = /^Step \d of \d/;
 
@@ -676,9 +966,10 @@ describe('CreateAccountSetup', () => {
     });
 
     it.each([
-      ['Usio', 'Business details', 'Step 1 of 4: Business details'],
-      ['Usio', 'About you', 'Step 1 of 4: Business details'],
-      ['Usio', 'Review & submit', 'Step 2 of 4: Review & submit'],
+      ['Usio', 'Business details', 'Step 1 of 5: Business details'],
+      ['Usio', 'About you', 'Step 1 of 5: Business details'],
+      ['Usio', 'Beneficial owners', 'Step 2 of 5: Beneficial owners'],
+      ['Usio', 'Review & submit', 'Step 3 of 5: Review & submit'],
       ['Dwolla', 'About you', 'Step 1 of 5: Business details'],
       ['Dwolla', 'ID documents', 'Step 2 of 5: Ownership & ID'],
       ['Dwolla', 'Portal', 'Step 5 of 5: Portal'],
@@ -739,7 +1030,7 @@ describe('CreateAccountSetup', () => {
 
       expect(await heading('Business details')).toBeInTheDocument();
       expect(
-        screen.getByText('Step 1 of 4: Business details'),
+        screen.getByText('Step 1 of 5: Business details'),
       ).toBeInTheDocument();
     });
 
@@ -759,13 +1050,13 @@ describe('CreateAccountSetup', () => {
       await chooseProvider(user, 'Usio');
       await heading('Business details');
       await passBusinessDetails(user);
-      await heading('Review & submit');
+      await heading('Beneficial owners');
       await user.dblClick(screen.getByRole('button', { name: 'Next' }));
 
-      expect(await heading('Agreement')).toBeInTheDocument();
+      expect(await heading('Review & submit')).toBeInTheDocument();
       await vi.advanceTimersByTimeAsync(100);
       expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
-        'Agreement',
+        'Review & submit',
       );
     });
 
@@ -775,7 +1066,7 @@ describe('CreateAccountSetup', () => {
       await chooseProvider(user, 'Usio');
       await heading('Business details');
       await passBusinessDetails(user);
-      await heading('Review & submit');
+      await heading('Beneficial owners');
       await act(() => router.navigate(-1));
       await heading('About you');
       await act(() => router.navigate(-1));
@@ -783,7 +1074,7 @@ describe('CreateAccountSetup', () => {
       await act(() => router.navigate(-1));
       await chooseProvider(user, 'Dwolla');
       await heading('Business details');
-      await act(() => router.navigate(PATHS.setupOwners));
+      await act(() => router.navigate(PATHS.setupDwollaOwners));
 
       expect(await heading('Business details')).toBeInTheDocument();
     });

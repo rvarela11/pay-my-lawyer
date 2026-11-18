@@ -16,6 +16,7 @@ export const USIO_FIELDS = {
   jobTitle: 'jobTitle',
   lastName: 'lastName',
   legalBusinessName: 'legalBusinessName',
+  owners: 'owners',
   ownership: 'ownership',
   phone: 'phone',
   ssn: 'ssn',
@@ -53,3 +54,5 @@ export const USIO_BUSINESS_FIELDS = [
   USIO_FIELDS.phone,
   USIO_FIELDS.website,
 ] as const;
+
+export const USIO_OWNERS_FIELDS = [USIO_FIELDS.owners] as const;

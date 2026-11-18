@@ -21,10 +21,20 @@ const LAZY_SCREENS: Partial<Record<string, RouteObject['lazy']>> = {
       await import('./screens/providers/dwolla/DwollaAboutScreen/DwollaAboutScreen.tsx')
     ).DwollaAboutScreen,
   }),
+  dwollaOwners: async () => ({
+    Component: (
+      await import('./screens/providers/dwolla/DwollaOwnersScreen/DwollaOwnersScreen.tsx')
+    ).DwollaOwnersScreen,
+  }),
   usioAbout: async () => ({
     Component: (
       await import('./screens/providers/usio/UsioAboutScreen/UsioAboutScreen.tsx')
     ).UsioAboutScreen,
+  }),
+  usioOwners: async () => ({
+    Component: (
+      await import('./screens/providers/usio/UsioOwnersScreen/UsioOwnersScreen.tsx')
+    ).UsioOwnersScreen,
   }),
 };
 

@@ -25,11 +25,11 @@ export const CITY_RULE = string()
 export const DATE_OF_BIRTH_RULE = mixed<Dayjs>()
   .nullable()
   .default(null)
-  .test('required', 'Enter your full date of birth', (value) => value != null)
+  .test('required', 'Enter full date of birth', (value) => value != null)
   .test('real', 'Enter a real date of birth', (value) => !!value?.isValid())
   .test(
     'adult',
-    'You must be 18 or older',
+    'Must be 18 or older',
     (value) => !value?.isAfter(dayjs().subtract(18, 'year'), 'day'),
   );
 
@@ -77,9 +77,9 @@ export const OWNERSHIP_RULE = string()
   .required('Ownership is required')
   .test(
     'ownership',
-    'Enter a number from 25 to 100',
+    'Enter a whole number from 1 to 100',
     (value) =>
-      /^\d+$/.test(value ?? '') && Number(value) >= 25 && Number(value) <= 100,
+      /^\d+$/.test(value ?? '') && Number(value) >= 1 && Number(value) <= 100,
   );
 
 export const PHONE_RULE = string()
