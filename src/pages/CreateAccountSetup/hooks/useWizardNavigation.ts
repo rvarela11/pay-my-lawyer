@@ -31,13 +31,18 @@ export const useWizardNavigation = ({ forms, progress, screen }: Options) => {
     }
 
     const { fields } = SCREENS[screen];
+    const form = forms.getForm(screen, provider);
 
     if (
       fields.length > 0 &&
-      !(await forms
-        .getForm(screen, provider)
-        .trigger([...fields], { shouldFocus: true }))
+      !(await form.trigger([...fields], { shouldFocus: true }))
     ) {
+      // Next checks fields without submitting, so mark them touched: onTouched then re-checks
+      // each change and clears an error as soon as it's fixed.
+      for (const field of fields) {
+        form.setValue(field, form.getValues(field), { shouldTouch: true });
+      }
+
       return;
     }
 

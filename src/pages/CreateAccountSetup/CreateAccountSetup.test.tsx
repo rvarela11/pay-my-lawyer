@@ -293,6 +293,27 @@ describe('CreateAccountSetup', () => {
       );
     });
 
+    it('clears an error from Next as soon as the field is fixed', async () => {
+      const { user } = await toBusiness();
+
+      await clickNext(user);
+
+      expect(
+        screen.getByText('Legal business name is required'),
+      ).toBeInTheDocument();
+      expect(screen.getByText('EIN is required')).toBeInTheDocument();
+
+      await paste(user, 'Legal business name', 'Big Law');
+
+      expect(
+        screen.queryByText('Legal business name is required'),
+      ).not.toBeInTheDocument();
+
+      await paste(user, 'EIN', '123456789');
+
+      expect(screen.queryByText('EIN is required')).not.toBeInTheDocument();
+    });
+
     it('says a malformed EIN needs 9 digits', async () => {
       const { user } = await toBusiness();
 
