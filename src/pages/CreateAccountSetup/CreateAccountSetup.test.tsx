@@ -423,7 +423,7 @@ describe('CreateAccountSetup', () => {
   });
 
   describe.each([
-    ['Usio', 'Review & submit'],
+    ['Usio', 'Beneficial owners'],
     ['Dwolla', 'Beneficial owners'],
   ])('%s about you', (provider, nextHeading) => {
     const toAbout = async () => {
@@ -710,9 +710,10 @@ describe('CreateAccountSetup', () => {
     });
 
     it.each([
-      ['Usio', 'Business details', 'Step 1 of 4: Business details'],
-      ['Usio', 'About you', 'Step 1 of 4: Business details'],
-      ['Usio', 'Review & submit', 'Step 2 of 4: Review & submit'],
+      ['Usio', 'Business details', 'Step 1 of 5: Business details'],
+      ['Usio', 'About you', 'Step 1 of 5: Business details'],
+      ['Usio', 'Beneficial owners', 'Step 2 of 5: Beneficial owners'],
+      ['Usio', 'Review & submit', 'Step 3 of 5: Review & submit'],
       ['Dwolla', 'About you', 'Step 1 of 5: Business details'],
       ['Dwolla', 'ID documents', 'Step 2 of 5: Ownership & ID'],
       ['Dwolla', 'Portal', 'Step 5 of 5: Portal'],
@@ -773,7 +774,7 @@ describe('CreateAccountSetup', () => {
 
       expect(await heading('Business details')).toBeInTheDocument();
       expect(
-        screen.getByText('Step 1 of 4: Business details'),
+        screen.getByText('Step 1 of 5: Business details'),
       ).toBeInTheDocument();
     });
 
@@ -793,13 +794,13 @@ describe('CreateAccountSetup', () => {
       await chooseProvider(user, 'Usio');
       await heading('Business details');
       await passBusinessDetails(user);
-      await heading('Review & submit');
+      await heading('Beneficial owners');
       await user.dblClick(screen.getByRole('button', { name: 'Next' }));
 
-      expect(await heading('Agreement')).toBeInTheDocument();
+      expect(await heading('Review & submit')).toBeInTheDocument();
       await vi.advanceTimersByTimeAsync(100);
       expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
-        'Agreement',
+        'Review & submit',
       );
     });
 
@@ -809,7 +810,7 @@ describe('CreateAccountSetup', () => {
       await chooseProvider(user, 'Usio');
       await heading('Business details');
       await passBusinessDetails(user);
-      await heading('Review & submit');
+      await heading('Beneficial owners');
       await act(() => router.navigate(-1));
       await heading('About you');
       await act(() => router.navigate(-1));
@@ -817,7 +818,7 @@ describe('CreateAccountSetup', () => {
       await act(() => router.navigate(-1));
       await chooseProvider(user, 'Dwolla');
       await heading('Business details');
-      await act(() => router.navigate(PATHS.setupOwners));
+      await act(() => router.navigate(PATHS.setupDwollaOwners));
 
       expect(await heading('Business details')).toBeInTheDocument();
     });

@@ -17,6 +17,7 @@ export const DWOLLA_FIELDS = {
   jobTitle: 'jobTitle',
   lastName: 'lastName',
   legalBusinessName: 'legalBusinessName',
+  owners: 'owners',
   ownership: 'ownership',
   phone: 'phone',
   ssn: 'ssn',
@@ -55,3 +56,5 @@ export const DWOLLA_BUSINESS_FIELDS = [
   DWOLLA_FIELDS.phone,
   DWOLLA_FIELDS.website,
 ] as const;
+
+export const DWOLLA_OWNERS_FIELDS = [DWOLLA_FIELDS.owners] as const;

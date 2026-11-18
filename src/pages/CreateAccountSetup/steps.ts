@@ -9,10 +9,12 @@ import {
 import {
   DWOLLA_ABOUT_FIELDS,
   DWOLLA_BUSINESS_FIELDS,
+  DWOLLA_OWNERS_FIELDS,
 } from './screens/providers/dwolla/fields.ts';
 import {
   USIO_ABOUT_FIELDS,
   USIO_BUSINESS_FIELDS,
+  USIO_OWNERS_FIELDS,
 } from './screens/providers/usio/fields.ts';
 
 // fields: the names Next checks, in the form the screen belongs to.
@@ -42,12 +44,12 @@ export const SCREENS: Record<ScreenId, Screen> = {
     path: PATHS.setupDwollaBusiness,
     title: 'Business details',
   },
-  [SCREEN_IDS.ids]: { fields: [], path: PATHS.setupIds, title: 'ID documents' },
-  [SCREEN_IDS.owners]: {
-    fields: [],
-    path: PATHS.setupOwners,
+  [SCREEN_IDS.dwollaOwners]: {
+    fields: DWOLLA_OWNERS_FIELDS,
+    path: PATHS.setupDwollaOwners,
     title: 'Beneficial owners',
   },
+  [SCREEN_IDS.ids]: { fields: [], path: PATHS.setupIds, title: 'ID documents' },
   [SCREEN_IDS.portal]: { fields: [], path: PATHS.setupPortal, title: 'Portal' },
   [SCREEN_IDS.provider]: {
     fields: [FIELDS.provider],
@@ -69,6 +71,11 @@ export const SCREENS: Record<ScreenId, Screen> = {
     path: PATHS.setupUsioBusiness,
     title: 'Business details',
   },
+  [SCREEN_IDS.usioOwners]: {
+    fields: USIO_OWNERS_FIELDS,
+    path: PATHS.setupUsioOwners,
+    title: 'Beneficial owners',
+  },
 };
 
 // The stages each path shows in the step indicator. "later" has no indicator.
@@ -78,7 +85,10 @@ export const STAGES: Record<Provider, readonly Stage[]> = {
       label: 'Business details',
       screens: [SCREEN_IDS.dwollaBusiness, SCREEN_IDS.dwollaAbout],
     },
-    { label: 'Ownership & ID', screens: [SCREEN_IDS.owners, SCREEN_IDS.ids] },
+    {
+      label: 'Ownership & ID',
+      screens: [SCREEN_IDS.dwollaOwners, SCREEN_IDS.ids],
+    },
     { label: 'Review & submit', screens: [SCREEN_IDS.review] },
     { label: 'Bank account', screens: [SCREEN_IDS.bankAccount] },
     { label: 'Portal', screens: [SCREEN_IDS.portal] },
@@ -89,6 +99,7 @@ export const STAGES: Record<Provider, readonly Stage[]> = {
       label: 'Business details',
       screens: [SCREEN_IDS.usioBusiness, SCREEN_IDS.usioAbout],
     },
+    { label: 'Beneficial owners', screens: [SCREEN_IDS.usioOwners] },
     { label: 'Review & submit', screens: [SCREEN_IDS.review] },
     { label: 'Agreement', screens: [SCREEN_IDS.agreement] },
     { label: 'Portal', screens: [SCREEN_IDS.portal] },

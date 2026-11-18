@@ -13,13 +13,14 @@ export const SCREEN_IDS = {
   bankAccount: 'bankAccount',
   dwollaAbout: 'dwollaAbout',
   dwollaBusiness: 'dwollaBusiness',
+  dwollaOwners: 'dwollaOwners',
   ids: 'ids',
-  owners: 'owners',
   portal: 'portal',
   provider: 'provider',
   review: 'review',
   usioAbout: 'usioAbout',
   usioBusiness: 'usioBusiness',
+  usioOwners: 'usioOwners',
 } as const;
 
 export type ScreenId = (typeof SCREEN_IDS)[keyof typeof SCREEN_IDS];
