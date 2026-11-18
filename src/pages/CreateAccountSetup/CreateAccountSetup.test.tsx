@@ -12,8 +12,9 @@ import { createMemoryRouter, RouterProvider } from 'react-router';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { PATHS } from '../../routes/paths.ts';
 import { CREATE_ACCOUNT_SETUP_ROUTE } from './createAccountSetupRoute.tsx';
-// About you is loaded on demand. Importing it here loads its code before any test runs, so
-// the first test to reach it doesn't wait on that load.
+// The About you screens load on demand. Importing them here loads their code before any test
+// runs, so the first test to reach one doesn't wait on that load.
+import './screens/providers/dwolla/DwollaAboutScreen/DwollaAboutScreen.tsx';
 import './screens/providers/usio/UsioAboutScreen/UsioAboutScreen.tsx';
 
 const PROVIDER_HEADING = 'How would you like to get paid?';
@@ -55,17 +56,8 @@ const choose = async (
   await user.click(await screen.findByRole('option', { name: option }));
 };
 
-// Fills every required field on the provider's Business details screen. Dwolla's has
-// only Legal business name until #55.
-const fillBusiness = async (
-  user: ReturnType<typeof userEvent.setup>,
-  provider = 'Usio',
-) => {
-  if (provider === 'Dwolla') {
-    await paste(user, 'Legal business name', 'Demo Law PLLC');
-    return;
-  }
-
+// Fills every required field on the provider's Business details screen.
+const fillBusiness = async (user: ReturnType<typeof userEvent.setup>) => {
   await choose(user, 'Business type', 'PLLC');
   await paste(user, 'Legal business name', 'Demo Law PLLC');
   await paste(user, 'EIN', '123456789');
@@ -87,18 +79,9 @@ const typeDate = async (
   await user.keyboard(value);
 };
 
-// Fills every required field on the provider's About you screen. Dwolla's is a placeholder
-// until #55.
-const fillAbout = async (
-  user: ReturnType<typeof userEvent.setup>,
-  provider = 'Usio',
-) => {
+// Fills every required field on the provider's About you screen.
+const fillAbout = async (user: ReturnType<typeof userEvent.setup>) => {
   await heading('About you');
-
-  if (provider === 'Dwolla') {
-    return;
-  }
-
   await paste(user, 'Email', 'lawyer@example.com');
   await paste(user, 'First name', 'Ana');
   await paste(user, 'Last name', 'Ng');
@@ -234,9 +217,9 @@ describe('CreateAccountSetup', () => {
 
     await chooseProvider(user, 'Dwolla');
     await heading('Business details');
-    await fillBusiness(user, 'Dwolla');
+    await fillBusiness(user);
     await clickNext(user);
-    await fillAbout(user, 'Dwolla');
+    await fillAbout(user);
 
     for (const name of [
       'Beneficial owners',
@@ -264,7 +247,7 @@ describe('CreateAccountSetup', () => {
     expect(await heading(PROVIDER_HEADING)).toBeInTheDocument();
   });
 
-  describe.each(['Usio'])('%s business details', (provider) => {
+  describe.each(['Usio', 'Dwolla'])('%s business details', (provider) => {
     const toBusiness = async () => {
       const wizard = renderWizard();
 
@@ -438,13 +421,16 @@ describe('CreateAccountSetup', () => {
     });
   });
 
-  describe.each(['Usio'])('%s about you', (provider) => {
+  describe.each([
+    ['Usio', 'Review & submit'],
+    ['Dwolla', 'Beneficial owners'],
+  ])('%s about you', (provider, nextHeading) => {
     const toAbout = async () => {
       const wizard = renderWizard();
 
       await chooseProvider(wizard.user, provider);
       await heading('Business details');
-      await fillBusiness(wizard.user, provider);
+      await fillBusiness(wizard.user);
       await clickNext(wizard.user);
       await heading('About you');
 
@@ -595,19 +581,20 @@ describe('CreateAccountSetup', () => {
     it('goes on after a complete screen', async () => {
       const { user } = await toAbout();
 
-      await fillAbout(user, provider);
+      await fillAbout(user);
       await clickNext(user);
 
-      expect(await heading('Review & submit')).toBeInTheDocument();
+      expect(await heading(nextHeading)).toBeInTheDocument();
     });
 
     it("keeps each provider's answers", async () => {
       const { router, user } = await toAbout();
+      const other = provider === 'Usio' ? 'Dwolla' : 'Usio';
 
       await act(() => router.navigate(-1));
       await heading('Business details');
       await act(() => router.navigate(-1));
-      await chooseProvider(user, 'Dwolla');
+      await chooseProvider(user, other);
       await heading('Business details');
 
       expect(screen.getByLabelText('Legal business name')).toHaveValue('');
@@ -624,7 +611,7 @@ describe('CreateAccountSetup', () => {
     it('start over clears every new field', async () => {
       const { user } = await toAbout();
 
-      await fillAbout(user, provider);
+      await fillAbout(user);
       await clickBack(user);
       await heading('Business details');
       await clickBack(user);
@@ -636,7 +623,7 @@ describe('CreateAccountSetup', () => {
 
       expect(screen.getByLabelText('Legal business name')).toHaveValue('');
 
-      await fillBusiness(user, provider);
+      await fillBusiness(user);
       await clickNext(user);
       await heading('About you');
 
@@ -665,9 +652,9 @@ describe('CreateAccountSetup', () => {
         const current = title().textContent;
 
         if (current === 'Business details') {
-          await fillBusiness(user, provider);
+          await fillBusiness(user);
         } else if (current === 'About you') {
-          await fillAbout(user, provider);
+          await fillAbout(user);
         }
 
         await clickNext(user);
@@ -862,15 +849,18 @@ describe('CreateAccountSetup', () => {
       );
     });
 
-    it('goes straight back when nothing was typed', async () => {
-      const { user } = renderWizard();
+    it.each(['Usio', 'Dwolla'])(
+      'goes straight back from %s when nothing was typed',
+      async (provider) => {
+        const { user } = renderWizard();
 
-      await chooseProvider(user, 'Usio');
-      await heading('Business details');
-      await clickBack(user);
+        await chooseProvider(user, provider);
+        await heading('Business details');
+        await clickBack(user);
 
-      expect(await heading(PROVIDER_HEADING)).toBeInTheDocument();
-      expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument();
-    });
+        expect(await heading(PROVIDER_HEADING)).toBeInTheDocument();
+        expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument();
+      },
+    );
   });
 });

@@ -1,11 +1,55 @@
 export const DWOLLA_FIELDS = {
+  address1: 'address1',
+  address2: 'address2',
+  businessType: 'businessType',
+  city: 'city',
+  dateOfBirth: 'dateOfBirth',
+  dba: 'dba',
+  ein: 'ein',
+  email: 'email',
+  firstName: 'firstName',
+  homeAddress1: 'homeAddress1',
+  homeAddress2: 'homeAddress2',
+  homeCity: 'homeCity',
+  homeState: 'homeState',
+  homeZip: 'homeZip',
+  jobTitle: 'jobTitle',
+  lastName: 'lastName',
   legalBusinessName: 'legalBusinessName',
+  ownership: 'ownership',
+  phone: 'phone',
+  ssn: 'ssn',
+  state: 'state',
+  website: 'website',
+  zip: 'zip',
 } as const;
 
 // Each screen's fields in on-screen order: Next checks them and focuses the first invalid one.
-// About you has none until #55.
-export const DWOLLA_ABOUT_FIELDS = [] as const;
+export const DWOLLA_ABOUT_FIELDS = [
+  DWOLLA_FIELDS.email,
+  DWOLLA_FIELDS.firstName,
+  DWOLLA_FIELDS.lastName,
+  DWOLLA_FIELDS.jobTitle,
+  DWOLLA_FIELDS.ownership,
+  DWOLLA_FIELDS.dateOfBirth,
+  DWOLLA_FIELDS.ssn,
+  DWOLLA_FIELDS.homeAddress1,
+  DWOLLA_FIELDS.homeAddress2,
+  DWOLLA_FIELDS.homeCity,
+  DWOLLA_FIELDS.homeState,
+  DWOLLA_FIELDS.homeZip,
+] as const;
 
 export const DWOLLA_BUSINESS_FIELDS = [
+  DWOLLA_FIELDS.businessType,
   DWOLLA_FIELDS.legalBusinessName,
+  DWOLLA_FIELDS.dba,
+  DWOLLA_FIELDS.ein,
+  DWOLLA_FIELDS.address1,
+  DWOLLA_FIELDS.address2,
+  DWOLLA_FIELDS.city,
+  DWOLLA_FIELDS.state,
+  DWOLLA_FIELDS.zip,
+  DWOLLA_FIELDS.phone,
+  DWOLLA_FIELDS.website,
 ] as const;

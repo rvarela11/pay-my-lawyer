@@ -2,14 +2,12 @@ import { Navigate, type RouteObject } from 'react-router';
 import { PATHS } from '../../routes/paths.ts';
 import { CreateAccountSetup } from './CreateAccountSetup.tsx';
 import { PlaceholderScreen } from './screens/PlaceholderScreen/PlaceholderScreen.tsx';
-import { DwollaAboutScreen } from './screens/providers/dwolla/DwollaAboutScreen/DwollaAboutScreen.tsx';
 import { DwollaBusinessScreen } from './screens/providers/dwolla/DwollaBusinessScreen/DwollaBusinessScreen.tsx';
 import { UsioBusinessScreen } from './screens/providers/usio/UsioBusinessScreen/UsioBusinessScreen.tsx';
 import { ProviderScreen } from './screens/ProviderScreen/ProviderScreen.tsx';
 import { SCREENS } from './steps.ts';
 
 const SCREEN_ELEMENTS = {
-  dwollaAbout: <DwollaAboutScreen />,
   dwollaBusiness: <DwollaBusinessScreen />,
   provider: <ProviderScreen />,
   usioBusiness: <UsioBusinessScreen />,
@@ -18,6 +16,11 @@ const SCREEN_ELEMENTS = {
 // Screens with the date picker load when first opened, so its code stays out of the bundle
 // every page downloads.
 const LAZY_SCREENS: Partial<Record<string, RouteObject['lazy']>> = {
+  dwollaAbout: async () => ({
+    Component: (
+      await import('./screens/providers/dwolla/DwollaAboutScreen/DwollaAboutScreen.tsx')
+    ).DwollaAboutScreen,
+  }),
   usioAbout: async () => ({
     Component: (
       await import('./screens/providers/usio/UsioAboutScreen/UsioAboutScreen.tsx')
