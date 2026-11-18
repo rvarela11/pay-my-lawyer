@@ -1,0 +1,4 @@
+.screen {
+  display: grid;
+  gap: calc(var(--mui-spacing) * 3);
+}
