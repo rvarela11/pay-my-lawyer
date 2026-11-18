@@ -4,7 +4,8 @@ import { useEffect, useRef } from 'react';
 import { OwnerDialog } from '../OwnerDialog/OwnerDialog.tsx';
 import type { Owner } from '../OwnerDialog/validation.ts';
 import { RemoveOwnerDialog } from '../RemoveOwnerDialog/RemoveOwnerDialog.tsx';
-import { useOwnerDialogs } from './hooks/useOwnerDialogs.ts';
+import { useOwnerDialog } from './hooks/useOwnerDialog.ts';
+import { useRemoveOwnerDialog } from './hooks/useRemoveOwnerDialog.ts';
 import {
   type Applicant,
   fullName,
@@ -45,7 +46,8 @@ export const OwnersList = ({
 
   const rows = toOwnerRows(applicant, owners);
   const total = totalOwnership(rows);
-  const dialogs = useOwnerDialogs({ onRemove, onSave, total });
+  const ownerDialog = useOwnerDialog({ onSave, total });
+  const removeDialog = useRemoveOwnerDialog({ onRemove });
 
   // A dialog gives focus back to the button that opened it. Removing an owner, or a save that
   // hides Add owner, takes that button away, so focus goes to Add owner or the list instead of
@@ -58,7 +60,7 @@ export const OwnersList = ({
 
   const handleEdit = (row: OwnerRow) => {
     if (row.owner) {
-      dialogs.openEdit(row.owner);
+      ownerDialog.openEdit(row.owner);
     } else {
       onEditApplicant();
     }
@@ -66,7 +68,7 @@ export const OwnersList = ({
 
   const handleRemove = (row: OwnerRow) => {
     if (row.owner) {
-      dialogs.askRemove(row.owner);
+      removeDialog.ask(row.owner);
     }
   };
 
@@ -86,7 +88,11 @@ export const OwnersList = ({
       {/* Top right, above the list, where it stays in view however many owners there are. */}
       {total < 100 && (
         <div className={styles.toolbar}>
-          <Button onClick={dialogs.openAdd} ref={addRef} startIcon={<Add />}>
+          <Button
+            onClick={ownerDialog.openAdd}
+            ref={addRef}
+            startIcon={<Add />}
+          >
             Add owner
           </Button>
         </div>
@@ -109,23 +115,26 @@ export const OwnersList = ({
         />
       )}
       <OwnerDialog
-        onCancel={dialogs.closeDialog}
+        onCancel={ownerDialog.close}
         onClosed={handleDialogClosed}
-        onSave={dialogs.save}
-        open={dialogs.isDialogOpen}
-        owner={dialogs.dialogOwner}
-        remaining={dialogs.remaining}
+        onSave={ownerDialog.save}
+        open={ownerDialog.isOpen}
+        owner={ownerDialog.owner}
+        remaining={ownerDialog.remaining}
       />
       <RemoveOwnerDialog
         name={
-          dialogs.removing
-            ? fullName(dialogs.removing.firstName, dialogs.removing.lastName)
+          removeDialog.owner
+            ? fullName(
+                removeDialog.owner.firstName,
+                removeDialog.owner.lastName,
+              )
             : ''
         }
-        onCancel={dialogs.cancelRemove}
+        onCancel={removeDialog.cancel}
         onClosed={handleDialogClosed}
-        onConfirm={dialogs.confirmRemove}
-        open={dialogs.isRemoveOpen}
+        onConfirm={removeDialog.confirm}
+        open={removeDialog.isOpen}
       />
     </div>
   );
