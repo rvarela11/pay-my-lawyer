@@ -6,7 +6,7 @@ import {
   DialogContent,
   DialogTitle,
 } from '@mui/material';
-import { type FormEvent, useEffect } from 'react';
+import { type SubmitEvent, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { DateOfBirthField } from '../DateOfBirthField/DateOfBirthField.tsx';
 import { FormGrid, FormGridFullRow } from '../FormGrid/FormGrid.tsx';
@@ -50,7 +50,7 @@ export const OwnerDialog = ({
 
   // The dialog renders inside the wizard's form through a portal, and React events bubble
   // through portals, so its submit must not reach the wizard and trigger Next.
-  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (event: SubmitEvent<HTMLFormElement>) => {
     event.stopPropagation();
     void handleSubmit((values) => {
       onSave({ ...values, id: values.id || crypto.randomUUID() });

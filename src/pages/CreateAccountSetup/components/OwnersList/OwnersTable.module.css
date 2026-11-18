@@ -1,0 +1,28 @@
+/* Browsers underline abbr[title] with dots; a column header doesn't need it. */
+.abbr {
+  text-decoration: none;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+/* Percentages line up digit by digit. */
+.number {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.total {
+  border-bottom: none;
+  color: var(--mui-palette-text-primary);
+}
+
+.visuallyHidden {
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
