@@ -17,10 +17,10 @@ import {
   STATE_RULE,
   WEBSITE_RULE,
   ZIP_RULE,
-} from '../validation.ts';
+} from '../rules.ts';
 import { USIO_FIELDS } from './fields.ts';
 
-export const USIO_FIELDS_SCHEMA = {
+export const USIO_FIELD_RULES = {
   [USIO_FIELDS.usioAddress1]: BUSINESS_ADDRESS_RULE,
   [USIO_FIELDS.usioAddress2]: OPTIONAL_TEXT_RULE,
   [USIO_FIELDS.usioBusinessType]: BUSINESS_TYPE_RULE,
