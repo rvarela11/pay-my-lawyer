@@ -1,4 +1,4 @@
-import { type InferType, object } from 'yup';
+import { array, type InferType, object } from 'yup';
 import {
   BAR_NUMBER_RULE,
   BUSINESS_ADDRESS_RULE,
@@ -41,6 +41,7 @@ export const usioSchema = object({
   [USIO_FIELDS.jobTitle]: JOB_TITLE_RULE,
   [USIO_FIELDS.lastName]: LAST_NAME_RULE,
   [USIO_FIELDS.legalBusinessName]: LEGAL_BUSINESS_NAME_RULE,
+  [USIO_FIELDS.owners]: array().default([]),
   [USIO_FIELDS.ownership]: OWNERSHIP_RULE,
   [USIO_FIELDS.phone]: PHONE_RULE,
   [USIO_FIELDS.ssn]: SSN_RULE,
