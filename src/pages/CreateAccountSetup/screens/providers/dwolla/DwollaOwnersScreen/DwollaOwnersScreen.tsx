@@ -24,9 +24,8 @@ import { OwnerDialog } from '../../../../components/OwnerDialog/OwnerDialog.tsx'
 import type { Owner } from '../../../../components/OwnerDialog/validation.ts';
 import { RemoveOwnerDialog } from '../../../../components/RemoveOwnerDialog/RemoveOwnerDialog.tsx';
 import { DWOLLA_FIELDS } from '../fields.ts';
+import type { DwollaValues } from '../validation.ts';
 import styles from './DwollaOwnersScreen.module.css';
-
-type OwnersError = { message?: string; root?: { message?: string } };
 
 type Row = {
   barNumber: string;
@@ -53,7 +52,7 @@ export const DwollaOwnersScreen = () => {
     clearErrors,
     control,
     formState: { errors },
-  } = useFormContext();
+  } = useFormContext<DwollaValues>();
   const { append, remove, update } = useFieldArray({
     control,
     keyName: 'key',
@@ -70,9 +69,9 @@ export const DwollaOwnersScreen = () => {
         DWOLLA_FIELDS.jobTitle,
         DWOLLA_FIELDS.ownership,
       ],
-    }) as [string, string, string, Dayjs | null, string, string];
+    });
   // Read the values, not useFieldArray's fields, so RHF's own row key never reaches the dialog.
-  const owners = useWatch({ control, name: DWOLLA_FIELDS.owners }) as Owner[];
+  const owners = useWatch({ control, name: DWOLLA_FIELDS.owners });
   const [dialogOwner, setDialogOwner] = useState<Owner | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [removing, setRemoving] = useState<Owner | null>(null);
@@ -103,8 +102,9 @@ export const DwollaOwnersScreen = () => {
   const total = rows.reduce((sum, row) => sum + row.ownership, 0);
   const remaining =
     100 - total + (dialogOwner ? Number(dialogOwner.ownership) : 0);
-  const ownersError = errors[DWOLLA_FIELDS.owners] as OwnersError | undefined;
-  const totalError = ownersError?.message ?? ownersError?.root?.message;
+  const totalError =
+    errors[DWOLLA_FIELDS.owners]?.message ??
+    errors[DWOLLA_FIELDS.owners]?.root?.message;
 
   // Icon buttons keep every row one line high; the tooltip shows each button's name.
   const actions = (row: Row) => {

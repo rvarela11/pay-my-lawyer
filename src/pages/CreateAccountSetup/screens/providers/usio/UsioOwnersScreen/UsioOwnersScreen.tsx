@@ -24,9 +24,8 @@ import { OwnerDialog } from '../../../../components/OwnerDialog/OwnerDialog.tsx'
 import type { Owner } from '../../../../components/OwnerDialog/validation.ts';
 import { RemoveOwnerDialog } from '../../../../components/RemoveOwnerDialog/RemoveOwnerDialog.tsx';
 import { USIO_FIELDS } from '../fields.ts';
+import type { UsioValues } from '../validation.ts';
 import styles from './UsioOwnersScreen.module.css';
-
-type OwnersError = { message?: string; root?: { message?: string } };
 
 type Row = {
   barNumber: string;
@@ -53,7 +52,7 @@ export const UsioOwnersScreen = () => {
     clearErrors,
     control,
     formState: { errors },
-  } = useFormContext();
+  } = useFormContext<UsioValues>();
   const { append, remove, update } = useFieldArray({
     control,
     keyName: 'key',
@@ -70,9 +69,9 @@ export const UsioOwnersScreen = () => {
         USIO_FIELDS.jobTitle,
         USIO_FIELDS.ownership,
       ],
-    }) as [string, string, string, Dayjs | null, string, string];
+    });
   // Read the values, not useFieldArray's fields, so RHF's own row key never reaches the dialog.
-  const owners = useWatch({ control, name: USIO_FIELDS.owners }) as Owner[];
+  const owners = useWatch({ control, name: USIO_FIELDS.owners });
   const [dialogOwner, setDialogOwner] = useState<Owner | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [removing, setRemoving] = useState<Owner | null>(null);
@@ -103,8 +102,9 @@ export const UsioOwnersScreen = () => {
   const total = rows.reduce((sum, row) => sum + row.ownership, 0);
   const remaining =
     100 - total + (dialogOwner ? Number(dialogOwner.ownership) : 0);
-  const ownersError = errors[USIO_FIELDS.owners] as OwnersError | undefined;
-  const totalError = ownersError?.message ?? ownersError?.root?.message;
+  const totalError =
+    errors[USIO_FIELDS.owners]?.message ??
+    errors[USIO_FIELDS.owners]?.root?.message;
 
   // Icon buttons keep every row one line high; the tooltip shows each button's name.
   const actions = (row: Row) => {
