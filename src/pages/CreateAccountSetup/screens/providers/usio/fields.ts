@@ -24,3 +24,33 @@ export const USIO_FIELDS = {
   usioWebsite: 'usioWebsite',
   usioZip: 'usioZip',
 } as const;
+
+// Each screen's fields in on-screen order: Next checks them and focuses the first invalid one.
+export const USIO_ABOUT_FIELDS = [
+  USIO_FIELDS.usioEmail,
+  USIO_FIELDS.usioFirstName,
+  USIO_FIELDS.usioLastName,
+  USIO_FIELDS.usioJobTitle,
+  USIO_FIELDS.usioOwnership,
+  USIO_FIELDS.usioDateOfBirth,
+  USIO_FIELDS.usioSsn,
+  USIO_FIELDS.usioHomeAddress1,
+  USIO_FIELDS.usioHomeAddress2,
+  USIO_FIELDS.usioHomeCity,
+  USIO_FIELDS.usioHomeState,
+  USIO_FIELDS.usioHomeZip,
+] as const;
+
+export const USIO_BUSINESS_FIELDS = [
+  USIO_FIELDS.usioBusinessType,
+  USIO_FIELDS.usioLegalBusinessName,
+  USIO_FIELDS.usioDba,
+  USIO_FIELDS.usioEin,
+  USIO_FIELDS.usioAddress1,
+  USIO_FIELDS.usioAddress2,
+  USIO_FIELDS.usioCity,
+  USIO_FIELDS.usioState,
+  USIO_FIELDS.usioZip,
+  USIO_FIELDS.usioPhone,
+  USIO_FIELDS.usioWebsite,
+] as const;

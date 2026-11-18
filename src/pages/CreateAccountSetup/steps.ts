@@ -6,6 +6,14 @@ import {
   SCREEN_IDS,
   type ScreenId,
 } from './ids.ts';
+import {
+  DWOLLA_ABOUT_FIELDS,
+  DWOLLA_BUSINESS_FIELDS,
+} from './screens/providers/dwolla/fields.ts';
+import {
+  USIO_ABOUT_FIELDS,
+  USIO_BUSINESS_FIELDS,
+} from './screens/providers/usio/fields.ts';
 
 type Screen = { fields: readonly FieldName[]; path: string; title: string };
 
@@ -24,12 +32,12 @@ export const SCREENS: Record<ScreenId, Screen> = {
     title: 'Bank account',
   },
   [SCREEN_IDS.dwollaAbout]: {
-    fields: [],
+    fields: DWOLLA_ABOUT_FIELDS,
     path: PATHS.setupDwollaAbout,
     title: 'About you',
   },
   [SCREEN_IDS.dwollaBusiness]: {
-    fields: [FIELDS.dwollaLegalBusinessName],
+    fields: DWOLLA_BUSINESS_FIELDS,
     path: PATHS.setupDwollaBusiness,
     title: 'Business details',
   },
@@ -51,37 +59,12 @@ export const SCREENS: Record<ScreenId, Screen> = {
     title: 'Review & submit',
   },
   [SCREEN_IDS.usioAbout]: {
-    fields: [
-      FIELDS.usioEmail,
-      FIELDS.usioFirstName,
-      FIELDS.usioLastName,
-      FIELDS.usioJobTitle,
-      FIELDS.usioOwnership,
-      FIELDS.usioDateOfBirth,
-      FIELDS.usioSsn,
-      FIELDS.usioHomeAddress1,
-      FIELDS.usioHomeAddress2,
-      FIELDS.usioHomeCity,
-      FIELDS.usioHomeState,
-      FIELDS.usioHomeZip,
-    ],
+    fields: USIO_ABOUT_FIELDS,
     path: PATHS.setupUsioAbout,
     title: 'About you',
   },
   [SCREEN_IDS.usioBusiness]: {
-    fields: [
-      FIELDS.usioBusinessType,
-      FIELDS.usioLegalBusinessName,
-      FIELDS.usioDba,
-      FIELDS.usioEin,
-      FIELDS.usioAddress1,
-      FIELDS.usioAddress2,
-      FIELDS.usioCity,
-      FIELDS.usioState,
-      FIELDS.usioZip,
-      FIELDS.usioPhone,
-      FIELDS.usioWebsite,
-    ],
+    fields: USIO_BUSINESS_FIELDS,
     path: PATHS.setupUsioBusiness,
     title: 'Business details',
   },
