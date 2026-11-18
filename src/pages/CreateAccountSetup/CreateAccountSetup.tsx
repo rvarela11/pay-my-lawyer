@@ -1,4 +1,3 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Typography } from '@mui/material';
 import {
   type MouseEvent,
@@ -6,18 +5,18 @@ import {
   useLayoutEffect,
   useRef,
 } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider } from 'react-hook-form';
 import { Navigate, Outlet, useLocation } from 'react-router';
 import { Container } from '../../components/Container/Container.tsx';
 import { Section } from '../../components/Section/Section.tsx';
 import { StartOverDialog } from './components/StartOverDialog/StartOverDialog.tsx';
 import { StepIndicator } from './components/StepIndicator/StepIndicator.tsx';
 import styles from './CreateAccountSetup.module.css';
+import { useSetupForms } from './hooks/useSetupForms.ts';
 import { useSetupProgress } from './hooks/useSetupProgress.ts';
 import { useWizardNavigation } from './hooks/useWizardNavigation.ts';
 import { SCREEN_IDS, type ScreenId, TITLE_ID } from './ids.ts';
 import { getScreenByPath, getStagePosition, SCREENS, STAGES } from './steps.ts';
-import { type SetupValues, setupSchema } from './validation.ts';
 
 export const CreateAccountSetup = () => {
   const { pathname } = useLocation();
@@ -25,12 +24,7 @@ export const CreateAccountSetup = () => {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const shownScreen = useRef<ScreenId | null>(null);
 
-  const form = useForm<SetupValues>({
-    defaultValues: setupSchema.getDefault(),
-    mode: 'onTouched',
-    resolver: yupResolver(setupSchema),
-    reValidateMode: 'onChange',
-  });
+  const forms = useSetupForms();
   const progress = useSetupProgress();
   const { furthest, provider } = progress;
   const {
@@ -40,8 +34,9 @@ export const CreateAccountSetup = () => {
     handleStartOverCancel,
     isReachable,
     isStartOverOpen,
-  } = useWizardNavigation({ form, progress, screen });
+  } = useWizardNavigation({ forms, progress, screen });
 
+  const form = forms.getForm(screen, provider);
   const position = screen ? getStagePosition(provider, screen) : null;
 
   // The second click of a double-click (detail 2) would skip the screen that just opened.

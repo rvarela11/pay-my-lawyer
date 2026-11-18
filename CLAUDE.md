@@ -33,6 +33,7 @@ Verify changes with `npx tsc -b && npm run lint && npm test -- --run && npm run 
 - Module order: imports first (packages, then relative paths sorted alphabetically, case-insensitive), then types, then constants, then functions (components and hooks included), each group alphabetical (case-insensitive). A type derived from a constant sits directly under that constant. A constant that another constant reads while the module loads comes first. Keep a comment with the declaration it describes.
 - Keep components focused on rendering. Move stateful logic (data loading, persistence, multi-step navigation, anything with its own state and effects) into custom hooks in a `hooks/` folder beside the component (`src/pages/CreateAccountSetup/hooks/useSetupProgress.ts`). DOM event handlers (`handleSubmit`, `handleClick`) stay in the component. Don't use container components.
 - Order a component body: hooks and state, then derived values, then handlers, then `useEffect`s, then early returns (loading states, `<Navigate>` redirects) directly above the main `return`. Nothing goes between the early returns and the main `return`.
+- Error messages: an empty field says "<Label> is required" ("Email is required"); a wrong format or range says how to fix it, starting with "Enter" ("Enter a valid email", "Enter a 9-digit EIN"). Check an existing page before writing new copy.
 - Name a function that handles an event `handle` + the event or action (`handleClose`, `handleSubmit`), and pass it to an `on`-prefixed prop (`onClose={handleClose}`). Callback props a component accepts keep the `on` prefix (`onClick`).
 
 ## Styling
@@ -47,6 +48,7 @@ Verify changes with `npx tsc -b && npm run lint && npm test -- --run && npm run 
 - Meet WCAG 2.1 AA, stay responsive down to 320px, and respect `prefers-reduced-motion`.
 - A page-specific component gets its own folder under the page (`src/pages/Home/PaymentDemo/`).
 - When a page grows, group its files by role: `screens/` (one per route), `components/`, `hooks/` and `data/` (JSON files and fetch/storage boundaries). Config files (`fields.ts`, `validation.ts`) stay at the page root (see `src/pages/CreateAccountSetup/`).
+- Screens that belong to one payment provider go in `screens/providers/<provider>/`, in a lowercase folder for that provider (`screens/providers/usio/UsioBusinessScreen/`). Screens shared by every path stay at the root of `screens/`. Component names keep the provider prefix so they stay unique. Each provider has its own React Hook Form form, so its folder has its own `fields.ts` (plain field names and each screen's field list) and `validation.ts` (its Yup schema and values type). Rules the providers share live in `screens/providers/rules.ts`. Providers with a form are listed in `screens/providers/schemas.ts` (`PROVIDER_SCHEMAS`), and `hooks/useSetupForms.ts` creates one form per entry in the layout so each provider keeps its answers. Look forms up by provider id; don't branch on each provider.
 - Data sits in a file beside the page or component that uses it (`products.ts`, `PaymentDemo/demo.ts`).
 
 ## SEO

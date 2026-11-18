@@ -1,13 +1,22 @@
 import { PATHS } from '../../routes/paths.ts';
-import { FIELDS, type FieldName } from './fields.ts';
+import { FIELDS } from './fields.ts';
 import {
   PROVIDER_IDS,
   type Provider,
   SCREEN_IDS,
   type ScreenId,
 } from './ids.ts';
+import {
+  DWOLLA_ABOUT_FIELDS,
+  DWOLLA_BUSINESS_FIELDS,
+} from './screens/providers/dwolla/fields.ts';
+import {
+  USIO_ABOUT_FIELDS,
+  USIO_BUSINESS_FIELDS,
+} from './screens/providers/usio/fields.ts';
 
-type Screen = { fields: readonly FieldName[]; path: string; title: string };
+// fields: the names Next checks, in the form the screen belongs to.
+type Screen = { fields: readonly string[]; path: string; title: string };
 
 export type Stage = { label: string; screens: readonly ScreenId[] };
 
@@ -23,15 +32,15 @@ export const SCREENS: Record<ScreenId, Screen> = {
     path: PATHS.setupBankAccount,
     title: 'Bank account',
   },
-  [SCREEN_IDS.business]: {
-    fields: [FIELDS.legalBusinessName],
-    path: PATHS.setupBusiness,
-    title: 'Business details',
+  [SCREEN_IDS.dwollaAbout]: {
+    fields: DWOLLA_ABOUT_FIELDS,
+    path: PATHS.setupDwollaAbout,
+    title: 'About you',
   },
-  [SCREEN_IDS.controller]: {
-    fields: [],
-    path: PATHS.setupController,
-    title: 'Business controller',
+  [SCREEN_IDS.dwollaBusiness]: {
+    fields: DWOLLA_BUSINESS_FIELDS,
+    path: PATHS.setupDwollaBusiness,
+    title: 'Business details',
   },
   [SCREEN_IDS.ids]: { fields: [], path: PATHS.setupIds, title: 'ID documents' },
   [SCREEN_IDS.owners]: {
@@ -50,6 +59,16 @@ export const SCREENS: Record<ScreenId, Screen> = {
     path: PATHS.setupReview,
     title: 'Review & submit',
   },
+  [SCREEN_IDS.usioAbout]: {
+    fields: USIO_ABOUT_FIELDS,
+    path: PATHS.setupUsioAbout,
+    title: 'About you',
+  },
+  [SCREEN_IDS.usioBusiness]: {
+    fields: USIO_BUSINESS_FIELDS,
+    path: PATHS.setupUsioBusiness,
+    title: 'Business details',
+  },
 };
 
 // The stages each path shows in the step indicator. "later" has no indicator.
@@ -57,7 +76,7 @@ export const STAGES: Record<Provider, readonly Stage[]> = {
   [PROVIDER_IDS.dwolla]: [
     {
       label: 'Business details',
-      screens: [SCREEN_IDS.business, SCREEN_IDS.controller],
+      screens: [SCREEN_IDS.dwollaBusiness, SCREEN_IDS.dwollaAbout],
     },
     { label: 'Ownership & ID', screens: [SCREEN_IDS.owners, SCREEN_IDS.ids] },
     { label: 'Review & submit', screens: [SCREEN_IDS.review] },
@@ -66,7 +85,10 @@ export const STAGES: Record<Provider, readonly Stage[]> = {
   ],
   [PROVIDER_IDS.later]: [],
   [PROVIDER_IDS.usio]: [
-    { label: 'Business details', screens: [SCREEN_IDS.business] },
+    {
+      label: 'Business details',
+      screens: [SCREEN_IDS.usioBusiness, SCREEN_IDS.usioAbout],
+    },
     { label: 'Review & submit', screens: [SCREEN_IDS.review] },
     { label: 'Agreement', screens: [SCREEN_IDS.agreement] },
     { label: 'Portal', screens: [SCREEN_IDS.portal] },
