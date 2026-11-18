@@ -12,6 +12,8 @@ type Options = {
 export const useOwnerDialogs = ({ onRemove, onSave, total }: Options) => {
   const [dialogOwner, setDialogOwner] = useState<Owner | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isRemoveOpen, setIsRemoveOpen] = useState(false);
+  // Kept after the Remove dialog closes, so its title keeps the name while it fades out.
   const [removing, setRemoving] = useState<Owner | null>(null);
 
   // What's left for the owner in the dialog: their own % counts as available while editing.
@@ -20,10 +22,11 @@ export const useOwnerDialogs = ({ onRemove, onSave, total }: Options) => {
 
   const askRemove = (owner: Owner) => {
     setRemoving(owner);
+    setIsRemoveOpen(true);
   };
 
   const cancelRemove = () => {
-    setRemoving(null);
+    setIsRemoveOpen(false);
   };
 
   const closeDialog = () => {
@@ -35,7 +38,7 @@ export const useOwnerDialogs = ({ onRemove, onSave, total }: Options) => {
       onRemove(removing.id);
     }
 
-    setRemoving(null);
+    setIsRemoveOpen(false);
   };
 
   const openAdd = () => {
@@ -60,6 +63,7 @@ export const useOwnerDialogs = ({ onRemove, onSave, total }: Options) => {
     confirmRemove,
     dialogOwner,
     isDialogOpen,
+    isRemoveOpen,
     openAdd,
     openEdit,
     remaining,

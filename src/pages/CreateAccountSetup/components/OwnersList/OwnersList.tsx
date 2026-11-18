@@ -125,7 +125,7 @@ export const OwnersList = ({
         onCancel={dialogs.cancelRemove}
         onClosed={handleDialogClosed}
         onConfirm={dialogs.confirmRemove}
-        open={!!dialogs.removing}
+        open={dialogs.isRemoveOpen}
       />
     </div>
   );

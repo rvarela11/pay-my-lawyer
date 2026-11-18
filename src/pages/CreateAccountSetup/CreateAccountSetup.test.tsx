@@ -912,6 +912,23 @@ describe('CreateAccountSetup', () => {
       expect(screen.queryByText('10%')).not.toBeInTheDocument();
     });
 
+    it('keeps the name in the Remove dialog while it closes', async () => {
+      const { user } = await toOwners();
+
+      await addOwner(user, '40');
+      await user.click(
+        screen.getByRole('button', { name: 'Remove Ben Ortiz' }),
+      );
+      const confirm = await screen.findByRole('alertdialog', {
+        name: 'Remove Ben Ortiz?',
+      });
+
+      await user.click(within(confirm).getByRole('button', { name: 'Remove' }));
+
+      expect(screen.queryByText('Remove ?')).not.toBeInTheDocument();
+      expect(screen.getByText('Remove Ben Ortiz?')).toBeInTheDocument();
+    });
+
     it('keeps the owner when removal is cancelled', async () => {
       const { user } = await toOwners();
 
