@@ -5,6 +5,7 @@ import {
   FormGridFullRow,
 } from '../../../../components/FormGrid/FormGrid.tsx';
 import { FormTextField } from '../../../../components/FormTextField/FormTextField.tsx';
+import { OwnershipField } from '../../../../components/OwnershipField/OwnershipField.tsx';
 import { SsnField } from '../../../../components/SsnField/SsnField.tsx';
 import { StateSelect } from '../../../../components/StateSelect/StateSelect.tsx';
 import { DWOLLA_FIELDS } from '../fields.ts';
@@ -42,12 +43,7 @@ export const DwollaAboutScreen = () => (
         label='Bar Card number'
         name={DWOLLA_FIELDS.barNumber}
       />
-      <FormTextField
-        autoComplete='off'
-        label='Ownership (%)'
-        name={DWOLLA_FIELDS.ownership}
-        slotProps={{ htmlInput: { inputMode: 'numeric' } }}
-      />
+      <OwnershipField name={DWOLLA_FIELDS.ownership} />
       <DateOfBirthField name={DWOLLA_FIELDS.dateOfBirth} />
       <SsnField name={DWOLLA_FIELDS.ssn} />
       <FormGridFullRow>
