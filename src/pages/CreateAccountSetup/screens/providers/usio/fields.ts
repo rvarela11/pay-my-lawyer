@@ -1,4 +1,3 @@
-// Usio's field names. Usio has its own form, so the names don't clash with another provider's.
 export const USIO_FIELDS = {
   address1: 'address1',
   address2: 'address2',

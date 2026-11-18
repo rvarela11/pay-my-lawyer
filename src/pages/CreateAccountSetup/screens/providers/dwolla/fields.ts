@@ -1,4 +1,3 @@
-// Dwolla's field names. Dwolla has its own form, so the names don't clash with another provider's.
 export const DWOLLA_FIELDS = {
   legalBusinessName: 'legalBusinessName',
 } as const;
