@@ -86,6 +86,7 @@ const fillAbout = async (user: ReturnType<typeof userEvent.setup>) => {
   await paste(user, 'First name', 'Ana');
   await paste(user, 'Last name', 'Ng');
   await paste(user, 'Job title', 'Owner');
+  await paste(user, 'Bar Card number', '12345');
   await paste(user, 'Ownership (%)', '100');
   await typeDate(user, '04281985');
   await paste(user, 'SSN', '123456789');
@@ -438,6 +439,28 @@ describe('CreateAccountSetup', () => {
     };
 
     const dateText = (date: dayjs.Dayjs) => date.format('MMDDYYYY');
+
+    it('requires a Bar Card number', async () => {
+      const { user } = await toAbout();
+
+      await user.click(screen.getByLabelText('Bar Card number'));
+      await user.tab();
+
+      expect(
+        screen.getByLabelText('Bar Card number'),
+      ).toHaveAccessibleDescription('Bar Card number is required');
+    });
+
+    it('treats a Bar Card number of only spaces as missing', async () => {
+      const { user } = await toAbout();
+
+      await paste(user, 'Bar Card number', '   ');
+      await user.tab();
+
+      expect(
+        screen.getByLabelText('Bar Card number'),
+      ).toHaveAccessibleDescription('Bar Card number is required');
+    });
 
     it('explains why it asks', async () => {
       await toAbout();

@@ -4,10 +4,6 @@ import { FIELDS } from './fields.ts';
 export const PASSWORD_MIN_LENGTH = 8;
 
 export const createAccountSchema = object({
-  [FIELDS.barNumber]: string()
-    .trim()
-    .default('')
-    .required('Bar Card number is required'),
   [FIELDS.email]: string()
     .trim()
     .default('')
