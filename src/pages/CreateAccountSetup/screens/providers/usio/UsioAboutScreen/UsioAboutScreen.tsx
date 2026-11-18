@@ -5,6 +5,7 @@ import {
   FormGridFullRow,
 } from '../../../../components/FormGrid/FormGrid.tsx';
 import { FormTextField } from '../../../../components/FormTextField/FormTextField.tsx';
+import { OwnershipField } from '../../../../components/OwnershipField/OwnershipField.tsx';
 import { SsnField } from '../../../../components/SsnField/SsnField.tsx';
 import { StateSelect } from '../../../../components/StateSelect/StateSelect.tsx';
 import { USIO_FIELDS } from '../fields.ts';
@@ -42,12 +43,7 @@ export const UsioAboutScreen = () => (
         label='Bar Card number'
         name={USIO_FIELDS.barNumber}
       />
-      <FormTextField
-        autoComplete='off'
-        label='Ownership (%)'
-        name={USIO_FIELDS.ownership}
-        slotProps={{ htmlInput: { inputMode: 'numeric' } }}
-      />
+      <OwnershipField name={USIO_FIELDS.ownership} />
       <DateOfBirthField name={USIO_FIELDS.dateOfBirth} />
       <SsnField name={USIO_FIELDS.ssn} />
       <FormGridFullRow>

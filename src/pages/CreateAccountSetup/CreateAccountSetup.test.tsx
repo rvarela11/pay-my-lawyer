@@ -590,7 +590,6 @@ describe('CreateAccountSetup', () => {
     it.each([
       ['0', true],
       ['101', true],
-      ['12.5', true],
       ['1', false],
       ['100', false],
     ])('checks the ownership %s', async (value, isInvalid) => {
@@ -600,8 +599,22 @@ describe('CreateAccountSetup', () => {
       await user.tab();
 
       expect(
-        screen.queryByText('Enter a whole number from 1 to 100') !== null,
+        screen.queryByText('Enter a percentage from 1 to 100') !== null,
       ).toBe(isInvalid);
+    });
+
+    it('keeps only digits in Ownership', async () => {
+      const { user } = await toAbout();
+      const ownership = screen.getByLabelText('Ownership (%)');
+
+      await paste(user, 'Ownership (%)', '50.5%');
+
+      expect(ownership).toHaveValue('505');
+
+      await user.clear(ownership);
+      await paste(user, 'Ownership (%)', 'abc40');
+
+      expect(ownership).toHaveValue('40');
     });
 
     it('does not mention additional owners', async () => {

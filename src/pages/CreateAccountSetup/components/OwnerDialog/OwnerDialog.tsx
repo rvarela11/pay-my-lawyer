@@ -11,6 +11,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { DateOfBirthField } from '../DateOfBirthField/DateOfBirthField.tsx';
 import { FormGrid, FormGridFullRow } from '../FormGrid/FormGrid.tsx';
 import { FormTextField } from '../FormTextField/FormTextField.tsx';
+import { OwnershipField } from '../OwnershipField/OwnershipField.tsx';
 import { SsnField } from '../SsnField/SsnField.tsx';
 import { StateSelect } from '../StateSelect/StateSelect.tsx';
 import { OWNER_FIELDS } from './fields.ts';
@@ -99,12 +100,7 @@ export const OwnerDialog = ({
                 name={OWNER_FIELDS.barNumber}
               />
               <DateOfBirthField name={OWNER_FIELDS.dateOfBirth} />
-              <FormTextField
-                autoComplete='off'
-                label='Ownership (%)'
-                name={OWNER_FIELDS.ownership}
-                slotProps={{ htmlInput: { inputMode: 'numeric' } }}
-              />
+              <OwnershipField name={OWNER_FIELDS.ownership} />
               <SsnField name={OWNER_FIELDS.ssn} />
               <FormGridFullRow>
                 <FormTextField

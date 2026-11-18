@@ -82,7 +82,7 @@ export const OWNERSHIP_RULE = string()
   .required('Ownership is required')
   .test(
     'ownership',
-    'Enter a whole number from 1 to 100',
+    'Enter a percentage from 1 to 100',
     (value) =>
       /^\d+$/.test(value ?? '') && Number(value) >= 1 && Number(value) <= 100,
   );
