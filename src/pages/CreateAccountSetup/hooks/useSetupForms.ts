@@ -1,5 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { type FieldValues, useForm, type UseFormReturn } from 'react-hook-form';
+import {
+  type FieldValues,
+  useForm,
+  type UseFormProps,
+  type UseFormReturn,
+} from 'react-hook-form';
+import type { AnyObjectSchema } from 'yup';
 import {
   PROVIDER_IDS,
   type Provider,
@@ -7,73 +13,62 @@ import {
   type ScreenId,
 } from '../ids.ts';
 import {
-  type DwollaValues,
-  dwollaSchema,
-} from '../screens/providers/dwolla/validation.ts';
-import {
-  type UsioValues,
-  usioSchema,
-} from '../screens/providers/usio/validation.ts';
+  type FormProviderId,
+  hasProviderForm,
+  PROVIDER_SCHEMAS,
+} from '../screens/providers/schemas.ts';
 import { type ProviderValues, providerSchema } from '../validation.ts';
 
 const FORM_OPTIONS = { mode: 'onTouched', reValidateMode: 'onChange' } as const;
 
 // One form for the provider choice and one per provider, so providers never share a field.
 // They live in the layout, so each provider's answers survive switching back and forth.
+// React's rules of hooks need one useForm call per provider; everything else is a lookup.
 export const useSetupForms = () => {
-  const providerForm = useForm<ProviderValues>({
-    ...FORM_OPTIONS,
-    defaultValues: providerSchema.getDefault(),
-    resolver: yupResolver(providerSchema),
-  });
-  const usioForm = useForm<UsioValues>({
-    ...FORM_OPTIONS,
-    defaultValues: usioSchema.getDefault(),
-    resolver: yupResolver(usioSchema),
-  });
-  const dwollaForm = useForm<DwollaValues>({
-    ...FORM_OPTIONS,
-    defaultValues: dwollaSchema.getDefault(),
-    resolver: yupResolver(dwollaSchema),
-  });
+  const providerForm = useForm<ProviderValues>(
+    formOptions<ProviderValues>(providerSchema),
+  );
+  const providerForms: Record<FormProviderId, UseFormReturn<FieldValues>> = {
+    [PROVIDER_IDS.dwolla]: useForm(formOptions(PROVIDER_SCHEMAS.dwolla)),
+    [PROVIDER_IDS.usio]: useForm(formOptions(PROVIDER_SCHEMAS.usio)),
+  };
 
   // The provider screen uses the choice form; later screens use the chosen provider's form.
-  // "Set up payments later" has no provider form, and its only screen (Portal) has no fields.
   const getForm = (
     screen: ScreenId | null,
     provider: Provider | null,
-  ): UseFormReturn<FieldValues> => {
-    if (screen !== SCREEN_IDS.provider && provider === PROVIDER_IDS.usio) {
-      return usioForm as unknown as UseFormReturn<FieldValues>;
-    }
-
-    if (screen !== SCREEN_IDS.provider && provider === PROVIDER_IDS.dwolla) {
-      return dwollaForm as unknown as UseFormReturn<FieldValues>;
-    }
-
-    return providerForm as unknown as UseFormReturn<FieldValues>;
-  };
+  ): UseFormReturn<FieldValues> =>
+    screen !== SCREEN_IDS.provider && hasProviderForm(provider)
+      ? providerForms[provider]
+      : (providerForm as unknown as UseFormReturn<FieldValues>);
 
   // Whether the provider's own form has anything typed in it, compared with its empty defaults.
-  // "Set up payments later" has no form, so there's nothing to lose.
   const hasAnswers = (provider: Provider | null) => {
-    const [values, defaults]: [FieldValues, FieldValues] =
-      provider === PROVIDER_IDS.usio
-        ? [usioForm.getValues(), usioSchema.getDefault()]
-        : provider === PROVIDER_IDS.dwolla
-          ? [dwollaForm.getValues(), dwollaSchema.getDefault()]
-          : [{}, {}];
+    if (!hasProviderForm(provider)) {
+      return false;
+    }
 
-    return Object.entries(values).some(
+    const defaults: FieldValues = PROVIDER_SCHEMAS[provider].getDefault();
+
+    return Object.entries(providerForms[provider].getValues()).some(
       ([name, value]) => value !== defaults[name],
     );
   };
 
   const resetAll = () => {
     providerForm.reset(providerSchema.getDefault());
-    usioForm.reset(usioSchema.getDefault());
-    dwollaForm.reset(dwollaSchema.getDefault());
+    (Object.keys(providerForms) as FormProviderId[]).forEach((id) => {
+      providerForms[id].reset(PROVIDER_SCHEMAS[id].getDefault());
+    });
   };
 
   return { getForm, hasAnswers, providerForm, resetAll };
 };
+
+const formOptions = <Values extends FieldValues>(
+  schema: AnyObjectSchema,
+): UseFormProps<Values> => ({
+  ...FORM_OPTIONS,
+  defaultValues: schema.getDefault(),
+  resolver: yupResolver(schema),
+});
