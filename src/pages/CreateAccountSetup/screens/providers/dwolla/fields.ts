@@ -1,6 +1,7 @@
 export const DWOLLA_FIELDS = {
   address1: 'address1',
   address2: 'address2',
+  barNumber: 'barNumber',
   businessType: 'businessType',
   city: 'city',
   dateOfBirth: 'dateOfBirth',
@@ -30,6 +31,7 @@ export const DWOLLA_ABOUT_FIELDS = [
   DWOLLA_FIELDS.firstName,
   DWOLLA_FIELDS.lastName,
   DWOLLA_FIELDS.jobTitle,
+  DWOLLA_FIELDS.barNumber,
   DWOLLA_FIELDS.ownership,
   DWOLLA_FIELDS.dateOfBirth,
   DWOLLA_FIELDS.ssn,

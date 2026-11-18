@@ -39,6 +39,11 @@ export const DwollaAboutScreen = () => (
       />
       <FormTextField
         autoComplete='off'
+        label='Bar Card number'
+        name={DWOLLA_FIELDS.barNumber}
+      />
+      <FormTextField
+        autoComplete='off'
         label='Ownership (%)'
         name={DWOLLA_FIELDS.ownership}
         slotProps={{ htmlInput: { inputMode: 'numeric' } }}

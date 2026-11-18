@@ -39,6 +39,11 @@ export const UsioAboutScreen = () => (
       />
       <FormTextField
         autoComplete='off'
+        label='Bar Card number'
+        name={USIO_FIELDS.barNumber}
+      />
+      <FormTextField
+        autoComplete='off'
         label='Ownership (%)'
         name={USIO_FIELDS.ownership}
         slotProps={{ htmlInput: { inputMode: 'numeric' } }}

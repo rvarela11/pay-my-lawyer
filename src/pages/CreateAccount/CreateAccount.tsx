@@ -148,21 +148,6 @@ export const CreateAccount = () => {
                 />
               )}
             />
-            <Controller
-              control={control}
-              name={FIELDS.barNumber}
-              render={({ field: { ref, ...field }, fieldState: { error } }) => (
-                <TextField
-                  {...field}
-                  autoComplete='off'
-                  error={!!error}
-                  fullWidth
-                  helperText={error?.message}
-                  inputRef={ref}
-                  label='Bar Card number'
-                />
-              )}
-            />
             <Button
               fullWidth
               loading={isSubmitting}

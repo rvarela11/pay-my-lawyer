@@ -20,7 +20,6 @@ const renderPage = () => {
   render(<RouterProvider router={router} />);
 
   return {
-    barNumber: screen.getByLabelText('Bar Card number'),
     email: screen.getByLabelText('Email'),
     password: screen.getByLabelText('Password'),
     submit: screen.getByRole('button', { name: 'Create account' }),
@@ -35,7 +34,6 @@ const fillForm = async (
 ) => {
   await user.type(fields.email, email);
   await user.type(fields.password, 'password1');
-  await user.type(fields.barNumber, '12345');
 };
 
 describe('CreateAccount', () => {
@@ -70,17 +68,6 @@ describe('CreateAccount', () => {
     expect(email).toHaveAccessibleDescription('Enter a valid email');
   });
 
-  it('treats a Bar Card number of only spaces as missing', async () => {
-    const { barNumber, email, user } = renderPage();
-
-    await user.type(barNumber, '   ');
-    await user.click(email);
-
-    expect(barNumber).toHaveAccessibleDescription(
-      'Bar Card number is required',
-    );
-  });
-
   it('shows every error and focuses Email when an empty form is submitted', async () => {
     const { email, submit, user } = renderPage();
 
@@ -88,7 +75,6 @@ describe('CreateAccount', () => {
 
     expect(await screen.findByText('Email is required')).toBeInTheDocument();
     expect(screen.getByText('Password is required')).toBeInTheDocument();
-    expect(screen.getByText('Bar Card number is required')).toBeInTheDocument();
     expect(email).toHaveFocus();
   });
 
@@ -157,7 +143,6 @@ describe('CreateAccount', () => {
     expect(alert).toHaveFocus();
     expect(fields.email).toHaveValue('error@example.com');
     expect(fields.password).toHaveValue('password1');
-    expect(fields.barNumber).toHaveValue('12345');
   });
 
   it('disables the button while submitting', async () => {
