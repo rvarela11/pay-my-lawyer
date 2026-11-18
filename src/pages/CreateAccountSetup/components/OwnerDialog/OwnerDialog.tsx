@@ -80,7 +80,6 @@ export const OwnerDialog = ({
             <FormGrid>
               <FormTextField
                 autoComplete='off'
-                autoFocus
                 label='First name'
                 name={OWNER_FIELDS.firstName}
               />

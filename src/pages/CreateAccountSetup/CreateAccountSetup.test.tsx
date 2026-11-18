@@ -716,9 +716,6 @@ describe('CreateAccountSetup', () => {
     it('shows you from About you', async () => {
       await toOwners();
 
-      expect(
-        screen.getByText('List everyone who owns 25% or more of the firm.'),
-      ).toBeInTheDocument();
       expect(screen.getByText('Ana Ng')).toBeInTheDocument();
       expect(screen.queryByText(/\(you\)/)).not.toBeInTheDocument();
       expect(screen.getByText('Title: Owner')).toBeInTheDocument();

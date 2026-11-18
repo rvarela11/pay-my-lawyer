@@ -177,9 +177,6 @@ export const UsioOwnersScreen = () => {
 
   return (
     <div className={styles.screen}>
-      <Typography component='p'>
-        List everyone who owns 25% or more of the firm.
-      </Typography>
       {totalError && (
         <Alert ref={alertRef} severity='error' tabIndex={-1}>
           {totalError}
