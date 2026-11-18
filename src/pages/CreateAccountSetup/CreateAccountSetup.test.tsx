@@ -485,7 +485,7 @@ describe('CreateAccountSetup', () => {
       await screen.findByRole('dialog');
 
       expect(
-        screen.queryByText('Enter your full date of birth'),
+        screen.queryByText('Enter full date of birth'),
       ).not.toBeInTheDocument();
     });
 
@@ -496,7 +496,7 @@ describe('CreateAccountSetup', () => {
       await user.tab();
 
       expect(
-        await screen.findByText('You must be 18 or older'),
+        await screen.findByText('Must be 18 or older'),
       ).toBeInTheDocument();
     });
 
@@ -507,9 +507,7 @@ describe('CreateAccountSetup', () => {
       await user.tab();
       await clickNext(user);
 
-      expect(
-        screen.queryByText('You must be 18 or older'),
-      ).not.toBeInTheDocument();
+      expect(screen.queryByText('Must be 18 or older')).not.toBeInTheDocument();
 
       await typeDate(
         user,
@@ -518,7 +516,7 @@ describe('CreateAccountSetup', () => {
       await user.tab();
 
       expect(
-        await screen.findByText('You must be 18 or older'),
+        await screen.findByText('Must be 18 or older'),
       ).toBeInTheDocument();
     });
 
@@ -529,7 +527,7 @@ describe('CreateAccountSetup', () => {
       await user.tab();
 
       expect(
-        await screen.findByText('Enter your full date of birth'),
+        await screen.findByText('Enter full date of birth'),
       ).toBeInTheDocument();
     });
 
@@ -579,10 +577,9 @@ describe('CreateAccountSetup', () => {
     });
 
     it.each([
-      ['24', true],
+      ['0', true],
       ['101', true],
-      ['25.5', true],
-      ['25', false],
+      ['1', false],
       ['100', false],
     ])('checks the ownership %s', async (value, isInvalid) => {
       const { user } = await toAbout();
@@ -590,9 +587,23 @@ describe('CreateAccountSetup', () => {
       await paste(user, 'Ownership (%)', value);
       await user.tab();
 
-      expect(screen.queryByText('Enter a number from 25 to 100') !== null).toBe(
-        isInvalid,
-      );
+      expect(
+        screen.queryByText('Enter a percentage from 1 to 100') !== null,
+      ).toBe(isInvalid);
+    });
+
+    it('keeps only digits in Ownership', async () => {
+      const { user } = await toAbout();
+      const ownership = screen.getByLabelText('Ownership (%)');
+
+      await paste(user, 'Ownership (%)', '50.5%');
+
+      expect(ownership).toHaveValue('505');
+
+      await user.clear(ownership);
+      await paste(user, 'Ownership (%)', 'abc40');
+
+      expect(ownership).toHaveValue('40');
     });
 
     it('does not mention additional owners', async () => {
