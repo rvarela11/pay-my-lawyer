@@ -135,7 +135,7 @@ export const DwollaOwnersScreen = () => {
     );
   };
 
-  // One label/value pair in a card: muted label, ink value, lined up in two columns.
+  // One label/value pair in a card: muted label on the left, ink value on the right edge.
   const detail = (
     label: string,
     value: string,
@@ -299,7 +299,7 @@ export const DwollaOwnersScreen = () => {
                 <Typography component='p' variant='subtitle1'>
                   {row.name}
                 </Typography>
-                {actions(row)}
+                <div className={styles.cardActions}>{actions(row)}</div>
               </div>
               <dl className={styles.details}>
                 {detail('Ownership', `${row.ownership}%`)}

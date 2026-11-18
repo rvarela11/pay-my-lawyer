@@ -29,6 +29,11 @@
   padding-block: calc(var(--mui-spacing) * 2);
 }
 
+.cardActions {
+  /* Cancels the icon buttons' own padding, so the icons end on the values' right edge. */
+  margin-inline-end: calc(var(--mui-spacing) * -1);
+}
+
 .cardHeader {
   align-items: center;
   display: flex;
@@ -36,7 +41,7 @@
   justify-content: space-between;
 }
 
-/* Labels and values in two columns, so the values line up down the card. */
+/* Labels on the left, values on the right edge, so every value and the total line up. */
 .details {
   column-gap: calc(var(--mui-spacing) * 2);
   display: grid;
@@ -73,6 +78,7 @@
   font-variant-numeric: tabular-nums;
   margin: 0;
   overflow-wrap: anywhere;
+  text-align: right;
 }
 
 .visuallyHidden {
