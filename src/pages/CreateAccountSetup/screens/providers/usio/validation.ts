@@ -1,6 +1,7 @@
 import { type InferType, object } from 'yup';
 import { OWNERS_RULE } from '../../../components/OwnerDialog/validation.ts';
 import {
+  BAR_NUMBER_RULE,
   BUSINESS_ADDRESS_RULE,
   BUSINESS_TYPE_RULE,
   CITY_RULE,
@@ -25,6 +26,7 @@ import { USIO_FIELDS } from './fields.ts';
 export const usioSchema = object({
   [USIO_FIELDS.address1]: BUSINESS_ADDRESS_RULE,
   [USIO_FIELDS.address2]: OPTIONAL_TEXT_RULE,
+  [USIO_FIELDS.barNumber]: BAR_NUMBER_RULE,
   [USIO_FIELDS.businessType]: BUSINESS_TYPE_RULE,
   [USIO_FIELDS.city]: CITY_RULE,
   [USIO_FIELDS.dateOfBirth]: DATE_OF_BIRTH_RULE,

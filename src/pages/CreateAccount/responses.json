@@ -1,5 +1,8 @@
 {
-  "duplicate": { "body": "Please use a different username or login", "status": 400 },
+  "duplicate": {
+    "body": "Please use a different username or login",
+    "status": 400
+  },
   "serverError": { "body": "Internal error", "status": 500 },
   "success": { "body": "OK", "status": 200 }
 }

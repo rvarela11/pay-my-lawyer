@@ -5,6 +5,11 @@ import { US_STATES } from '../../components/StateSelect/usStates.ts';
 
 // Rules shared by every provider's field set. Each starts empty, so nothing shows on load.
 // Empty fields say "<Label> is required"; a wrong format says how to fix it ("Enter a …").
+export const BAR_NUMBER_RULE = string()
+  .trim()
+  .default('')
+  .required('Bar Card number is required');
+
 export const BUSINESS_ADDRESS_RULE = string()
   .trim()
   .default('')

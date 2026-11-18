@@ -1,6 +1,7 @@
 export const USIO_FIELDS = {
   address1: 'address1',
   address2: 'address2',
+  barNumber: 'barNumber',
   businessType: 'businessType',
   city: 'city',
   dateOfBirth: 'dateOfBirth',
@@ -31,6 +32,7 @@ export const USIO_ABOUT_FIELDS = [
   USIO_FIELDS.firstName,
   USIO_FIELDS.lastName,
   USIO_FIELDS.jobTitle,
+  USIO_FIELDS.barNumber,
   USIO_FIELDS.ownership,
   USIO_FIELDS.dateOfBirth,
   USIO_FIELDS.ssn,
