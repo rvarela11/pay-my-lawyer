@@ -3,7 +3,7 @@ import { DateOfBirthField } from '../../../../components/DateOfBirthField/DateOf
 import { FormTextField } from '../../../../components/FormTextField/FormTextField.tsx';
 import { SsnField } from '../../../../components/SsnField/SsnField.tsx';
 import { StateSelect } from '../../../../components/StateSelect/StateSelect.tsx';
-import { FIELDS } from '../../../../fields.ts';
+import { USIO_FIELDS } from '../fields.ts';
 import styles from './UsioAboutScreen.module.css';
 
 export const UsioAboutScreen = () => (
@@ -14,57 +14,57 @@ export const UsioAboutScreen = () => (
         autoComplete='email'
         className={styles.wide}
         label='Email'
-        name={FIELDS.usioEmail}
+        name={USIO_FIELDS.usioEmail}
         type='email'
       />
       <FormTextField
         autoComplete='given-name'
         label='First name'
-        name={FIELDS.usioFirstName}
+        name={USIO_FIELDS.usioFirstName}
       />
       <FormTextField
         autoComplete='family-name'
         label='Last name'
-        name={FIELDS.usioLastName}
+        name={USIO_FIELDS.usioLastName}
       />
       <FormTextField
         autoComplete='organization-title'
         label='Job title'
-        name={FIELDS.usioJobTitle}
+        name={USIO_FIELDS.usioJobTitle}
       />
       <FormTextField
         autoComplete='off'
         label='Ownership (%)'
-        name={FIELDS.usioOwnership}
+        name={USIO_FIELDS.usioOwnership}
         slotProps={{ htmlInput: { inputMode: 'numeric' } }}
       />
-      <DateOfBirthField name={FIELDS.usioDateOfBirth} />
-      <SsnField name={FIELDS.usioSsn} />
+      <DateOfBirthField name={USIO_FIELDS.usioDateOfBirth} />
+      <SsnField name={USIO_FIELDS.usioSsn} />
       <FormTextField
         autoComplete='address-line1'
         className={styles.wide}
         label='Home address'
-        name={FIELDS.usioHomeAddress1}
+        name={USIO_FIELDS.usioHomeAddress1}
       />
       <FormTextField
         autoComplete='address-line2'
         label='Address 2 (optional)'
-        name={FIELDS.usioHomeAddress2}
+        name={USIO_FIELDS.usioHomeAddress2}
       />
       <FormTextField
         autoComplete='address-level2'
         label='City'
-        name={FIELDS.usioHomeCity}
+        name={USIO_FIELDS.usioHomeCity}
       />
       <StateSelect
         autoComplete='address-level1'
         label='State'
-        name={FIELDS.usioHomeState}
+        name={USIO_FIELDS.usioHomeState}
       />
       <FormTextField
         autoComplete='postal-code'
         label='ZIP code'
-        name={FIELDS.usioHomeZip}
+        name={USIO_FIELDS.usioHomeZip}
         slotProps={{ htmlInput: { inputMode: 'numeric' } }}
       />
     </div>

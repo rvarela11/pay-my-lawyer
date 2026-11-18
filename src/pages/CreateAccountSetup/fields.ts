@@ -1,30 +1,11 @@
-// Each provider has its own field names, even where the fields match (one form per provider).
+import { DWOLLA_FIELDS } from './screens/providers/dwolla/fields.ts';
+import { USIO_FIELDS } from './screens/providers/usio/fields.ts';
+
+// Every field in the wizard's one form: the provider choice plus each provider's own fields.
 export const FIELDS = {
-  dwollaLegalBusinessName: 'dwollaLegalBusinessName',
+  ...DWOLLA_FIELDS,
   provider: 'provider',
-  usioAddress1: 'usioAddress1',
-  usioAddress2: 'usioAddress2',
-  usioBusinessType: 'usioBusinessType',
-  usioCity: 'usioCity',
-  usioDateOfBirth: 'usioDateOfBirth',
-  usioDba: 'usioDba',
-  usioEin: 'usioEin',
-  usioEmail: 'usioEmail',
-  usioFirstName: 'usioFirstName',
-  usioHomeAddress1: 'usioHomeAddress1',
-  usioHomeAddress2: 'usioHomeAddress2',
-  usioHomeCity: 'usioHomeCity',
-  usioHomeState: 'usioHomeState',
-  usioHomeZip: 'usioHomeZip',
-  usioJobTitle: 'usioJobTitle',
-  usioLastName: 'usioLastName',
-  usioLegalBusinessName: 'usioLegalBusinessName',
-  usioOwnership: 'usioOwnership',
-  usioPhone: 'usioPhone',
-  usioSsn: 'usioSsn',
-  usioState: 'usioState',
-  usioWebsite: 'usioWebsite',
-  usioZip: 'usioZip',
+  ...USIO_FIELDS,
 } as const;
 
 export type FieldName = (typeof FIELDS)[keyof typeof FIELDS];
