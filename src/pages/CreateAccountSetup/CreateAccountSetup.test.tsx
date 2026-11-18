@@ -1,5 +1,12 @@
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import {
+  cleanup,
+  render,
+  screen,
+  waitFor,
+  within,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import dayjs from 'dayjs';
 import { act } from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -26,6 +33,91 @@ const clickNext = (user: ReturnType<typeof userEvent.setup>) =>
 
 const clickBack = (user: ReturnType<typeof userEvent.setup>) =>
   user.click(screen.getByRole('button', { name: 'Back' }));
+
+const paste = async (
+  user: ReturnType<typeof userEvent.setup>,
+  label: string,
+  value: string,
+) => {
+  await user.click(screen.getByLabelText(label));
+  await user.paste(value);
+};
+
+const choose = async (
+  user: ReturnType<typeof userEvent.setup>,
+  label: string,
+  option: string,
+) => {
+  await user.click(screen.getByRole('combobox', { name: label }));
+  await user.click(await screen.findByRole('option', { name: option }));
+};
+
+// Fills every required field on the provider's Business details screen. Dwolla's has
+// only Legal business name until #55.
+const fillBusiness = async (
+  user: ReturnType<typeof userEvent.setup>,
+  provider = 'Usio',
+) => {
+  if (provider === 'Dwolla') {
+    await paste(user, 'Legal business name', 'Demo Law PLLC');
+    return;
+  }
+
+  await choose(user, 'Business type', 'PLLC');
+  await paste(user, 'Legal business name', 'Demo Law PLLC');
+  await paste(user, 'EIN', '123456789');
+  await paste(user, 'Address', '1 Main St');
+  await paste(user, 'City', 'Austin');
+  await choose(user, 'State', 'Texas');
+  await paste(user, 'ZIP code', '78701');
+  await paste(user, 'Phone', '5551234567');
+};
+
+// Types a date as MMDDYYYY into the Date of birth field's sections.
+const typeDate = async (
+  user: ReturnType<typeof userEvent.setup>,
+  value: string,
+) => {
+  const group = screen.getByRole('group', { name: 'Date of birth' });
+
+  await user.click(within(group).getAllByRole('spinbutton')[0]);
+  await user.keyboard(value);
+};
+
+// Fills every required field on the provider's About you screen. Dwolla's is a placeholder
+// until #55.
+const fillAbout = async (
+  user: ReturnType<typeof userEvent.setup>,
+  provider = 'Usio',
+) => {
+  await heading('About you');
+
+  if (provider === 'Dwolla') {
+    return;
+  }
+
+  await paste(user, 'Email', 'lawyer@example.com');
+  await paste(user, 'First name', 'Ana');
+  await paste(user, 'Last name', 'Ng');
+  await paste(user, 'Job title', 'Owner');
+  await paste(user, 'Ownership (%)', '100');
+  await typeDate(user, '04281985');
+  await paste(user, 'SSN', '123456789');
+  await paste(user, 'Home address', '2 Oak St');
+  await paste(user, 'City', 'Austin');
+  await choose(user, 'State', 'Texas');
+  await paste(user, 'ZIP code', '78702');
+};
+
+// From Business details, fills both screens and moves past About you.
+const passBusinessDetails = async (
+  user: ReturnType<typeof userEvent.setup>,
+) => {
+  await fillBusiness(user);
+  await clickNext(user);
+  await fillAbout(user);
+  await clickNext(user);
+};
 
 const chooseProvider = async (
   user: ReturnType<typeof userEvent.setup>,
@@ -102,32 +194,14 @@ describe('CreateAccountSetup', () => {
     await waitFor(() => expect(title).toHaveFocus());
   });
 
-  it('blocks Next on an empty required field and focuses it', async () => {
-    const { user } = renderWizard();
-
-    await chooseProvider(user, 'Usio');
-    await heading('Business details');
-    await clickNext(user);
-
-    const field = screen.getByLabelText('Legal business name');
-
-    expect(field).toHaveAccessibleDescription(
-      'Legal business name is required',
-    );
-    expect(field).toHaveFocus();
-  });
-
   it('keeps values after Next and Back', async () => {
     const { user } = renderWizard();
 
     await chooseProvider(user, 'Usio');
     await heading('Business details');
-    await user.type(
-      screen.getByLabelText('Legal business name'),
-      'Demo Law PLLC',
-    );
+    await fillBusiness(user);
     await clickNext(user);
-    await heading('Review & submit');
+    await heading('About you');
     await clickBack(user);
     await heading('Business details');
 
@@ -141,12 +215,9 @@ describe('CreateAccountSetup', () => {
 
     await chooseProvider(user, 'Usio');
     await heading('Business details');
-    await user.type(
-      screen.getByLabelText('Legal business name'),
-      'Demo Law PLLC',
-    );
+    await fillBusiness(user);
     await clickNext(user);
-    await heading('Review & submit');
+    await heading('About you');
     await act(() => router.navigate(-1));
 
     await heading('Business details');
@@ -160,13 +231,11 @@ describe('CreateAccountSetup', () => {
 
     await chooseProvider(user, 'Dwolla');
     await heading('Business details');
-    await user.type(
-      screen.getByLabelText('Legal business name'),
-      'Demo Law PLLC',
-    );
+    await fillBusiness(user, 'Dwolla');
+    await clickNext(user);
+    await fillAbout(user, 'Dwolla');
 
     for (const name of [
-      'Business controller',
       'Beneficial owners',
       'ID documents',
       'Review & submit',
@@ -192,6 +261,323 @@ describe('CreateAccountSetup', () => {
     expect(await heading(PROVIDER_HEADING)).toBeInTheDocument();
   });
 
+  describe.each(['Usio'])('%s business details', (provider) => {
+    const toBusiness = async () => {
+      const wizard = renderWizard();
+
+      await chooseProvider(wizard.user, provider);
+      await heading('Business details');
+
+      return wizard;
+    };
+
+    it('shows no errors before anything is touched', async () => {
+      await toBusiness();
+
+      expect(screen.queryAllByText(/^Enter |^Choose /)).toHaveLength(0);
+    });
+
+    it("checks a field when it's left", async () => {
+      const { user } = await toBusiness();
+
+      await user.click(screen.getByLabelText('EIN'));
+      await user.tab();
+
+      expect(screen.getByLabelText('EIN')).toHaveAccessibleDescription(
+        'Enter a 9-digit EIN',
+      );
+    });
+
+    it('formats the phone and EIN as you type', async () => {
+      const { user } = await toBusiness();
+
+      await paste(user, 'Phone', '5551234567');
+      await paste(user, 'EIN', '123456789');
+
+      expect(screen.getByLabelText('Phone')).toHaveValue('(555) 123-4567');
+      expect(screen.getByLabelText('EIN')).toHaveValue('12-3456789');
+    });
+
+    it("adds https:// to the website when it's left", async () => {
+      const { user } = await toBusiness();
+      const website = screen.getByLabelText('Website (optional)');
+
+      await paste(user, 'Website (optional)', 'yourfirm.com');
+      await user.tab();
+      expect(website).toHaveValue('https://yourfirm.com');
+
+      await user.clear(website);
+      await user.paste('http://x.com');
+      await user.tab();
+      expect(website).toHaveValue('http://x.com');
+    });
+
+    it('rejects an invalid website', async () => {
+      const { user } = await toBusiness();
+
+      await paste(user, 'Website (optional)', 'not a site');
+      await user.tab();
+
+      expect(
+        screen.getByLabelText('Website (optional)'),
+      ).toHaveAccessibleDescription(
+        'Enter a web address, like https://yourfirm.com',
+      );
+    });
+
+    it('requires a state and starts empty', async () => {
+      const { user } = await toBusiness();
+
+      expect(
+        screen.getByRole('combobox', { name: 'State' }),
+      ).not.toHaveTextContent(/\w/);
+
+      await clickNext(user);
+
+      expect(screen.getByText('Choose a state')).toBeInTheDocument();
+    });
+
+    it('focuses the first invalid field on Next', async () => {
+      const { user } = await toBusiness();
+
+      await clickNext(user);
+
+      expect(
+        screen.getByRole('combobox', { name: 'Business type' }),
+      ).toHaveFocus();
+      expect(screen.getByText('Choose a business type')).toBeInTheDocument();
+    });
+
+    it('labels optional fields and marks nothing with an asterisk', async () => {
+      await toBusiness();
+
+      expect(
+        screen.getByLabelText('Doing business as (optional)'),
+      ).toBeInTheDocument();
+      expect(screen.getByLabelText('Address 2 (optional)')).toBeInTheDocument();
+      expect(screen.getByLabelText('Website (optional)')).toBeInTheDocument();
+      expect(screen.queryByText('*')).not.toBeInTheDocument();
+    });
+
+    it('keeps every answer after Next and Back', async () => {
+      const { user } = await toBusiness();
+
+      await fillBusiness(user);
+      await clickNext(user);
+      await heading('About you');
+      await clickBack(user);
+      await heading('Business details');
+
+      expect(
+        screen.getByRole('combobox', { name: 'Business type' }),
+      ).toHaveTextContent('PLLC');
+      expect(screen.getByRole('combobox', { name: 'State' })).toHaveTextContent(
+        'Texas',
+      );
+      expect(screen.getByLabelText('EIN')).toHaveValue('12-3456789');
+      expect(screen.getByLabelText('ZIP code')).toHaveValue('78701');
+    });
+  });
+
+  describe.each(['Usio'])('%s about you', (provider) => {
+    const toAbout = async () => {
+      const wizard = renderWizard();
+
+      await chooseProvider(wizard.user, provider);
+      await heading('Business details');
+      await fillBusiness(wizard.user, provider);
+      await clickNext(wizard.user);
+      await heading('About you');
+
+      return wizard;
+    };
+
+    const dateText = (date: dayjs.Dayjs) => date.format('MMDDYYYY');
+
+    it('explains why it asks', async () => {
+      await toAbout();
+
+      expect(
+        screen.getByText('We use this to verify your identity.'),
+      ).toBeInTheDocument();
+    });
+
+    it('starts with an empty date of birth', async () => {
+      await toAbout();
+
+      expect(
+        screen.getByRole('group', { name: 'Date of birth' }),
+      ).toHaveTextContent('MM/DD/YYYY');
+    });
+
+    it('rejects someone under 18', async () => {
+      const { user } = await toAbout();
+
+      await typeDate(user, dateText(dayjs().subtract(17, 'year')));
+      await user.tab();
+
+      expect(
+        await screen.findByText('You must be 18 or older'),
+      ).toBeInTheDocument();
+    });
+
+    it('accepts someone who turns 18 today', async () => {
+      const { user } = await toAbout();
+
+      await typeDate(user, dateText(dayjs().subtract(18, 'year')));
+      await user.tab();
+      await clickNext(user);
+
+      expect(
+        screen.queryByText('You must be 18 or older'),
+      ).not.toBeInTheDocument();
+
+      await typeDate(
+        user,
+        dateText(dayjs().subtract(18, 'year').add(1, 'day')),
+      );
+      await user.tab();
+
+      expect(
+        await screen.findByText('You must be 18 or older'),
+      ).toBeInTheDocument();
+    });
+
+    it('asks for the full date when only part is typed', async () => {
+      const { user } = await toAbout();
+
+      await typeDate(user, '0428');
+      await user.tab();
+
+      expect(
+        await screen.findByText('Enter your full date of birth'),
+      ).toBeInTheDocument();
+    });
+
+    it('rejects an impossible date', async () => {
+      const { user } = await toAbout();
+
+      await typeDate(user, '02311985');
+      await user.tab();
+
+      expect(
+        await screen.findByText('Enter a real date of birth'),
+      ).toBeInTheDocument();
+    });
+
+    // A text input masked with CSS, not type='password', so password managers don't treat
+    // About you as a login form and fill a saved password into it.
+    it('masks the SSN without making it a password field', async () => {
+      const { user } = await toAbout();
+      const ssn = screen.getByLabelText('SSN');
+
+      expect(ssn).toHaveAttribute('type', 'text');
+      expect(ssn).toHaveAttribute('data-masked', 'true');
+
+      await user.click(screen.getByRole('button', { name: 'Show SSN' }));
+
+      expect(ssn).toHaveAttribute('data-masked', 'false');
+
+      await user.click(screen.getByRole('button', { name: 'Hide SSN' }));
+
+      expect(ssn).toHaveAttribute('data-masked', 'true');
+    });
+
+    it.each([
+      ['123-45-6789', false],
+      ['123 45 6789', false],
+      ['12345678a', true],
+      ['12345678', true],
+    ])('checks the SSN %s', async (value, isInvalid) => {
+      const { user } = await toAbout();
+
+      await paste(user, 'SSN', value);
+      await user.tab();
+
+      expect(screen.queryByText('Enter a 9-digit SSN') !== null).toBe(
+        isInvalid,
+      );
+    });
+
+    it.each([
+      ['24', true],
+      ['101', true],
+      ['25.5', true],
+      ['25', false],
+      ['100', false],
+    ])('checks the ownership %s', async (value, isInvalid) => {
+      const { user } = await toAbout();
+
+      await paste(user, 'Ownership (%)', value);
+      await user.tab();
+
+      expect(screen.queryByText('Enter a number from 25 to 100') !== null).toBe(
+        isInvalid,
+      );
+    });
+
+    it('does not mention additional owners', async () => {
+      await toAbout();
+
+      expect(screen.queryByText(/additional owners/i)).not.toBeInTheDocument();
+    });
+
+    it('goes on after a complete screen', async () => {
+      const { user } = await toAbout();
+
+      await fillAbout(user, provider);
+      await clickNext(user);
+
+      expect(await heading('Review & submit')).toBeInTheDocument();
+    });
+
+    it("keeps each provider's answers", async () => {
+      const { router, user } = await toAbout();
+
+      await act(() => router.navigate(-1));
+      await heading('Business details');
+      await act(() => router.navigate(-1));
+      await chooseProvider(user, 'Dwolla');
+      await heading('Business details');
+
+      expect(screen.getByLabelText('Legal business name')).toHaveValue('');
+
+      await act(() => router.navigate(-1));
+      await chooseProvider(user, provider);
+      await heading('Business details');
+
+      expect(screen.getByLabelText('Legal business name')).toHaveValue(
+        'Demo Law PLLC',
+      );
+    });
+
+    it('start over clears every new field', async () => {
+      const { user } = await toAbout();
+
+      await fillAbout(user, provider);
+      await clickBack(user);
+      await heading('Business details');
+      await clickBack(user);
+      await user.click(
+        await screen.findByRole('button', { name: 'Start over' }),
+      );
+      await chooseProvider(user, provider);
+      await heading('Business details');
+
+      expect(screen.getByLabelText('Legal business name')).toHaveValue('');
+
+      await fillBusiness(user, provider);
+      await clickNext(user);
+      await heading('About you');
+
+      expect(screen.getByLabelText('Email')).toHaveValue('');
+      expect(screen.getByLabelText('SSN')).toHaveValue('');
+      expect(
+        screen.getByRole('group', { name: 'Date of birth' }),
+      ).toHaveTextContent('MM/DD/YYYY');
+    });
+  });
+
   describe('step indicator', () => {
     const STEP_TEXT = /^Step \d of \d/;
 
@@ -202,15 +588,17 @@ describe('CreateAccountSetup', () => {
     ) => {
       await chooseProvider(user, provider);
       await heading('Business details');
-      await user.type(
-        screen.getByLabelText('Legal business name'),
-        'Demo Law PLLC',
-      );
 
       const title = () => screen.getByRole('heading', { level: 1 });
 
       while (title().textContent !== target) {
         const current = title().textContent;
+
+        if (current === 'Business details') {
+          await fillBusiness(user, provider);
+        } else if (current === 'About you') {
+          await fillAbout(user, provider);
+        }
 
         await clickNext(user);
         await waitFor(() =>
@@ -232,8 +620,9 @@ describe('CreateAccountSetup', () => {
 
     it.each([
       ['Usio', 'Business details', 'Step 1 of 4: Business details'],
+      ['Usio', 'About you', 'Step 1 of 4: Business details'],
       ['Usio', 'Review & submit', 'Step 2 of 4: Review & submit'],
-      ['Dwolla', 'Business controller', 'Step 1 of 5: Business details'],
+      ['Dwolla', 'About you', 'Step 1 of 5: Business details'],
       ['Dwolla', 'ID documents', 'Step 2 of 5: Ownership & ID'],
       ['Dwolla', 'Portal', 'Step 5 of 5: Portal'],
     ])('%s on %s shows "%s"', async (provider, target, text) => {
@@ -253,7 +642,7 @@ describe('CreateAccountSetup', () => {
   });
 
   describe('navigation guard', () => {
-    it.each([PATHS.setupBusiness, PATHS.setupReview])(
+    it.each([PATHS.setupUsioBusiness, PATHS.setupReview])(
       'opens %s on the provider choice',
       async (path) => {
         renderWizard(path);
@@ -284,6 +673,19 @@ describe('CreateAccountSetup', () => {
       expect(await heading('Business details')).toBeInTheDocument();
     });
 
+    it("redirects the other provider's screens", async () => {
+      const { router, user } = renderWizard();
+
+      await chooseProvider(user, 'Usio');
+      await heading('Business details');
+      await act(() => router.navigate(PATHS.setupDwollaBusiness));
+
+      expect(await heading('Business details')).toBeInTheDocument();
+      expect(
+        screen.getByText('Step 1 of 4: Business details'),
+      ).toBeInTheDocument();
+    });
+
     it('redirects a screen that is not on the chosen path', async () => {
       const { router, user } = renderWizard();
 
@@ -299,11 +701,7 @@ describe('CreateAccountSetup', () => {
 
       await chooseProvider(user, 'Usio');
       await heading('Business details');
-      await user.type(
-        screen.getByLabelText('Legal business name'),
-        'Demo Law PLLC',
-      );
-      await clickNext(user);
+      await passBusinessDetails(user);
       await heading('Review & submit');
       await user.dblClick(screen.getByRole('button', { name: 'Next' }));
 
@@ -319,12 +717,10 @@ describe('CreateAccountSetup', () => {
 
       await chooseProvider(user, 'Usio');
       await heading('Business details');
-      await user.type(
-        screen.getByLabelText('Legal business name'),
-        'Demo Law PLLC',
-      );
-      await clickNext(user);
+      await passBusinessDetails(user);
       await heading('Review & submit');
+      await act(() => router.navigate(-1));
+      await heading('About you');
       await act(() => router.navigate(-1));
       await heading('Business details');
       await act(() => router.navigate(-1));
@@ -342,10 +738,7 @@ describe('CreateAccountSetup', () => {
 
       await chooseProvider(wizard.user, 'Usio');
       await heading('Business details');
-      await wizard.user.type(
-        screen.getByLabelText('Legal business name'),
-        'Demo Law PLLC',
-      );
+      await fillBusiness(wizard.user);
       await clickBack(wizard.user);
 
       return wizard;

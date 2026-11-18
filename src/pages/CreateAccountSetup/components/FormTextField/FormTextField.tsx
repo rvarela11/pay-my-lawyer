@@ -1,0 +1,54 @@
+import { TextField, type TextFieldProps } from '@mui/material';
+import type { ChangeEvent } from 'react';
+import { Controller, type FieldPath, useFormContext } from 'react-hook-form';
+import type { SetupValues } from '../../validation.ts';
+
+type Props = Omit<TextFieldProps, 'name'> & {
+  // Rewrites the value as the user types, like (555) 123-4567.
+  format?: (value: string) => string;
+  name: FieldPath<SetupValues>;
+  // Rewrites the value when the field is left, like adding https://.
+  normalize?: (value: string) => string;
+};
+
+// A TextField wired to the wizard form: its value, its error and its ref for focus on Next.
+export const FormTextField = ({ format, name, normalize, ...props }: Props) => {
+  const { control } = useFormContext<SetupValues>();
+
+  return (
+    <Controller
+      control={control}
+      name={name}
+      render={({
+        field: { onBlur, onChange, ref, value, ...field },
+        fieldState: { error },
+      }) => {
+        const handleBlur = () => {
+          if (normalize && typeof value === 'string') {
+            onChange(normalize(value));
+          }
+
+          onBlur();
+        };
+
+        const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+          onChange(format ? format(event.target.value) : event.target.value);
+        };
+
+        return (
+          <TextField
+            {...props}
+            {...field}
+            error={!!error}
+            fullWidth
+            helperText={error?.message}
+            inputRef={ref}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            value={value ?? ''}
+          />
+        );
+      }}
+    />
+  );
+};

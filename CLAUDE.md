@@ -47,6 +47,7 @@ Verify changes with `npx tsc -b && npm run lint && npm test -- --run && npm run 
 - Meet WCAG 2.1 AA, stay responsive down to 320px, and respect `prefers-reduced-motion`.
 - A page-specific component gets its own folder under the page (`src/pages/Home/PaymentDemo/`).
 - When a page grows, group its files by role: `screens/` (one per route), `components/`, `hooks/` and `data/` (JSON files and fetch/storage boundaries). Config files (`fields.ts`, `validation.ts`) stay at the page root (see `src/pages/CreateAccountSetup/`).
+- Screens that belong to one payment provider go in `screens/providers/<provider>/`, in a lowercase folder for that provider (`screens/providers/usio/UsioBusinessScreen/`). Screens shared by every path stay at the root of `screens/`. Component names keep the provider prefix so they stay unique.
 - Data sits in a file beside the page or component that uses it (`products.ts`, `PaymentDemo/demo.ts`).
 
 ## SEO

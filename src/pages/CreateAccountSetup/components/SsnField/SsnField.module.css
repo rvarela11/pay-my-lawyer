@@ -1,0 +1,4 @@
+/* Non-standard but supported in Chrome, Edge, Safari and Firefox 114+. */
+.input[data-masked='true'] {
+  -webkit-text-security: disc;
+}

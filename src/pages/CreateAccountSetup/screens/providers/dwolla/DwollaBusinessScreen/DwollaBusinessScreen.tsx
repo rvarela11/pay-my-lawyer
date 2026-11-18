@@ -1,16 +1,15 @@
 import { TextField } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
-import { FIELDS } from '../../fields.ts';
-import type { SetupValues } from '../../validation.ts';
+import { FIELDS } from '../../../../fields.ts';
+import type { SetupValues } from '../../../../validation.ts';
 
-// One real field for now; #18 builds the full business form.
-export const BusinessScreen = () => {
+export const DwollaBusinessScreen = () => {
   const { control } = useFormContext<SetupValues>();
 
   return (
     <Controller
       control={control}
-      name={FIELDS.legalBusinessName}
+      name={FIELDS.dwollaLegalBusinessName}
       render={({ field: { ref, ...field }, fieldState: { error } }) => (
         <TextField
           {...field}

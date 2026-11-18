@@ -11,13 +11,15 @@ export type Provider = (typeof PROVIDER_IDS)[keyof typeof PROVIDER_IDS];
 export const SCREEN_IDS = {
   agreement: 'agreement',
   bankAccount: 'bankAccount',
-  business: 'business',
-  controller: 'controller',
+  dwollaAbout: 'dwollaAbout',
+  dwollaBusiness: 'dwollaBusiness',
   ids: 'ids',
   owners: 'owners',
   portal: 'portal',
   provider: 'provider',
   review: 'review',
+  usioAbout: 'usioAbout',
+  usioBusiness: 'usioBusiness',
 } as const;
 
 export type ScreenId = (typeof SCREEN_IDS)[keyof typeof SCREEN_IDS];
