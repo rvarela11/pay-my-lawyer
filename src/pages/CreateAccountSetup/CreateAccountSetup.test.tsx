@@ -848,6 +848,60 @@ describe('CreateAccountSetup', () => {
       ).toBeInTheDocument();
     });
 
+    it('clears the total error once it is fixed in About you', async () => {
+      const { user } = await toOwners();
+
+      await addOwner(user, '40');
+      await clickBack(user);
+      await heading('About you');
+      await user.clear(screen.getByLabelText('Ownership (%)'));
+      await paste(user, 'Ownership (%)', '70');
+      await clickNext(user);
+      await heading('Beneficial owners');
+      await clickNext(user);
+      await screen.findByRole('alert');
+      await user.click(
+        screen.getByRole('button', { name: 'Edit your details' }),
+      );
+      await heading('About you');
+      await user.clear(screen.getByLabelText('Ownership (%)'));
+      await paste(user, 'Ownership (%)', '60');
+      await clickNext(user);
+      await heading('Beneficial owners');
+
+      expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    });
+
+    it('moves focus to Add owner after removing an owner', async () => {
+      const { user } = await toOwners();
+
+      await addOwner(user, '40');
+      await user.click(
+        screen.getByRole('button', { name: 'Remove Ben Ortiz' }),
+      );
+      const confirm = await screen.findByRole('alertdialog', {
+        name: 'Remove Ben Ortiz?',
+      });
+
+      await user.click(within(confirm).getByRole('button', { name: 'Remove' }));
+
+      await waitFor(() =>
+        expect(screen.getByRole('button', { name: 'Add owner' })).toHaveFocus(),
+      );
+    });
+
+    it('moves focus to the list when a save hides Add owner', async () => {
+      const { user } = await toOwners();
+
+      await addOwner(user, '40');
+
+      await waitFor(() =>
+        expect(
+          screen.getByRole('list', { name: 'Beneficial owners' }),
+        ).toHaveFocus(),
+      );
+    });
+
     it('goes on with a total under 100%', async () => {
       const { user } = await toOwners();
 

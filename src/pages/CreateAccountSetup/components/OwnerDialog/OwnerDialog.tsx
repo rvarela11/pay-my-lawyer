@@ -18,6 +18,8 @@ import { type Owner, ownerSchema } from './validation.ts';
 
 type Props = {
   onCancel: () => void;
+  // Runs once the dialog has finished closing.
+  onClosed: () => void;
   onSave: (owner: Owner) => void;
   open: boolean;
   // null when adding a new owner.
@@ -31,6 +33,7 @@ const TITLE_ID = 'owner-dialog-title';
 // Adds or edits one beneficial owner in its own small form; the screen keeps the list.
 export const OwnerDialog = ({
   onCancel,
+  onClosed,
   onSave,
   open,
   owner,
@@ -66,6 +69,7 @@ export const OwnerDialog = ({
       maxWidth='md'
       onClose={onCancel}
       open={open}
+      slotProps={{ transition: { onExited: onClosed } }}
     >
       <FormProvider {...form}>
         <form noValidate onSubmit={handleFormSubmit}>

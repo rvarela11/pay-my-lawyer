@@ -20,6 +20,8 @@ import { RemoveOwnerDialog } from '../../../../components/RemoveOwnerDialog/Remo
 import { DWOLLA_FIELDS } from '../fields.ts';
 import styles from './DwollaOwnersScreen.module.css';
 
+type OwnersError = { message?: string; root?: { message?: string } };
+
 type Row = {
   dateOfBirth: string;
   id: string;
@@ -27,8 +29,6 @@ type Row = {
   owner: Owner | null;
   ownership: number;
 };
-
-type OwnersError = { message?: string; root?: { message?: string } };
 
 const formatDate = (date: Dayjs | null) => date?.format('MM/DD/YYYY') ?? '';
 
@@ -39,6 +39,7 @@ export const DwollaOwnersScreen = () => {
   const navigate = useNavigate();
   const wide = useMediaQuery('(min-width: 600px)');
   const {
+    clearErrors,
     control,
     formState: { errors },
   } = useFormContext();
@@ -61,7 +62,9 @@ export const DwollaOwnersScreen = () => {
   const [dialogOwner, setDialogOwner] = useState<Owner | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [removing, setRemoving] = useState<Owner | null>(null);
+  const addRef = useRef<HTMLButtonElement>(null);
   const alertRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLTableElement & HTMLUListElement>(null);
 
   const rows: Row[] = [
     {
@@ -112,6 +115,15 @@ export const DwollaOwnersScreen = () => {
     setIsDialogOpen(true);
   };
 
+  // A dialog gives focus back to the button that opened it. Removing an owner, or a save that
+  // hides Add owner, takes that button away, so focus goes to Add owner or the list instead of
+  // falling back to the top of the page.
+  const handleDialogClosed = () => {
+    if (document.activeElement === document.body) {
+      (addRef.current ?? listRef.current)?.focus();
+    }
+  };
+
   const handleDialogCancel = () => {
     setIsDialogOpen(false);
   };
@@ -147,6 +159,12 @@ export const DwollaOwnersScreen = () => {
     setRemoving(null);
   };
 
+  // A total error from an earlier Next may be out of date once the applicant changes their % in
+  // About you, so it's cleared on arrival; Next checks the total again.
+  useEffect(() => {
+    clearErrors(DWOLLA_FIELDS.owners);
+  }, [clearErrors]);
+
   useEffect(() => {
     if (totalError) {
       alertRef.current?.focus();
@@ -164,7 +182,7 @@ export const DwollaOwnersScreen = () => {
         </Alert>
       )}
       {wide ? (
-        <Table aria-label='Beneficial owners'>
+        <Table aria-label='Beneficial owners' ref={listRef} tabIndex={-1}>
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>
@@ -185,7 +203,12 @@ export const DwollaOwnersScreen = () => {
           </TableBody>
         </Table>
       ) : (
-        <ul aria-label='Beneficial owners' className={styles.cards}>
+        <ul
+          aria-label='Beneficial owners'
+          className={styles.cards}
+          ref={listRef}
+          tabIndex={-1}
+        >
           {rows.map((row) => (
             <li className={styles.card} key={row.id}>
               <Typography component='p' variant='subtitle1'>
@@ -205,13 +228,14 @@ export const DwollaOwnersScreen = () => {
       <div className={styles.footer}>
         <Typography component='p'>{`Total: ${total}%`}</Typography>
         {total < 100 && (
-          <Button onClick={handleAdd} variant='outlined'>
+          <Button onClick={handleAdd} ref={addRef} variant='outlined'>
             Add owner
           </Button>
         )}
       </div>
       <OwnerDialog
         onCancel={handleDialogCancel}
+        onClosed={handleDialogClosed}
         onSave={handleDialogSave}
         open={isDialogOpen}
         owner={dialogOwner}
@@ -220,6 +244,7 @@ export const DwollaOwnersScreen = () => {
       <RemoveOwnerDialog
         name={removing ? fullName(removing.firstName, removing.lastName) : ''}
         onCancel={handleRemoveCancel}
+        onClosed={handleDialogClosed}
         onConfirm={handleRemoveConfirm}
         open={!!removing}
       />

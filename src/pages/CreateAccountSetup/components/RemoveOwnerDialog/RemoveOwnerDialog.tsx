@@ -11,6 +11,8 @@ import styles from './RemoveOwnerDialog.module.css';
 type Props = {
   name: string;
   onCancel: () => void;
+  // Runs once the dialog has finished closing.
+  onClosed: () => void;
   onConfirm: () => void;
   open: boolean;
 };
@@ -21,6 +23,7 @@ const TITLE_ID = 'remove-owner-title';
 export const RemoveOwnerDialog = ({
   name,
   onCancel,
+  onClosed,
   onConfirm,
   open,
 }: Props) => (
@@ -30,6 +33,7 @@ export const RemoveOwnerDialog = ({
     onClose={onCancel}
     open={open}
     role='alertdialog'
+    slotProps={{ transition: { onExited: onClosed } }}
   >
     <DialogTitle id={TITLE_ID}>Remove {name}?</DialogTitle>
     <DialogContent>
