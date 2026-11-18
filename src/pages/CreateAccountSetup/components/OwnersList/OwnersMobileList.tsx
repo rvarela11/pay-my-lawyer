@@ -2,6 +2,7 @@ import { List, ListItem, Typography } from '@mui/material';
 import type { Ref } from 'react';
 import { OwnerActions } from './OwnerActions.tsx';
 import { OwnerDetail } from './OwnerDetail.tsx';
+import { OWNER_LABELS } from './ownerLabels.ts';
 import type { OwnerRow } from './ownerRows.ts';
 import styles from './OwnersMobileList.module.css';
 
@@ -23,7 +24,7 @@ export const OwnersMobileList = ({
 }: Props) => (
   <>
     <List
-      aria-label='Beneficial owners'
+      aria-label={OWNER_LABELS.list}
       disablePadding
       ref={listRef}
       tabIndex={-1}
@@ -44,17 +45,23 @@ export const OwnersMobileList = ({
             </div>
           </div>
           <dl className={styles.details}>
-            <OwnerDetail label='Ownership' value={`${row.ownership}%`} />
-            <OwnerDetail label='Bar Card #' value={row.barNumber} />
-            <OwnerDetail label='DOB' value={row.dateOfBirth} />
-            <OwnerDetail label='Title' value={row.title} />
+            <OwnerDetail
+              label={OWNER_LABELS.ownership}
+              value={`${row.ownership}%`}
+            />
+            <OwnerDetail label={OWNER_LABELS.barNumber} value={row.barNumber} />
+            <OwnerDetail
+              label={OWNER_LABELS.dateOfBirth}
+              value={row.dateOfBirth}
+            />
+            <OwnerDetail label={OWNER_LABELS.title} value={row.title} />
           </dl>
         </ListItem>
       ))}
     </List>
     <dl className={styles.details}>
       <OwnerDetail
-        label='Total ownership'
+        label={OWNER_LABELS.totalOwnership}
         value={`${total}%`}
         variant='subtitle2'
       />

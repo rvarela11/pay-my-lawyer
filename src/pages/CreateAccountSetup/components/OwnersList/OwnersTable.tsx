@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import type { Ref } from 'react';
 import { OwnerActions } from './OwnerActions.tsx';
+import { OWNER_LABELS } from './ownerLabels.ts';
 import type { OwnerRow } from './ownerRows.ts';
 import styles from './OwnersTable.module.css';
 
@@ -29,24 +30,26 @@ export const OwnersTable = ({
   total,
 }: Props) => (
   <Table
-    aria-label='Beneficial owners'
+    aria-label={OWNER_LABELS.list}
     ref={tableRef}
     size='small'
     tabIndex={-1}
   >
     <TableHead>
       <TableRow>
-        <TableCell>Name</TableCell>
-        <TableCell className={styles.nowrap}>Bar Card #</TableCell>
+        <TableCell>{OWNER_LABELS.name}</TableCell>
         <TableCell className={styles.nowrap}>
-          <abbr className={styles.abbr} title='Date of birth'>
-            DOB
+          {OWNER_LABELS.barNumber}
+        </TableCell>
+        <TableCell className={styles.nowrap}>
+          <abbr className={styles.abbr} title={OWNER_LABELS.dateOfBirthFull}>
+            {OWNER_LABELS.dateOfBirth}
           </abbr>
         </TableCell>
-        <TableCell>Title</TableCell>
-        <TableCell align='right'>Ownership</TableCell>
+        <TableCell>{OWNER_LABELS.title}</TableCell>
+        <TableCell align='right'>{OWNER_LABELS.ownership}</TableCell>
         <TableCell>
-          <span className={styles.visuallyHidden}>Actions</span>
+          <span className={styles.visuallyHidden}>{OWNER_LABELS.actions}</span>
         </TableCell>
       </TableRow>
     </TableHead>
@@ -76,7 +79,7 @@ export const OwnersTable = ({
       <TableRow>
         <TableCell className={styles.total} colSpan={4}>
           <Typography component='span' variant='subtitle2'>
-            Total
+            {OWNER_LABELS.total}
           </Typography>
         </TableCell>
         <TableCell align='right' className={`${styles.number} ${styles.total}`}>
