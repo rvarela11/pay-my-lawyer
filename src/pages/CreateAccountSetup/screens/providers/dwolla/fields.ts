@@ -1,6 +1,6 @@
-// Dwolla's own field names. The prefix keeps them apart from Usio's in the shared form.
+// Dwolla's field names. Dwolla has its own form, so the names don't clash with another provider's.
 export const DWOLLA_FIELDS = {
-  dwollaLegalBusinessName: 'dwollaLegalBusinessName',
+  legalBusinessName: 'legalBusinessName',
 } as const;
 
 // Each screen's fields in on-screen order: Next checks them and focuses the first invalid one.
@@ -8,5 +8,5 @@ export const DWOLLA_FIELDS = {
 export const DWOLLA_ABOUT_FIELDS = [] as const;
 
 export const DWOLLA_BUSINESS_FIELDS = [
-  DWOLLA_FIELDS.dwollaLegalBusinessName,
+  DWOLLA_FIELDS.legalBusinessName,
 ] as const;

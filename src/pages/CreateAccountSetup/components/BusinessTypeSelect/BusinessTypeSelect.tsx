@@ -1,10 +1,8 @@
 import { MenuItem } from '@mui/material';
-import type { FieldPath } from 'react-hook-form';
-import type { SetupValues } from '../../validation.ts';
 import { FormTextField } from '../FormTextField/FormTextField.tsx';
 import { BUSINESS_TYPES } from './businessTypes.ts';
 
-type Props = { name: FieldPath<SetupValues> };
+type Props = { name: string };
 
 export const BusinessTypeSelect = ({ name }: Props) => (
   <FormTextField label='Business type' name={name} select>

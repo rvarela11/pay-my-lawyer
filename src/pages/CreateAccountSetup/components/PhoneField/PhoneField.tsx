@@ -1,9 +1,7 @@
-import type { FieldPath } from 'react-hook-form';
-import type { SetupValues } from '../../validation.ts';
 import { FormTextField } from '../FormTextField/FormTextField.tsx';
 import { formatPhone } from './formatPhone.ts';
 
-type Props = { label: string; name: FieldPath<SetupValues> };
+type Props = { label: string; name: string };
 
 export const PhoneField = ({ label, name }: Props) => (
   <FormTextField

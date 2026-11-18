@@ -1,15 +1,15 @@
 import { TextField } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
-import type { SetupValues } from '../../../../validation.ts';
 import { DWOLLA_FIELDS } from '../fields.ts';
+import type { DwollaValues } from '../validation.ts';
 
 export const DwollaBusinessScreen = () => {
-  const { control } = useFormContext<SetupValues>();
+  const { control } = useFormContext<DwollaValues>();
 
   return (
     <Controller
       control={control}
-      name={DWOLLA_FIELDS.dwollaLegalBusinessName}
+      name={DWOLLA_FIELDS.legalBusinessName}
       render={({ field: { ref, ...field }, fieldState: { error } }) => (
         <TextField
           {...field}

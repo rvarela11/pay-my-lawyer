@@ -1,9 +1,7 @@
-import type { FieldPath } from 'react-hook-form';
-import type { SetupValues } from '../../validation.ts';
 import { FormTextField } from '../FormTextField/FormTextField.tsx';
 import { formatEin } from './formatEin.ts';
 
-type Props = { name: FieldPath<SetupValues> };
+type Props = { name: string };
 
 export const EinField = ({ name }: Props) => (
   <FormTextField

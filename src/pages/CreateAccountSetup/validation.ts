@@ -1,15 +1,12 @@
 import { type InferType, object, string } from 'yup';
 import { FIELDS } from './fields.ts';
 import { PROVIDER_IDS } from './ids.ts';
-import { DWOLLA_FIELD_RULES } from './screens/providers/dwolla/rules.ts';
-import { USIO_FIELD_RULES } from './screens/providers/usio/rules.ts';
 
 const PROVIDER_REQUIRED_MESSAGE = 'Choose how you want to get paid';
 
-// The wizard's one form: the provider choice plus each provider's own field set.
-export const setupSchema = object({
-  ...DWOLLA_FIELD_RULES,
-  ...USIO_FIELD_RULES,
+// The provider choice has its own small form; each provider's answers live in that provider's
+// form (screens/providers/<provider>/validation.ts).
+export const providerSchema = object({
   [FIELDS.provider]: string()
     .default('')
     .required(PROVIDER_REQUIRED_MESSAGE)
@@ -17,4 +14,4 @@ export const setupSchema = object({
     .oneOf(['', ...Object.values(PROVIDER_IDS)], PROVIDER_REQUIRED_MESSAGE),
 });
 
-export type SetupValues = InferType<typeof setupSchema>;
+export type ProviderValues = InferType<typeof providerSchema>;

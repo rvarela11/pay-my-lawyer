@@ -14,57 +14,57 @@ export const UsioAboutScreen = () => (
         autoComplete='email'
         className={styles.wide}
         label='Email'
-        name={USIO_FIELDS.usioEmail}
+        name={USIO_FIELDS.email}
         type='email'
       />
       <FormTextField
         autoComplete='given-name'
         label='First name'
-        name={USIO_FIELDS.usioFirstName}
+        name={USIO_FIELDS.firstName}
       />
       <FormTextField
         autoComplete='family-name'
         label='Last name'
-        name={USIO_FIELDS.usioLastName}
+        name={USIO_FIELDS.lastName}
       />
       <FormTextField
         autoComplete='organization-title'
         label='Job title'
-        name={USIO_FIELDS.usioJobTitle}
+        name={USIO_FIELDS.jobTitle}
       />
       <FormTextField
         autoComplete='off'
         label='Ownership (%)'
-        name={USIO_FIELDS.usioOwnership}
+        name={USIO_FIELDS.ownership}
         slotProps={{ htmlInput: { inputMode: 'numeric' } }}
       />
-      <DateOfBirthField name={USIO_FIELDS.usioDateOfBirth} />
-      <SsnField name={USIO_FIELDS.usioSsn} />
+      <DateOfBirthField name={USIO_FIELDS.dateOfBirth} />
+      <SsnField name={USIO_FIELDS.ssn} />
       <FormTextField
         autoComplete='address-line1'
         className={styles.wide}
         label='Home address'
-        name={USIO_FIELDS.usioHomeAddress1}
+        name={USIO_FIELDS.homeAddress1}
       />
       <FormTextField
         autoComplete='address-line2'
         label='Address 2 (optional)'
-        name={USIO_FIELDS.usioHomeAddress2}
+        name={USIO_FIELDS.homeAddress2}
       />
       <FormTextField
         autoComplete='address-level2'
         label='City'
-        name={USIO_FIELDS.usioHomeCity}
+        name={USIO_FIELDS.homeCity}
       />
       <StateSelect
         autoComplete='address-level1'
         label='State'
-        name={USIO_FIELDS.usioHomeState}
+        name={USIO_FIELDS.homeState}
       />
       <FormTextField
         autoComplete='postal-code'
         label='ZIP code'
-        name={USIO_FIELDS.usioHomeZip}
+        name={USIO_FIELDS.homeZip}
         slotProps={{ htmlInput: { inputMode: 'numeric' } }}
       />
     </div>

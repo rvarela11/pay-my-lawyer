@@ -9,7 +9,7 @@ import {
 import { Controller, useFormContext } from 'react-hook-form';
 import { FIELDS } from '../../fields.ts';
 import { PROVIDER_IDS, TITLE_ID } from '../../ids.ts';
-import type { SetupValues } from '../../validation.ts';
+import type { ProviderValues } from '../../validation.ts';
 import styles from './ProviderScreen.module.css';
 
 const ERROR_ID = 'provider-error';
@@ -39,7 +39,7 @@ const PROVIDER_OPTIONS = [
 ] as const;
 
 export const ProviderScreen = () => {
-  const { control } = useFormContext<SetupValues>();
+  const { control } = useFormContext<ProviderValues>();
 
   return (
     <div className={styles.screen}>

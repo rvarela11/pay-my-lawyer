@@ -1,5 +1,5 @@
 import { PATHS } from '../../routes/paths.ts';
-import { FIELDS, type FieldName } from './fields.ts';
+import { FIELDS } from './fields.ts';
 import {
   PROVIDER_IDS,
   type Provider,
@@ -15,7 +15,8 @@ import {
   USIO_BUSINESS_FIELDS,
 } from './screens/providers/usio/fields.ts';
 
-type Screen = { fields: readonly FieldName[]; path: string; title: string };
+// fields: the names Next checks, in the form the screen belongs to.
+type Screen = { fields: readonly string[]; path: string; title: string };
 
 export type Stage = { label: string; screens: readonly ScreenId[] };
 

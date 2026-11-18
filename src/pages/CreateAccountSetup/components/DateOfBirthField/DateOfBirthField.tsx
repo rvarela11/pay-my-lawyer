@@ -1,20 +1,13 @@
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import dayjs, { type Dayjs } from 'dayjs';
-import {
-  Controller,
-  type FieldPathByValue,
-  useFormContext,
-} from 'react-hook-form';
-import type { SetupValues } from '../../validation.ts';
+import dayjs from 'dayjs';
+import { Controller, useFormContext } from 'react-hook-form';
 
-type Props = { name: FieldPathByValue<SetupValues, Dayjs | null | undefined> };
+type Props = { name: string };
 
-// Starts empty (legacy pre-filled a date 18 years ago). The date can be typed, and the
-// calendar opens on the years so nobody pages back decades.
 export const DateOfBirthField = ({ name }: Props) => {
-  const { control } = useFormContext<SetupValues>();
+  const { control } = useFormContext();
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>

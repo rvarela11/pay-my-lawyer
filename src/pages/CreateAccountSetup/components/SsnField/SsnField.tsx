@@ -2,16 +2,15 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { IconButton, InputAdornment, TextField } from '@mui/material';
 import { useState } from 'react';
-import { Controller, type FieldPath, useFormContext } from 'react-hook-form';
-import type { SetupValues } from '../../validation.ts';
+import { Controller, useFormContext } from 'react-hook-form';
 import styles from './SsnField.module.css';
 
-type Props = { name: FieldPath<SetupValues> };
+type Props = { name: string };
 
 // A text input with the digits masked by CSS, not type='password': password managers
 // ignore autoComplete='off' on password fields and could fill a saved password here.
 export const SsnField = ({ name }: Props) => {
-  const { control } = useFormContext<SetupValues>();
+  const { control } = useFormContext();
   const [isShown, setIsShown] = useState(false);
 
   const handleToggle = () => {
