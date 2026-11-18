@@ -15,7 +15,9 @@ import { CREATE_ACCOUNT_SETUP_ROUTE } from './createAccountSetupRoute.tsx';
 // The About you screens load on demand. Importing them here loads their code before any test
 // runs, so the first test to reach one doesn't wait on that load.
 import './screens/providers/dwolla/DwollaAboutScreen/DwollaAboutScreen.tsx';
+import './screens/providers/dwolla/DwollaOwnersScreen/DwollaOwnersScreen.tsx';
 import './screens/providers/usio/UsioAboutScreen/UsioAboutScreen.tsx';
+import './screens/providers/usio/UsioOwnersScreen/UsioOwnersScreen.tsx';
 
 const PROVIDER_HEADING = 'How would you like to get paid?';
 
@@ -31,6 +33,12 @@ const renderWizard = (initialPath: string = PATHS.createAccountSetup) => {
 };
 
 const heading = (name: string) => screen.findByRole('heading', { name });
+
+// The values shown next to a label in the owners list (its <dt>/<dd> pairs), one per owner.
+const detailValues = (label: string) =>
+  screen
+    .getAllByText(label, { selector: 'dt' })
+    .map((term) => term.nextElementSibling?.textContent);
 
 const clickNext = (user: ReturnType<typeof userEvent.setup>) =>
   user.click(screen.getByRole('button', { name: 'Next' }));
@@ -80,14 +88,17 @@ const typeDate = async (
 };
 
 // Fills every required field on the provider's About you screen.
-const fillAbout = async (user: ReturnType<typeof userEvent.setup>) => {
+const fillAbout = async (
+  user: ReturnType<typeof userEvent.setup>,
+  ownership = '100',
+) => {
   await heading('About you');
   await paste(user, 'Email', 'lawyer@example.com');
   await paste(user, 'First name', 'Ana');
   await paste(user, 'Last name', 'Ng');
   await paste(user, 'Job title', 'Owner');
   await paste(user, 'Bar Card number', '12345');
-  await paste(user, 'Ownership (%)', '100');
+  await paste(user, 'Ownership (%)', ownership);
   await typeDate(user, '04281985');
   await paste(user, 'SSN', '123456789');
   await paste(user, 'Home address', '2 Oak St');
@@ -666,6 +677,45 @@ describe('CreateAccountSetup', () => {
       expect(
         screen.getByRole('group', { name: 'Date of birth' }),
       ).toHaveTextContent('MM/DD/YYYY');
+    });
+  });
+
+  describe.each([
+    ['Usio', 'Review & submit'],
+    ['Dwolla', 'ID documents'],
+  ])('%s beneficial owners', (provider, nextHeading) => {
+    // Walks to the owners screen with the applicant owning 60%.
+    const toOwners = async () => {
+      const wizard = renderWizard();
+
+      await chooseProvider(wizard.user, provider);
+      await heading('Business details');
+      await fillBusiness(wizard.user);
+      await clickNext(wizard.user);
+      await fillAbout(wizard.user, '60');
+      await clickNext(wizard.user);
+      await heading('Beneficial owners');
+
+      return wizard;
+    };
+
+    it('shows you from About you', async () => {
+      await toOwners();
+
+      expect(screen.getByText('Ana Ng')).toBeInTheDocument();
+      expect(screen.queryByText(/\(you\)/)).not.toBeInTheDocument();
+      expect(detailValues('Bar Card #')).toContain('12345');
+      expect(detailValues('Title')).toContain('Owner');
+      expect(detailValues('Ownership')).toEqual(['60%']);
+      expect(detailValues('Total ownership')).toEqual(['60%']);
+    });
+
+    it('goes on with a total under 100%', async () => {
+      const { user } = await toOwners();
+
+      await clickNext(user);
+
+      expect(await heading(nextHeading)).toBeInTheDocument();
     });
   });
 
