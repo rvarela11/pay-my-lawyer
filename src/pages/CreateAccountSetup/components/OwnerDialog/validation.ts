@@ -4,6 +4,7 @@ import {
   DATE_OF_BIRTH_RULE,
   FIRST_NAME_RULE,
   HOME_ADDRESS_RULE,
+  JOB_TITLE_RULE,
   LAST_NAME_RULE,
   OPTIONAL_TEXT_RULE,
   OWNERSHIP_RULE,
@@ -24,13 +25,14 @@ export const ownerSchema = object({
   [OWNER_FIELDS.homeState]: STATE_RULE,
   [OWNER_FIELDS.homeZip]: ZIP_RULE,
   [OWNER_FIELDS.id]: string().default(''),
+  [OWNER_FIELDS.jobTitle]: JOB_TITLE_RULE,
   [OWNER_FIELDS.lastName]: LAST_NAME_RULE,
   [OWNER_FIELDS.ownership]: OWNERSHIP_RULE.test('remaining', function (value) {
     const remaining = Number(this.options.context?.remaining ?? 100);
 
     return (
       Number(value) <= remaining ||
-      this.createError({ message: `Enter ${remaining}% or less` })
+      this.createError({ message: "Total ownership can't be over 100%" })
     );
   }),
   [OWNER_FIELDS.ssn]: SSN_RULE,

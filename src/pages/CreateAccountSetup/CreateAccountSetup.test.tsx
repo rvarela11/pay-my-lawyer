@@ -663,6 +663,7 @@ describe('CreateAccountSetup', () => {
     ) => {
       await paste(user, 'First name', 'Ben');
       await paste(user, 'Last name', 'Ortiz');
+      await paste(user, 'Job title', 'Partner');
       await typeDate(user, '02031979');
       await paste(user, 'Ownership (%)', ownership);
       await paste(user, 'SSN', '987654321');
@@ -695,7 +696,9 @@ describe('CreateAccountSetup', () => {
       expect(
         screen.getByText('List everyone who owns 25% or more of the firm.'),
       ).toBeInTheDocument();
-      expect(screen.getByText('Ana Ng (you)')).toBeInTheDocument();
+      expect(screen.getByText('Ana Ng')).toBeInTheDocument();
+      expect(screen.queryByText(/\(you\)/)).not.toBeInTheDocument();
+      expect(screen.getByText('Title: Owner')).toBeInTheDocument();
       expect(screen.getByText('60%')).toBeInTheDocument();
       expect(screen.getByText('Total: 60%')).toBeInTheDocument();
       expect(
@@ -714,6 +717,7 @@ describe('CreateAccountSetup', () => {
       expect(screen.getByText('Ben Ortiz')).toBeInTheDocument();
       expect(screen.getByText('40%')).toBeInTheDocument();
       expect(screen.getByText('02/03/1979')).toBeInTheDocument();
+      expect(screen.getByText('Title: Partner')).toBeInTheDocument();
       expect(screen.getByText('Total: 100%')).toBeInTheDocument();
       expect(
         screen.queryByRole('button', { name: 'Add owner' }),
@@ -773,6 +777,19 @@ describe('CreateAccountSetup', () => {
       expect(screen.getByText('Total: 100%')).toBeInTheDocument();
     });
 
+    it('requires a job title for an owner', async () => {
+      const { user } = await toOwners();
+
+      await user.click(screen.getByRole('button', { name: 'Add owner' }));
+      const dialog = await screen.findByRole('dialog', { name: 'Add owner' });
+
+      await user.click(within(dialog).getByRole('button', { name: 'Save' }));
+
+      expect(
+        await within(dialog).findByText('Job title is required'),
+      ).toBeInTheDocument();
+    });
+
     it('limits an owner to what is left', async () => {
       const { user } = await toOwners();
 
@@ -781,7 +798,30 @@ describe('CreateAccountSetup', () => {
       await paste(user, 'Ownership (%)', '41');
       await user.tab();
 
-      expect(await screen.findByText('Enter 40% or less')).toBeInTheDocument();
+      expect(
+        await screen.findByText("Total ownership can't be over 100%"),
+      ).toBeInTheDocument();
+    });
+
+    it("won't save an owner while the total is over 100%", async () => {
+      const { user } = await toOwners();
+
+      await addOwner(user, '40');
+      await clickBack(user);
+      await heading('About you');
+      await user.clear(screen.getByLabelText('Ownership (%)'));
+      await paste(user, 'Ownership (%)', '70');
+      await clickNext(user);
+      await heading('Beneficial owners');
+      await user.click(screen.getByRole('button', { name: 'Edit Ben Ortiz' }));
+      const dialog = await screen.findByRole('dialog', { name: 'Edit owner' });
+
+      await user.click(within(dialog).getByRole('button', { name: 'Save' }));
+
+      expect(
+        await within(dialog).findByText("Total ownership can't be over 100%"),
+      ).toBeInTheDocument();
+      expect(screen.queryByText(/-\d+%|Enter 0%/)).not.toBeInTheDocument();
     });
 
     it('removes only the chosen owner', async () => {

@@ -28,6 +28,7 @@ type Row = {
   name: string;
   owner: Owner | null;
   ownership: number;
+  title: string;
 };
 
 const formatDate = (date: Dayjs | null) => date?.format('MM/DD/YYYY') ?? '';
@@ -48,15 +49,16 @@ export const UsioOwnersScreen = () => {
     keyName: 'key',
     name: USIO_FIELDS.owners,
   });
-  const [firstName, lastName, dateOfBirth, ownership] = useWatch({
+  const [firstName, lastName, dateOfBirth, jobTitle, ownership] = useWatch({
     control,
     name: [
       USIO_FIELDS.firstName,
       USIO_FIELDS.lastName,
       USIO_FIELDS.dateOfBirth,
+      USIO_FIELDS.jobTitle,
       USIO_FIELDS.ownership,
     ],
-  }) as [string, string, Dayjs | null, string];
+  }) as [string, string, Dayjs | null, string, string];
   // Read the values, not useFieldArray's fields, so RHF's own row key never reaches the dialog.
   const owners = useWatch({ control, name: USIO_FIELDS.owners }) as Owner[];
   const [dialogOwner, setDialogOwner] = useState<Owner | null>(null);
@@ -70,9 +72,10 @@ export const UsioOwnersScreen = () => {
     {
       dateOfBirth: formatDate(dateOfBirth),
       id: 'you',
-      name: `${fullName(firstName, lastName)} (you)`,
+      name: fullName(firstName, lastName),
       owner: null,
       ownership: Number(ownership),
+      title: jobTitle,
     },
     ...owners.map((owner) => ({
       dateOfBirth: formatDate(owner.dateOfBirth ?? null),
@@ -80,6 +83,7 @@ export const UsioOwnersScreen = () => {
       name: fullName(owner.firstName, owner.lastName),
       owner,
       ownership: Number(owner.ownership),
+      title: owner.jobTitle,
     })),
   ];
   const total = rows.reduce((sum, row) => sum + row.ownership, 0);
@@ -187,6 +191,7 @@ export const UsioOwnersScreen = () => {
             <TableRow>
               <TableCell>Name</TableCell>
               <TableCell>Date of birth</TableCell>
+              <TableCell>Title</TableCell>
               <TableCell>Ownership</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
@@ -196,6 +201,7 @@ export const UsioOwnersScreen = () => {
               <TableRow key={row.id}>
                 <TableCell>{row.name}</TableCell>
                 <TableCell>{row.dateOfBirth}</TableCell>
+                <TableCell>{row.title}</TableCell>
                 <TableCell>{`${row.ownership}%`}</TableCell>
                 <TableCell>{actions(row)}</TableCell>
               </TableRow>
@@ -216,6 +222,9 @@ export const UsioOwnersScreen = () => {
               </Typography>
               <Typography component='p' variant='body2'>
                 {row.dateOfBirth}
+              </Typography>
+              <Typography component='p' variant='body2'>
+                {`Title: ${row.title}`}
               </Typography>
               <Typography component='p' variant='body2'>
                 {`${row.ownership}%`}

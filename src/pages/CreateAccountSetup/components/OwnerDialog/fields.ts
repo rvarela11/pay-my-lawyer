@@ -7,6 +7,7 @@ export const OWNER_FIELDS = {
   homeState: 'homeState',
   homeZip: 'homeZip',
   id: 'id',
+  jobTitle: 'jobTitle',
   lastName: 'lastName',
   ownership: 'ownership',
   ssn: 'ssn',
