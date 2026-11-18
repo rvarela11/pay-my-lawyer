@@ -274,13 +274,26 @@ describe('CreateAccountSetup', () => {
     it('shows no errors before anything is touched', async () => {
       await toBusiness();
 
-      expect(screen.queryAllByText(/^Enter |^Choose /)).toHaveLength(0);
+      expect(
+        screen.queryAllByText(/is required$|^Enter |^Choose |^You must/),
+      ).toHaveLength(0);
     });
 
     it("checks a field when it's left", async () => {
       const { user } = await toBusiness();
 
       await user.click(screen.getByLabelText('EIN'));
+      await user.tab();
+
+      expect(screen.getByLabelText('EIN')).toHaveAccessibleDescription(
+        'EIN is required',
+      );
+    });
+
+    it('says a malformed EIN needs 9 digits', async () => {
+      const { user } = await toBusiness();
+
+      await paste(user, 'EIN', '12345');
       await user.tab();
 
       expect(screen.getByLabelText('EIN')).toHaveAccessibleDescription(
@@ -356,7 +369,7 @@ describe('CreateAccountSetup', () => {
 
       await clickNext(user);
 
-      expect(screen.getByText('Choose a state')).toBeInTheDocument();
+      expect(screen.getByText('State is required')).toBeInTheDocument();
     });
 
     it('focuses the first invalid field on Next', async () => {
@@ -367,7 +380,7 @@ describe('CreateAccountSetup', () => {
       expect(
         screen.getByRole('combobox', { name: 'Business type' }),
       ).toHaveFocus();
-      expect(screen.getByText('Choose a business type')).toBeInTheDocument();
+      expect(screen.getByText('Business type is required')).toBeInTheDocument();
     });
 
     it('labels optional fields and marks nothing with an asterisk', async () => {

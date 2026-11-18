@@ -4,17 +4,21 @@ import { BUSINESS_TYPES } from '../../components/BusinessTypeSelect/businessType
 import { US_STATES } from '../../components/StateSelect/usStates.ts';
 
 // Rules shared by every provider's field set. Each starts empty, so nothing shows on load.
+// Empty fields say "<Label> is required"; a wrong format says how to fix it ("Enter a …").
 export const BUSINESS_ADDRESS_RULE = string()
   .trim()
   .default('')
-  .required('Enter the business address');
+  .required('Address is required');
 
 export const BUSINESS_TYPE_RULE = string()
   .default('')
-  .required('Choose a business type')
-  .oneOf(['', ...BUSINESS_TYPES], 'Choose a business type');
+  .required('Business type is required')
+  .oneOf(['', ...BUSINESS_TYPES], 'Business type is required');
 
-export const CITY_RULE = string().trim().default('').required('Enter a city');
+export const CITY_RULE = string()
+  .trim()
+  .default('')
+  .required('City is required');
 
 // Checked in order: empty, then a real date, then 18 or older (a birthday today counts).
 // An unfinished date reaches the form as null, like an empty one, so one message covers both.
@@ -31,44 +35,46 @@ export const DATE_OF_BIRTH_RULE = mixed<Dayjs>()
 
 export const EIN_RULE = string()
   .default('')
+  .required('EIN is required')
   .test('ein', 'Enter a 9-digit EIN', (value) => digitCount(value) === 9);
 
 export const EMAIL_RULE = string()
   .trim()
   .default('')
-  .required('Enter an email address, like name@yourfirm.com')
-  .email('Enter an email address, like name@yourfirm.com');
+  .required('Email is required')
+  .email('Enter a valid email');
 
 export const FIRST_NAME_RULE = string()
   .trim()
   .default('')
-  .required('Enter your first name');
+  .required('First name is required');
 
 export const HOME_ADDRESS_RULE = string()
   .trim()
   .default('')
-  .required('Enter your home address');
+  .required('Home address is required');
 
 export const JOB_TITLE_RULE = string()
   .trim()
   .default('')
-  .required('Enter your job title');
+  .required('Job title is required');
 
 export const LAST_NAME_RULE = string()
   .trim()
   .default('')
-  .required('Enter your last name');
+  .required('Last name is required');
 
 export const LEGAL_BUSINESS_NAME_RULE = string()
   .trim()
   .default('')
-  .required('Enter your legal business name');
+  .required('Legal business name is required');
 
 export const OPTIONAL_TEXT_RULE = string().trim().default('');
 
 export const OWNERSHIP_RULE = string()
   .trim()
   .default('')
+  .required('Ownership is required')
   .test(
     'ownership',
     'Enter a number from 25 to 100',
@@ -78,6 +84,7 @@ export const OWNERSHIP_RULE = string()
 
 export const PHONE_RULE = string()
   .default('')
+  .required('Phone is required')
   .test(
     'phone',
     'Enter a 10-digit phone number',
@@ -87,6 +94,7 @@ export const PHONE_RULE = string()
 // Dashes and spaces are fine; the SSN needs exactly 9 digits.
 export const SSN_RULE = string()
   .default('')
+  .required('SSN is required')
   .test(
     'ssn',
     'Enter a 9-digit SSN',
@@ -95,8 +103,8 @@ export const SSN_RULE = string()
 
 export const STATE_RULE = string()
   .default('')
-  .required('Choose a state')
-  .oneOf(['', ...US_STATES.map(({ code }) => code)], 'Choose a state');
+  .required('State is required')
+  .oneOf(['', ...US_STATES.map(({ code }) => code)], 'State is required');
 
 export const WEBSITE_RULE = string()
   .default('')
@@ -112,6 +120,7 @@ export const WEBSITE_RULE = string()
 export const ZIP_RULE = string()
   .trim()
   .default('')
+  .required('ZIP code is required')
   .matches(/^\d{5}$/, 'Enter a 5-digit ZIP code');
 
 // Called only while validating, after the module has loaded.
