@@ -12,6 +12,9 @@ import { createMemoryRouter, RouterProvider } from 'react-router';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { PATHS } from '../../routes/paths.ts';
 import { CREATE_ACCOUNT_SETUP_ROUTE } from './createAccountSetupRoute.tsx';
+// About you is loaded on demand. Importing it here loads its code before any test runs, so
+// the first test to reach it doesn't wait on that load.
+import './screens/providers/usio/UsioAboutScreen/UsioAboutScreen.tsx';
 
 const PROVIDER_HEADING = 'How would you like to get paid?';
 
