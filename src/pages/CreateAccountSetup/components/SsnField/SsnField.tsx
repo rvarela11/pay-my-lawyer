@@ -2,7 +2,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { IconButton, InputAdornment, TextField } from '@mui/material';
 import { useState } from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
+import { useController, useFormContext } from 'react-hook-form';
 import styles from './SsnField.module.css';
 
 type Props = { name: string };
@@ -12,48 +12,46 @@ type Props = { name: string };
 export const SsnField = ({ name }: Props) => {
   const { control } = useFormContext();
   const [isShown, setIsShown] = useState(false);
+  const {
+    field: { ref, value, ...field },
+    fieldState: { error },
+  } = useController({ control, name });
 
   const handleToggle = () => {
     setIsShown((shown) => !shown);
   };
 
   return (
-    <Controller
-      control={control}
-      name={name}
-      render={({ field: { ref, value, ...field }, fieldState: { error } }) => (
-        <TextField
-          {...field}
-          autoComplete='off'
-          error={!!error}
-          fullWidth
-          helperText={error?.message}
-          inputRef={ref}
-          label='SSN'
-          slotProps={{
-            htmlInput: {
-              className: styles.input,
-              'data-masked': String(!isShown),
-              inputMode: 'numeric',
-            },
-            input: {
-              endAdornment: (
-                <InputAdornment position='end'>
-                  <IconButton
-                    aria-label={isShown ? 'Hide SSN' : 'Show SSN'}
-                    edge='end'
-                    onClick={handleToggle}
-                  >
-                    {isShown ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            },
-          }}
-          type='text'
-          value={value ?? ''}
-        />
-      )}
+    <TextField
+      {...field}
+      autoComplete='off'
+      error={!!error}
+      fullWidth
+      helperText={error?.message}
+      inputRef={ref}
+      label='SSN'
+      slotProps={{
+        htmlInput: {
+          className: styles.input,
+          'data-masked': String(!isShown),
+          inputMode: 'numeric',
+        },
+        input: {
+          endAdornment: (
+            <InputAdornment position='end'>
+              <IconButton
+                aria-label={isShown ? 'Hide SSN' : 'Show SSN'}
+                edge='end'
+                onClick={handleToggle}
+              >
+                {isShown ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        },
+      }}
+      type='text'
+      value={value ?? ''}
     />
   );
 };
