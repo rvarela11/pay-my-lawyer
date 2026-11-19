@@ -31,11 +31,11 @@ export const OwnersMobileList = ({
     >
       {rows.map((row) => (
         <ListItem className={styles.owner} disableGutters divider key={row.id}>
-          <Stack spacing={1} sx={{ width: '100%' }} useFlexGap>
+          <Stack className={styles.body} spacing={1} useFlexGap>
             <Stack
+              className={styles.header}
               direction='row'
               spacing={1}
-              sx={{ alignItems: 'center', justifyContent: 'space-between' }}
               useFlexGap
             >
               <Typography component='p' variant='subtitle1'>

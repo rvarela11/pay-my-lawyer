@@ -9,9 +9,9 @@ export const Footer = () => (
   <Section className={styles.footer} component='footer'>
     <Container>
       <Stack
+        className={styles.columns}
         direction={{ md: 'row', xs: 'column' }}
         spacing={{ md: 6, xs: 5 }}
-        sx={{ justifyContent: 'space-between' }}
         useFlexGap
       >
         <Typography className={styles.wordmark} component='p' variant='h2'>
@@ -22,7 +22,6 @@ export const Footer = () => (
           className={styles.contact}
           component='address'
           spacing={1}
-          sx={{ alignItems: 'flex-start' }}
           useFlexGap
         >
           <Stack
@@ -31,7 +30,6 @@ export const Footer = () => (
             direction='row'
             href='mailto:ceo@paymylawyer.cc'
             spacing={1.5}
-            sx={{ alignItems: 'center' }}
             useFlexGap
           >
             <span aria-hidden className={styles.badge}>
@@ -45,7 +43,6 @@ export const Footer = () => (
             direction='row'
             href='tel:+19564666918'
             spacing={1.5}
-            sx={{ alignItems: 'center' }}
             useFlexGap
           >
             <span aria-hidden className={styles.badge}>
@@ -59,22 +56,12 @@ export const Footer = () => (
         </Stack>
       </Stack>
 
-      <Stack spacing={1} sx={{ mt: 4 }} useFlexGap>
+      <Stack className={styles.fine} spacing={1} useFlexGap>
         <Typography variant='body2'>
           Services are only offered to licensed attorneys within the United
           States.
         </Typography>
-        <Stack
-          direction='row'
-          spacing={3}
-          sx={{
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            justifyContent: 'space-between',
-            rowGap: 1,
-          }}
-          useFlexGap
-        >
+        <Stack className={styles.legal} direction='row' spacing={3} useFlexGap>
           <Typography variant='caption'>
             Copyright © {new Date().getFullYear()} Pay My Lawyer
           </Typography>

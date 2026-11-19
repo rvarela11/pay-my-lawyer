@@ -1,0 +1,4 @@
+.forgotPassword {
+  align-self: flex-end;
+  margin-top: calc(var(--mui-spacing) * -2);
+}

@@ -1,0 +1,4 @@
+/* Edit and Remove side by side, so every row keeps the same height. */
+.actions {
+  justify-content: flex-end;
+}

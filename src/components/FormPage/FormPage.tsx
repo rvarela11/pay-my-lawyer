@@ -1,6 +1,7 @@
 import { Stack, Typography } from '@mui/material';
 import type { ReactNode } from 'react';
 import { Container } from '../Container/Container.tsx';
+import styles from './FormPage.module.css';
 import { Section } from '../Section/Section.tsx';
 
 type Props = {
@@ -27,7 +28,7 @@ export const FormPage = ({
         </Typography>
         <Typography component='p'>{subtitle}</Typography>
       </Stack>
-      <Stack spacing={3} sx={{ mt: 4 }} useFlexGap>
+      <Stack className={styles.body} spacing={3} useFlexGap>
         {alert}
         {children}
       </Stack>

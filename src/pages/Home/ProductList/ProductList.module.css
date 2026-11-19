@@ -71,6 +71,12 @@
   width: 32px;
 }
 
+@media (min-width: 900px) {
+  .text {
+    align-items: baseline;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .row::before {
     transition: none;

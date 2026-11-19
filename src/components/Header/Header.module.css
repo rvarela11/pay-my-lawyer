@@ -2,6 +2,15 @@
   background-color: var(--mui-palette-background-paper);
 }
 
+.actions {
+  align-items: center;
+}
+
+.desktopNav {
+  align-items: center;
+  display: none;
+}
+
 .navLink {
   border-bottom: 2px solid transparent;
   display: inline-block;
@@ -12,4 +21,14 @@
 .navLink:hover,
 .navLink[aria-current='page'] {
   border-bottom-color: currentColor;
+}
+
+@media (min-width: 900px) {
+  .desktopNav {
+    display: flex;
+  }
+
+  .menuButton {
+    display: none;
+  }
 }

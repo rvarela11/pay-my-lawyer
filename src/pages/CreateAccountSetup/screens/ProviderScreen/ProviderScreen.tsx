@@ -59,7 +59,6 @@ export const ProviderScreen = () => {
                 direction='row'
                 id={ERROR_ID}
                 spacing={1}
-                sx={{ alignItems: 'center' }}
                 useFlexGap
               >
                 <ErrorOutlineOutlined aria-hidden='true' fontSize='small' />
@@ -70,7 +69,7 @@ export const ProviderScreen = () => {
               {...field}
               aria-describedby={error ? ERROR_ID : undefined}
               aria-labelledby={TITLE_ID}
-              sx={{ gap: 2 }}
+              className={styles.options}
             >
               {PROVIDER_OPTIONS.map(
                 ({ accepts, label, needs, value }, index) => (

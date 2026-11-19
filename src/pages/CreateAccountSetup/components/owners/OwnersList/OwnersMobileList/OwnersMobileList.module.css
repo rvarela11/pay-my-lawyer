@@ -3,6 +3,10 @@
   margin-inline-end: calc(var(--mui-spacing) * -1);
 }
 
+.body {
+  width: 100%;
+}
+
 /* Labels on the left, values on the right edge, so every value and the total line up. */
 .details {
   column-gap: calc(var(--mui-spacing) * 2);
@@ -12,6 +16,10 @@
   row-gap: calc(var(--mui-spacing) / 2);
 }
 
+.header {
+  align-items: center;
+  justify-content: space-between;
+}
 
 /* The owner's name row and details fill the item, so the icons and values reach the right edge. */
 .owner {

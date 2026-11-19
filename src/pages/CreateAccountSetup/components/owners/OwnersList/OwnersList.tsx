@@ -6,6 +6,7 @@ import type { Owner } from '../OwnerDialog/validation.ts';
 import { RemoveOwnerDialog } from '../RemoveOwnerDialog/RemoveOwnerDialog.tsx';
 import { useOwnerDialog } from './hooks/useOwnerDialog.ts';
 import { useRemoveOwnerDialog } from './hooks/useRemoveOwnerDialog.ts';
+import styles from './OwnersList.module.css';
 import { OwnersMobileList } from './OwnersMobileList/OwnersMobileList.tsx';
 import { OwnersTable } from './OwnersTable/OwnersTable.tsx';
 import {
@@ -87,7 +88,7 @@ export const OwnersList = ({
       )}
       {/* Top right, above the list, where it stays in view however many owners there are. */}
       {total < 100 && (
-        <Stack direction='row' sx={{ justifyContent: 'flex-end' }}>
+        <Stack className={styles.toolbar} direction='row'>
           <Button
             onClick={ownerDialog.openAdd}
             ref={addRef}

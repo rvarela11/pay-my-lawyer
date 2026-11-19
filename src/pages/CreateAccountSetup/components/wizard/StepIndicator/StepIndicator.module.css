@@ -1,7 +1,21 @@
+.bar {
+  border-radius: calc(var(--mui-spacing) * 0.5);
+}
+
 .indicator {
   margin-bottom: calc(var(--mui-spacing) * 3);
 }
 
-.bar {
-  border-radius: calc(var(--mui-spacing) * 0.5);
+.stepper {
+  display: none;
+}
+
+@media (min-width: 600px) {
+  .bar {
+    display: none;
+  }
+
+  .stepper {
+    display: flex;
+  }
 }

@@ -11,13 +11,9 @@ export const Home = () => {
   return (
     <>
       <HeroPanel aria-labelledby='hero-title' fullHeight>
-        <Grid
-          container
-          spacing={{ lg: 6, xs: 5 }}
-          sx={{ alignItems: 'flex-end' }}
-        >
+        <Grid className={styles.hero} container spacing={{ lg: 6, xs: 5 }}>
           <Grid size={{ lg: 'grow', xs: 12 }}>
-            <Stack spacing={3} sx={{ alignItems: 'flex-start' }} useFlexGap>
+            <Stack className={styles.heroCopy} spacing={3} useFlexGap>
               <Typography
                 className={styles.heroTitle}
                 id='hero-title'
@@ -34,9 +30,9 @@ export const Home = () => {
                 in one place.
               </Typography>
               <Button
+                className={styles.heroAction}
                 component={RouterLink}
                 size='large'
-                sx={{ mt: 1 }}
                 to={PATHS.createAccount}
                 variant='contained'
               >

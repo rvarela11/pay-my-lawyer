@@ -41,10 +41,10 @@ export const Header = () => {
 
           <Stack
             aria-label='Primary'
+            className={styles.desktopNav}
             component='nav'
             direction='row'
             spacing={4}
-            sx={{ alignItems: 'center', display: { md: 'flex', xs: 'none' } }}
             useFlexGap
           >
             <Stack
@@ -70,9 +70,9 @@ export const Header = () => {
               ))}
             </Stack>
             <Stack
+              className={styles.actions}
               direction='row'
               spacing={1.5}
-              sx={{ alignItems: 'center' }}
               useFlexGap
             >
               <Button component={NavLink} to={PATHS.signIn} variant='outlined'>
@@ -93,10 +93,10 @@ export const Header = () => {
             aria-controls='mobile-nav'
             aria-expanded={open}
             aria-label='Menu'
+            className={styles.menuButton}
             edge='end'
             onClick={handleOpen}
             size='large'
-            sx={{ display: { md: 'none' } }}
           >
             <MenuIcon />
           </IconButton>

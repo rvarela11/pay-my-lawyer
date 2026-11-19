@@ -100,11 +100,11 @@ export const CreateAccountSetup = () => {
             )}
           </Stack>
           <Stack
+            className={styles.form}
             component='form'
             noValidate
             onSubmit={handleSubmit}
             spacing={4}
-            sx={{ mt: 4 }}
             useFlexGap
           >
             <Outlet />
@@ -116,9 +116,9 @@ export const CreateAccountSetup = () => {
               )}
               {screen !== SCREEN_IDS.portal && (
                 <Button
+                  className={styles.next}
                   onClick={handleNextClick}
                   size='large'
-                  sx={{ ml: 'auto' }}
                   type='submit'
                   variant='contained'
                 >

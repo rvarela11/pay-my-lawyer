@@ -7,6 +7,7 @@ import { FormPage } from '../../components/FormPage/FormPage.tsx';
 import { PasswordField } from '../../components/PasswordField/PasswordField.tsx';
 import { PATHS } from '../../routes/paths.ts';
 import { FIELDS } from './fields.ts';
+import styles from './SignIn.module.css';
 import { submitSignIn } from './submitSignIn.ts';
 import { type SignInValues, signInSchema } from './validation.ts';
 
@@ -121,8 +122,8 @@ export const SignIn = () => {
           )}
         />
         <Link
+          className={styles.forgotPassword}
           component={RouterLink}
-          sx={{ alignSelf: 'flex-end', mt: -2 }}
           to={PATHS.forgotPassword}
           underline='always'
           variant='body2'

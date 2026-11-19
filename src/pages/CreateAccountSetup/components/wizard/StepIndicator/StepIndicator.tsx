@@ -13,7 +13,7 @@ export const StepIndicator = ({ labels, number, total }: Props) => (
     <Stepper
       activeStep={number - 1}
       alternativeLabel
-      sx={{ display: { sm: 'flex', xs: 'none' } }}
+      className={styles.stepper}
     >
       {labels.map((label) => (
         <Step key={label}>
@@ -23,7 +23,6 @@ export const StepIndicator = ({ labels, number, total }: Props) => (
     </Stepper>
     <LinearProgress
       className={styles.bar}
-      sx={{ display: { sm: 'none' } }}
       value={(number / total) * 100}
       variant='determinate'
     />

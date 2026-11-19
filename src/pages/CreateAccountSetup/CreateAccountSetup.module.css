@@ -1,7 +1,15 @@
-.title:focus {
-  outline: none;
+.form {
+  margin-top: calc(var(--mui-spacing) * 4);
+}
+
+.next {
+  margin-inline-start: auto;
 }
 
 .step {
   color: var(--mui-palette-text-secondary);
+}
+
+.title:focus {
+  outline: none;
 }

@@ -27,12 +27,7 @@ export const ProductList = () => (
           >
             {String(index + 1).padStart(2, '0')}
           </Typography>
-          <Grid
-            component='span'
-            container
-            spacing={1}
-            sx={{ alignItems: { md: 'baseline' } }}
-          >
+          <Grid className={styles.text} component='span' container spacing={1}>
             <Grid component='span' size={{ md: 6, xs: 12 }}>
               <Typography component='h3' variant='h3'>
                 {name}
