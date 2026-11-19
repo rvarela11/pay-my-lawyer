@@ -1,12 +1,11 @@
 import Add from '@mui/icons-material/Add';
-import { Alert, Button, useMediaQuery, useTheme } from '@mui/material';
+import { Alert, Button, Stack, useMediaQuery, useTheme } from '@mui/material';
 import { useEffect, useRef } from 'react';
 import { OwnerDialog } from '../OwnerDialog/OwnerDialog.tsx';
 import type { Owner } from '../OwnerDialog/validation.ts';
 import { RemoveOwnerDialog } from '../RemoveOwnerDialog/RemoveOwnerDialog.tsx';
 import { useOwnerDialog } from './hooks/useOwnerDialog.ts';
 import { useRemoveOwnerDialog } from './hooks/useRemoveOwnerDialog.ts';
-import styles from './OwnersList.module.css';
 import { OwnersMobileList } from './OwnersMobileList/OwnersMobileList.tsx';
 import { OwnersTable } from './OwnersTable/OwnersTable.tsx';
 import {
@@ -80,7 +79,7 @@ export const OwnersList = ({
   }, [totalError]);
 
   return (
-    <div className={styles.screen}>
+    <Stack spacing={3} useFlexGap>
       {totalError && (
         <Alert ref={alertRef} severity='error' tabIndex={-1}>
           {totalError}
@@ -88,7 +87,7 @@ export const OwnersList = ({
       )}
       {/* Top right, above the list, where it stays in view however many owners there are. */}
       {total < 100 && (
-        <div className={styles.toolbar}>
+        <Stack direction='row' sx={{ justifyContent: 'flex-end' }}>
           <Button
             onClick={ownerDialog.openAdd}
             ref={addRef}
@@ -96,7 +95,7 @@ export const OwnersList = ({
           >
             Add owner
           </Button>
-        </div>
+        </Stack>
       )}
       {wide ? (
         <OwnersTable
@@ -137,6 +136,6 @@ export const OwnersList = ({
         onConfirm={removeDialog.confirm}
         open={removeDialog.isOpen}
       />
-    </div>
+    </Stack>
   );
 };

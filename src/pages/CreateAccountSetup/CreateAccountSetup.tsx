@@ -1,4 +1,4 @@
-import { Button, Typography } from '@mui/material';
+import { Button, Stack, Typography } from '@mui/material';
 import {
   type MouseEvent,
   type SubmitEvent,
@@ -82,24 +82,33 @@ export const CreateAccountSetup = () => {
               total={position.total}
             />
           )}
-          <Typography
-            className={styles.title}
-            component='h1'
-            id={TITLE_ID}
-            ref={titleRef}
-            tabIndex={-1}
-            variant='h4'
-          >
-            {SCREENS[screen].title}
-          </Typography>
-          {provider && position && (
-            <Typography className={styles.step} component='p' variant='body2'>
-              Step {position.number} of {position.total}: {position.label}
+          <Stack spacing={1} useFlexGap>
+            <Typography
+              className={styles.title}
+              component='h1'
+              id={TITLE_ID}
+              ref={titleRef}
+              tabIndex={-1}
+              variant='h4'
+            >
+              {SCREENS[screen].title}
             </Typography>
-          )}
-          <form className={styles.form} noValidate onSubmit={handleSubmit}>
+            {provider && position && (
+              <Typography className={styles.step} component='p' variant='body2'>
+                Step {position.number} of {position.total}: {position.label}
+              </Typography>
+            )}
+          </Stack>
+          <Stack
+            component='form'
+            noValidate
+            onSubmit={handleSubmit}
+            spacing={4}
+            sx={{ mt: 4 }}
+            useFlexGap
+          >
             <Outlet />
-            <div className={styles.actions}>
+            <Stack direction='row' spacing={2} useFlexGap>
               {screen !== SCREEN_IDS.provider && (
                 <Button onClick={goBack} size='large' variant='outlined'>
                   Back
@@ -107,17 +116,17 @@ export const CreateAccountSetup = () => {
               )}
               {screen !== SCREEN_IDS.portal && (
                 <Button
-                  className={styles.next}
                   onClick={handleNextClick}
                   size='large'
+                  sx={{ ml: 'auto' }}
                   type='submit'
                   variant='contained'
                 >
                   Next
                 </Button>
               )}
-            </div>
-          </form>
+            </Stack>
+          </Stack>
           <StartOverDialog
             onCancel={handleStartOverCancel}
             onConfirm={handleStartOver}

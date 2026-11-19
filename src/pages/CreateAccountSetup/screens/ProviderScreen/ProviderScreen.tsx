@@ -4,6 +4,7 @@ import {
   FormControlLabel,
   Radio,
   RadioGroup,
+  Stack,
   Typography,
 } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -42,7 +43,7 @@ export const ProviderScreen = () => {
   const { control } = useFormContext<ProviderValues>();
 
   return (
-    <div className={styles.screen}>
+    <Stack spacing={3} useFlexGap>
       <Controller
         control={control}
         name={FIELDS.provider}
@@ -52,16 +53,24 @@ export const ProviderScreen = () => {
             error={!!error}
           >
             {error && (
-              <Typography className={styles.error} id={ERROR_ID}>
+              <Stack
+                className={styles.error}
+                component={Typography}
+                direction='row'
+                id={ERROR_ID}
+                spacing={1}
+                sx={{ alignItems: 'center' }}
+                useFlexGap
+              >
                 <ErrorOutlineOutlined aria-hidden='true' fontSize='small' />
                 {error.message}
-              </Typography>
+              </Stack>
             )}
             <RadioGroup
               {...field}
               aria-describedby={error ? ERROR_ID : undefined}
               aria-labelledby={TITLE_ID}
-              className={styles.options}
+              sx={{ gap: 2 }}
             >
               {PROVIDER_OPTIONS.map(
                 ({ accepts, label, needs, value }, index) => (
@@ -81,7 +90,12 @@ export const ProviderScreen = () => {
                     }
                     key={value}
                     label={
-                      <span className={styles.text}>
+                      <Stack
+                        className={styles.text}
+                        component='span'
+                        spacing={0.5}
+                        useFlexGap
+                      >
                         <Typography
                           component='span'
                           id={`${value}-label`}
@@ -99,7 +113,7 @@ export const ProviderScreen = () => {
                         >
                           {needs}
                         </Typography>
-                      </span>
+                      </Stack>
                     }
                     value={value}
                   />
@@ -118,7 +132,12 @@ export const ProviderScreen = () => {
                   />
                 }
                 label={
-                  <span className={styles.text}>
+                  <Stack
+                    className={styles.text}
+                    component='span'
+                    spacing={0.5}
+                    useFlexGap
+                  >
                     <Typography component='span' id={`${LATER.value}-label`}>
                       {LATER.label}
                     </Typography>
@@ -129,7 +148,7 @@ export const ProviderScreen = () => {
                     >
                       {LATER.needs}
                     </Typography>
-                  </span>
+                  </Stack>
                 }
                 value={LATER.value}
               />
@@ -137,6 +156,6 @@ export const ProviderScreen = () => {
           </FormControl>
         )}
       />
-    </div>
+    </Stack>
   );
 };

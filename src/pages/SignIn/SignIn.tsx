@@ -1,14 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Alert, Button, Link, TextField, Typography } from '@mui/material';
+import { Alert, Button, Link, Stack, TextField } from '@mui/material';
 import { useEffect, useRef } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Link as RouterLink, useNavigate } from 'react-router';
-import { Container } from '../../components/Container/Container.tsx';
+import { FormPage } from '../../components/FormPage/FormPage.tsx';
 import { PasswordField } from '../../components/PasswordField/PasswordField.tsx';
-import { Section } from '../../components/Section/Section.tsx';
 import { PATHS } from '../../routes/paths.ts';
 import { FIELDS } from './fields.ts';
-import styles from './SignIn.module.css';
 import { submitSignIn } from './submitSignIn.ts';
 import { type SignInValues, signInSchema } from './validation.ts';
 
@@ -61,12 +59,16 @@ export const SignIn = () => {
   }, [serverError]);
 
   return (
-    <Section aria-labelledby='sign-in-title'>
-      <Container size='narrow'>
-        <Typography component='h1' id='sign-in-title' variant='h4'>
-          Sign in
-        </Typography>
-        <Typography className={styles.subtitle} component='p'>
+    <FormPage
+      alert={
+        serverError && (
+          <Alert ref={alertRef} severity='error' tabIndex={-1}>
+            {serverError.message}
+          </Alert>
+        )
+      }
+      subtitle={
+        <>
           New to Pay My Lawyer?{' '}
           <Link
             component={RouterLink}
@@ -75,76 +77,69 @@ export const SignIn = () => {
           >
             Create an account
           </Link>
-        </Typography>
-
-        {serverError && (
-          <Alert
-            className={styles.alert}
-            ref={alertRef}
-            severity='error'
-            tabIndex={-1}
-          >
-            {serverError.message}
-          </Alert>
-        )}
-
-        <form
-          className={styles.form}
-          noValidate
-          onSubmit={handleSubmit(handleSignIn)}
+        </>
+      }
+      title='Sign in'
+      titleId='sign-in-title'
+    >
+      <Stack
+        component='form'
+        noValidate
+        spacing={3}
+        useFlexGap
+        onSubmit={handleSubmit(handleSignIn)}
+      >
+        <Controller
+          control={control}
+          name={FIELDS.email}
+          render={({ field: { ref, ...field }, fieldState: { error } }) => (
+            <TextField
+              {...field}
+              autoComplete='email'
+              error={!!error}
+              fullWidth
+              helperText={error?.message}
+              inputRef={ref}
+              label='Email'
+              type='email'
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name={FIELDS.password}
+          render={({ field: { ref, ...field }, fieldState: { error } }) => (
+            <PasswordField
+              {...field}
+              autoComplete='current-password'
+              error={!!error}
+              fullWidth
+              helperText={error?.message}
+              inputRef={ref}
+              label='Password'
+            />
+          )}
+        />
+        <Link
+          component={RouterLink}
+          sx={{ alignSelf: 'flex-end', mt: -2 }}
+          to={PATHS.forgotPassword}
+          underline='always'
+          variant='body2'
         >
-          <Controller
-            control={control}
-            name={FIELDS.email}
-            render={({ field: { ref, ...field }, fieldState: { error } }) => (
-              <TextField
-                {...field}
-                autoComplete='email'
-                error={!!error}
-                fullWidth
-                helperText={error?.message}
-                inputRef={ref}
-                label='Email'
-                type='email'
-              />
-            )}
-          />
-          <Controller
-            control={control}
-            name={FIELDS.password}
-            render={({ field: { ref, ...field }, fieldState: { error } }) => (
-              <PasswordField
-                {...field}
-                autoComplete='current-password'
-                error={!!error}
-                fullWidth
-                helperText={error?.message}
-                inputRef={ref}
-                label='Password'
-              />
-            )}
-          />
-          <Link
-            className={styles.forgotPassword}
-            component={RouterLink}
-            to={PATHS.forgotPassword}
-            underline='always'
-            variant='body2'
-          >
-            Forgot password?
-          </Link>
-          <Button
-            fullWidth
-            loading={isSubmitting}
-            loadingPosition='start'
-            size='large'
-            type='submit'
-            variant='contained'
-          >
-            Sign in
-          </Button>
-        </form>
-      </Container>
-    </Section>
+          Forgot password?
+        </Link>
+        <Button
+          fullWidth
+          loading={isSubmitting}
+          loadingPosition='start'
+          size='large'
+          type='submit'
+          variant='contained'
+        >
+          Sign in
+        </Button>
+      </Stack>
+    </FormPage>
   );
 };

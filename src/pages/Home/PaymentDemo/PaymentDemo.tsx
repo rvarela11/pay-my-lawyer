@@ -100,9 +100,7 @@ export const PaymentDemo = () => {
           <Typography component='p' variant='h6'>
             {DEMO_INVOICE.firm}
           </Typography>
-          <Typography variant='body2'>
-            Invoice {DEMO_INVOICE.id}
-          </Typography>
+          <Typography variant='body2'>Invoice {DEMO_INVOICE.id}</Typography>
           <Typography className={styles.amount} component='p' variant='h4'>
             {amount}
           </Typography>
@@ -178,8 +176,8 @@ export const PaymentDemo = () => {
             </Typography>
           </div>
           <table className={styles.table}>
-            <caption className={styles.visuallyHidden}>Recent invoices</caption>
-            <thead className={styles.visuallyHidden}>
+            <caption className='visually-hidden'>Recent invoices</caption>
+            <thead className='visually-hidden'>
               <tr>
                 <th scope='col'>Client</th>
                 <th scope='col'>Amount</th>
@@ -240,7 +238,7 @@ export const PaymentDemo = () => {
         </div>
       </section>
 
-      <p className={styles.visuallyHidden} role='status'>
+      <p className='visually-hidden' role='status'>
         {paid &&
           `Payment received. Invoice ${DEMO_INVOICE.id} now shows as paid. Total collected is ${usd.format(COLLECTED_BEFORE + DEMO_INVOICE.amount)}.`}
       </p>

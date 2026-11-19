@@ -2,22 +2,8 @@
   margin-bottom: calc(var(--mui-spacing) * 3);
 }
 
-.stepper {
-  display: none;
-}
-
 .bar {
   border-radius: calc(var(--mui-spacing) * 0.5);
-}
-
-@media (min-width: 600px) {
-  .stepper {
-    display: flex;
-  }
-
-  .bar {
-    display: none;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

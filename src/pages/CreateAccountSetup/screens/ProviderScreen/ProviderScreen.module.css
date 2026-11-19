@@ -1,24 +1,11 @@
-.screen {
-  display: grid;
-  gap: calc(var(--mui-spacing) * 3);
-}
-
 .groupError {
   border-inline-start: 4px solid var(--mui-palette-error-main);
   padding-inline-start: calc(var(--mui-spacing) * 2);
 }
 
 .error {
-  align-items: center;
   color: var(--mui-palette-error-main);
-  display: flex;
-  gap: calc(var(--mui-spacing) * 1);
   margin-bottom: calc(var(--mui-spacing) * 2);
-}
-
-.options {
-  display: grid;
-  gap: calc(var(--mui-spacing) * 2);
 }
 
 /* The whole row is the radio's label, so clicking anywhere selects it. */
@@ -51,7 +38,5 @@
 }
 
 .text {
-  display: grid;
-  gap: calc(var(--mui-spacing) * 0.5);
   padding-top: calc(var(--mui-spacing) * 1);
 }

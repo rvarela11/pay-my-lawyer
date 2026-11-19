@@ -1,11 +1,17 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Alert, Button, Link, TextField, Typography } from '@mui/material';
+import {
+  Alert,
+  Button,
+  Link,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { useEffect, useRef } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Link as RouterLink, useNavigate } from 'react-router';
-import { Container } from '../../components/Container/Container.tsx';
+import { FormPage } from '../../components/FormPage/FormPage.tsx';
 import { PasswordField } from '../../components/PasswordField/PasswordField.tsx';
-import { Section } from '../../components/Section/Section.tsx';
 import { PATHS } from '../../routes/paths.ts';
 import styles from './CreateAccount.module.css';
 import { FIELDS } from './fields.ts';
@@ -70,109 +76,102 @@ export const CreateAccount = () => {
   }, [serverError]);
 
   return (
-    <Section aria-labelledby='create-account-title'>
-      <Container size='narrow'>
-        <Typography component='h1' id='create-account-title' variant='h4'>
-          Create your account
-        </Typography>
-        <Typography className={styles.subtitle} component='p'>
+    <FormPage
+      alert={
+        serverError && (
+          <Alert ref={alertRef} severity='error' tabIndex={-1}>
+            {serverError.message}
+          </Alert>
+        )
+      }
+      subtitle={
+        <>
           Already have an account?{' '}
           <Link component={RouterLink} to={PATHS.signIn} underline='always'>
             Sign in
           </Link>
-        </Typography>
-
-        {serverError && (
-          <Alert
-            className={styles.alert}
-            ref={alertRef}
-            severity='error'
-            tabIndex={-1}
-          >
-            {serverError.message}
-          </Alert>
-        )}
-
-        <form
-          className={styles.form}
-          noValidate
-          onSubmit={handleSubmit(handleCreateAccount)}
+        </>
+      }
+      title='Create your account'
+      titleId='create-account-title'
+    >
+      <Stack
+        component='form'
+        noValidate
+        spacing={3}
+        useFlexGap
+        onSubmit={handleSubmit(handleCreateAccount)}
+      >
+        <Controller
+          control={control}
+          name={FIELDS.email}
+          render={({ field: { ref, ...field }, fieldState: { error } }) => (
+            <TextField
+              {...field}
+              autoComplete='email'
+              error={!!error}
+              fullWidth
+              helperText={
+                error?.type === 'server' ? (
+                  <>
+                    {error.message}{' '}
+                    <Link
+                      component={RouterLink}
+                      to={PATHS.signIn}
+                      underline='always'
+                    >
+                      Sign in instead?
+                    </Link>
+                  </>
+                ) : (
+                  error?.message
+                )
+              }
+              inputRef={ref}
+              label='Email'
+              type='email'
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name={FIELDS.password}
+          render={({ field: { ref, ...field }, fieldState: { error } }) => (
+            <PasswordField
+              {...field}
+              autoComplete='new-password'
+              error={!!error}
+              fullWidth
+              helperText={
+                error?.message ?? `At least ${PASSWORD_MIN_LENGTH} characters`
+              }
+              inputRef={ref}
+              label='Password'
+            />
+          )}
+        />
+        <Button
+          fullWidth
+          loading={isSubmitting}
+          loadingPosition='start'
+          size='large'
+          type='submit'
+          variant='contained'
         >
-          <Controller
-            control={control}
-            name={FIELDS.email}
-            render={({ field: { ref, ...field }, fieldState: { error } }) => (
-              <TextField
-                {...field}
-                autoComplete='email'
-                error={!!error}
-                fullWidth
-                helperText={
-                  error?.type === 'server' ? (
-                    <>
-                      {error.message}{' '}
-                      <Link
-                        component={RouterLink}
-                        to={PATHS.signIn}
-                        underline='always'
-                      >
-                        Sign in instead?
-                      </Link>
-                    </>
-                  ) : (
-                    error?.message
-                  )
-                }
-                inputRef={ref}
-                label='Email'
-                type='email'
-              />
-            )}
-          />
-          <Controller
-            control={control}
-            name={FIELDS.password}
-            render={({ field: { ref, ...field }, fieldState: { error } }) => (
-              <PasswordField
-                {...field}
-                autoComplete='new-password'
-                error={!!error}
-                fullWidth
-                helperText={
-                  error?.message ?? `At least ${PASSWORD_MIN_LENGTH} characters`
-                }
-                inputRef={ref}
-                label='Password'
-              />
-            )}
-          />
-          <Button
-            fullWidth
-            loading={isSubmitting}
-            loadingPosition='start'
-            size='large'
-            type='submit'
-            variant='contained'
-          >
-            Create account
-          </Button>
-          <Typography
-            className={styles.agreement}
-            component='p'
-            variant='body2'
-          >
-            By creating an account you agree to the{' '}
-            <Link component={RouterLink} to={PATHS.terms} underline='always'>
-              Terms
-            </Link>{' '}
-            and the{' '}
-            <Link component={RouterLink} to={PATHS.privacy} underline='always'>
-              Privacy Policy
-            </Link>
-            .
-          </Typography>
-        </form>
-      </Container>
-    </Section>
+          Create account
+        </Button>
+        <Typography className={styles.agreement} component='p' variant='body2'>
+          By creating an account you agree to the{' '}
+          <Link component={RouterLink} to={PATHS.terms} underline='always'>
+            Terms
+          </Link>{' '}
+          and the{' '}
+          <Link component={RouterLink} to={PATHS.privacy} underline='always'>
+            Privacy Policy
+          </Link>
+          .
+        </Typography>
+      </Stack>
+    </FormPage>
   );
 };

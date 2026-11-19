@@ -1,7 +1,6 @@
 import DeleteOutlined from '@mui/icons-material/DeleteOutlined';
 import EditOutlined from '@mui/icons-material/EditOutlined';
-import { IconButton, Tooltip } from '@mui/material';
-import styles from './OwnerActions.module.css';
+import { IconButton, Stack, Tooltip } from '@mui/material';
 
 type Props = {
   isApplicant: boolean;
@@ -22,7 +21,12 @@ export const OwnerActions = ({
   const removeLabel = `Remove ${name}`;
 
   return (
-    <div className={styles.actions}>
+    <Stack
+      direction='row'
+      spacing={0.5}
+      sx={{ justifyContent: 'flex-end' }}
+      useFlexGap
+    >
       <Tooltip title={editLabel}>
         <IconButton aria-label={editLabel} onClick={onEdit}>
           <EditOutlined />
@@ -35,6 +39,6 @@ export const OwnerActions = ({
           </IconButton>
         </Tooltip>
       )}
-    </div>
+    </Stack>
   );
 };

@@ -49,7 +49,7 @@ export const OwnersTable = ({
         <TableCell>{OWNER_LABELS.title}</TableCell>
         <TableCell align='right'>{OWNER_LABELS.ownership}</TableCell>
         <TableCell>
-          <span className={styles.visuallyHidden}>{OWNER_LABELS.actions}</span>
+          <span className='visually-hidden'>{OWNER_LABELS.actions}</span>
         </TableCell>
       </TableRow>
     </TableHead>
