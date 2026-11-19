@@ -1,5 +1,10 @@
 # CLAUDE.md
 
+## Getting started
+
+- `/start-ticket <number>` creates the branch, moves the ticket to In progress and summarizes it for discussion before any building.
+- The setup wizard has its own `src/pages/CreateAccountSetup/CLAUDE.md` (how it flows, adding a screen or provider, gotchas).
+
 ## Commands
 
 ```bash
