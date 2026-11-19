@@ -1,4 +1,19 @@
 import type { ThemeOptions } from '@mui/material/styles';
+import type {} from '@mui/x-date-pickers/themeAugmentation';
+
+// MUI's idle outline is ~1.5:1 on white; draw it in ink like the site's other borders (and above the 3:1 non-text contrast, WCAG 1.4.11).
+// Hover, focus, error and disabled keep MUI's colors. Read by COMPONENTS while the module loads, so it comes first.
+const inkOutline = (outline: string) => ({
+  [`&:not(:hover, .Mui-disabled, .Mui-error, .Mui-focused) ${outline}`]: {
+    borderColor: 'var(--mui-palette-primary-main)',
+  },
+  // Touch browsers keep :hover on the last tapped field, where MUI falls back to its faint outline.
+  '@media (hover: none)': {
+    [`&:not(.Mui-disabled, .Mui-error, .Mui-focused) ${outline}`]: {
+      borderColor: 'var(--mui-palette-primary-main)',
+    },
+  },
+});
 
 export const COMPONENTS = {
   // MUI's medium button is ~36px tall; raise it to a 44px touch target (WCAG 2.5.5) so components don't set heights one by one.
@@ -42,6 +57,15 @@ export const COMPONENTS = {
     },
   },
   // Dialog buttons sit inside the dialog's 24px padding instead of MUI's tight 8px.
+  // Dialogs sit flat with an ink border, like the site's panels, instead of MUI's drop shadow; the backdrop still dims the page.
+  MuiDialog: {
+    styleOverrides: {
+      paper: {
+        border: '1px solid var(--mui-palette-primary-main)',
+        boxShadow: 'none',
+      },
+    },
+  },
   MuiDialogActions: {
     styleOverrides: {
       root: ({ theme }) => ({ padding: theme.spacing(0, 3, 3) }),
@@ -56,26 +80,13 @@ export const COMPONENTS = {
     },
   },
   MuiLink: { defaultProps: { color: 'inherit', underline: 'hover' } },
-  // MUI's idle outline is ~1.5:1 on white; darken it to ink at 70% to meet the 3:1 non-text contrast (WCAG 1.4.11). Hover, focus, error and disabled keep MUI's colors.
   MuiOutlinedInput: {
+    styleOverrides: { root: inkOutline('.MuiOutlinedInput-notchedOutline') },
+  },
+  // The date picker (MUI X) draws its field with its own input, so it needs the same outline.
+  MuiPickersOutlinedInput: {
     styleOverrides: {
-      root: ({ theme }) => {
-        const borderColor = `rgb(${theme.vars?.palette.text.primaryChannel} / 0.7)`;
-
-        return {
-          '&:not(:hover, .Mui-disabled, .Mui-error, .Mui-focused) .MuiOutlinedInput-notchedOutline':
-            {
-              borderColor,
-            },
-          // Touch browsers keep :hover on the last tapped field, where MUI falls back to its faint outline.
-          '@media (hover: none)': {
-            '&:not(.Mui-disabled, .Mui-error, .Mui-focused) .MuiOutlinedInput-notchedOutline':
-              {
-                borderColor,
-              },
-          },
-        };
-      },
+      root: inkOutline('.MuiPickersOutlinedInput-notchedOutline'),
     },
   },
   // The header and mobile menu bars: logo on the left, actions on the right.
