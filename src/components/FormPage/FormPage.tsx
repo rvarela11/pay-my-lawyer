@@ -20,7 +20,7 @@ export const FormPage = ({
   title,
   titleId,
 }: Props) => (
-  <Section aria-labelledby={titleId} className={styles.page}>
+  <Section aria-labelledby={titleId} spacing='form'>
     <Container size='narrow'>
       <Stack spacing={1} useFlexGap>
         <Typography component='h1' id={titleId} variant='h4'>

@@ -2,7 +2,7 @@
 footer.footer {
   background-color: var(--mui-palette-primary-main);
   color: var(--mui-palette-brand-paper);
-  padding-block: clamp(48px, 5vw, 80px) calc(var(--mui-spacing) * 4);
+  padding-block: clamp(32px, 3vw, 48px) calc(var(--mui-spacing) * 3);
 }
 
 .wordmark {
@@ -20,7 +20,7 @@ footer.footer {
 
 .contactLink {
   align-items: center;
-  min-height: 44px;
+  min-height: 36px;
 }
 
 .badge {
@@ -35,12 +35,15 @@ footer.footer {
   width: 24px;
 }
 
+/* Lines up with the link rows above it. */
 .addressLine {
-  padding-block: var(--mui-spacing);
+  align-items: center;
+  display: flex;
+  min-height: 36px;
 }
 
 .fine {
-  margin-top: calc(var(--mui-spacing) * 4);
+  margin-top: calc(var(--mui-spacing) * 3);
 }
 
 .legal {

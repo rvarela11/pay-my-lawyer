@@ -79,6 +79,18 @@ export const COMPONENTS = {
     },
   },
   // The header and mobile menu bars: logo on the left, actions on the right.
+  // The wizard's stepper: the current step in the accent (with ink numbers, which read on it), finished steps in ink.
+  MuiStepIcon: {
+    styleOverrides: {
+      root: {
+        '&.Mui-active': { color: 'var(--mui-palette-brand-accent)' },
+        '&.Mui-active .MuiStepIcon-text': {
+          fill: 'var(--mui-palette-primary-main)',
+        },
+        '&.Mui-completed': { color: 'var(--mui-palette-primary-main)' },
+      },
+    },
+  },
   MuiToolbar: {
     styleOverrides: {
       root: ({ theme }) => ({
