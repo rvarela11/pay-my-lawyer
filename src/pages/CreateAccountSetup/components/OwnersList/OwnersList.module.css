@@ -2,3 +2,8 @@
   display: grid;
   gap: calc(var(--mui-spacing) * 3);
 }
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+}

@@ -7,18 +7,34 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import type { Ref } from 'react';
+import { OwnerActions } from './OwnerActions.tsx';
 import { OWNER_LABELS } from './ownerLabels.ts';
 import styles from './OwnersTable.module.css';
 import type { OwnerRow } from './toOwnerRows.ts';
 
 type Props = {
+  onEdit: (row: OwnerRow) => void;
+  onRemove: (row: OwnerRow) => void;
   rows: OwnerRow[];
+  tableRef: Ref<HTMLTableElement>;
   total: number;
 };
 
 // The owners list on wider screens.
-export const OwnersTable = ({ rows, total }: Props) => (
-  <Table aria-label={OWNER_LABELS.list} size='small'>
+export const OwnersTable = ({
+  onEdit,
+  onRemove,
+  rows,
+  tableRef,
+  total,
+}: Props) => (
+  <Table
+    aria-label={OWNER_LABELS.list}
+    ref={tableRef}
+    size='small'
+    tabIndex={-1}
+  >
     <TableHead>
       <TableRow>
         <TableCell>{OWNER_LABELS.name}</TableCell>
@@ -32,6 +48,9 @@ export const OwnersTable = ({ rows, total }: Props) => (
         </TableCell>
         <TableCell>{OWNER_LABELS.title}</TableCell>
         <TableCell align='right'>{OWNER_LABELS.ownership}</TableCell>
+        <TableCell>
+          <span className={styles.visuallyHidden}>{OWNER_LABELS.actions}</span>
+        </TableCell>
       </TableRow>
     </TableHead>
     <TableBody>
@@ -43,6 +62,14 @@ export const OwnersTable = ({ rows, total }: Props) => (
           <TableCell>{row.title}</TableCell>
           <TableCell align='right' className={styles.number}>
             {`${row.ownership}%`}
+          </TableCell>
+          <TableCell>
+            <OwnerActions
+              isApplicant={!row.owner}
+              name={row.name}
+              onEdit={() => onEdit(row)}
+              onRemove={() => onRemove(row)}
+            />
           </TableCell>
         </TableRow>
       ))}
@@ -60,6 +87,7 @@ export const OwnersTable = ({ rows, total }: Props) => (
             {`${total}%`}
           </Typography>
         </TableCell>
+        <TableCell className={styles.total} />
       </TableRow>
     </TableFooter>
   </Table>
