@@ -15,7 +15,7 @@ const BRAND = {
   blue: '#a9bee8',
   green: '#93c8b8',
   orange: '#e8b08a',
-  paper: '#fffbf7',
+  paper: '#fbfcf8',
   pink: '#e7a6b8',
   yellow: '#ead38a',
 };
@@ -27,7 +27,7 @@ export const theme = responsiveFontSizes(
   createTheme({
     cssVariables: true,
     palette: {
-      background: { default: '#f5f0eb', paper: BRAND.paper },
+      background: { default: '#f3f4ee', paper: BRAND.paper },
       primary: { main: INK, contrastText: '#fff' },
       secondary: { main: BRAND.accent, contrastText: INK },
       text: { primary: INK, secondary: INK },
