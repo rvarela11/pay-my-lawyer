@@ -1,0 +1,10 @@
+.term {
+  color: var(--mui-palette-text-secondary);
+}
+
+.value {
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+  overflow-wrap: anywhere;
+  text-align: right;
+}

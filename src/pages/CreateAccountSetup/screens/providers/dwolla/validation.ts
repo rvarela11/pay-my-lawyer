@@ -1,4 +1,5 @@
-import { array, type InferType, object } from 'yup';
+import { type InferType, object } from 'yup';
+import { OWNERS_RULE } from '../../../components/OwnerDialog/validation.ts';
 import {
   BAR_NUMBER_RULE,
   BUSINESS_ADDRESS_RULE,
@@ -41,7 +42,7 @@ export const dwollaSchema = object({
   [DWOLLA_FIELDS.jobTitle]: JOB_TITLE_RULE,
   [DWOLLA_FIELDS.lastName]: LAST_NAME_RULE,
   [DWOLLA_FIELDS.legalBusinessName]: LEGAL_BUSINESS_NAME_RULE,
-  [DWOLLA_FIELDS.owners]: array().default([]),
+  [DWOLLA_FIELDS.owners]: OWNERS_RULE,
   [DWOLLA_FIELDS.ownership]: OWNERSHIP_RULE,
   [DWOLLA_FIELDS.phone]: PHONE_RULE,
   [DWOLLA_FIELDS.ssn]: SSN_RULE,
