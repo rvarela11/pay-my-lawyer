@@ -1,6 +1,6 @@
 /* The element in the selector outranks Section's .section padding, whatever order the stylesheets load in. */
 footer.footer {
-  padding-block: 0 calc(var(--mui-spacing) * 4);
+  padding-block: calc(var(--mui-spacing) * 3) calc(var(--mui-spacing) * 4);
 }
 
 .inner {

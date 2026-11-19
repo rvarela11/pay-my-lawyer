@@ -60,6 +60,16 @@ section.hero {
   max-width: 14ch;
 }
 
+.cta {
+  background-color: var(--mui-palette-primary-main);
+  color: var(--mui-palette-brand-paper);
+}
+
+.cta :focus-visible {
+  outline: 3px solid var(--mui-palette-brand-yellow);
+  outline-offset: 3px;
+}
+
 .ctaInner {
   align-items: center;
   display: flex;
