@@ -1,10 +1,11 @@
 .header {
-  background-color: var(--mui-palette-background-default);
+  background-color: var(--mui-palette-background-paper);
 }
 
 .toolbar {
   gap: calc(var(--mui-spacing) * 3);
   justify-content: space-between;
+  min-height: 64px;
   padding-block: var(--mui-spacing);
 }
 
@@ -14,40 +15,62 @@
 
 .navList {
   display: flex;
-  gap: calc(var(--mui-spacing) / 2);
+  gap: calc(var(--mui-spacing) * 3);
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
+.actions {
+  align-items: center;
+  display: flex;
+  gap: calc(var(--mui-spacing) * 1.5);
+}
+
 .navLink {
-  border-bottom-color: transparent;
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-radius: 0;
-  padding-inline: calc(var(--mui-spacing) * 1.5);
+  border-bottom: 2px solid transparent;
+  display: inline-block;
+  line-height: 1.2;
+  padding-block: calc(var(--mui-spacing) * 1.5);
 }
 
-.navLink:hover {
-  background-color: transparent;
-  border-bottom-color: var(--mui-palette-brand-sage);
-}
-
+.navLink:hover,
 .navLink[aria-current='page'] {
-  border-bottom-color: var(--mui-palette-brand-green);
-  font-weight: 700;
+  border-bottom-color: currentColor;
 }
 
-.menuButton,
-.menuButton:hover {
+/* 2px matches the weight of the section rules; the fill marks the current page. */
+.signIn,
+.signIn:hover {
+  border-color: var(--mui-palette-primary-main);
   border-width: 2px;
+}
+
+.signIn[aria-current='page'] {
+  background-color: var(--mui-palette-primary-main);
+  color: var(--mui-palette-primary-contrastText);
+}
+
+/* Two rules, like a folded menu; the button stays 48px for touch. */
+.menuButton {
+  border-radius: 0;
+  height: 48px;
+  margin-right: -12px;
+  width: 64px;
+}
+
+.menuLines {
+  border-block: 2px solid currentColor;
+  display: block;
+  height: 10px;
+  width: 40px;
 }
 
 @media (min-width: 900px) {
   .desktopNav {
     align-items: center;
     display: flex;
-    gap: calc(var(--mui-spacing) * 3);
+    gap: calc(var(--mui-spacing) * 4);
   }
 
   .menuButton {

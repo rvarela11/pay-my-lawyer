@@ -1,0 +1,104 @@
+.list {
+  border-bottom: 1px solid var(--mui-palette-primary-main);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.row {
+  align-items: center;
+  border-top: 1px solid var(--mui-palette-primary-main);
+  display: grid;
+  gap: calc(var(--mui-spacing) * 2);
+  grid-template-columns: 2.5ch minmax(0, 1fr) auto;
+  isolation: isolate;
+  padding: calc(var(--mui-spacing) * 3) calc(var(--mui-spacing) * 1.5);
+  position: relative;
+}
+
+/* The accent drops from the top rule on hover. */
+.row::before {
+  background-color: var(--accent);
+  content: '';
+  inset: 0;
+  position: absolute;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+  z-index: -1;
+}
+
+.row:hover::before,
+.row:focus-visible::before {
+  transform: scaleY(1);
+}
+
+.row:focus-visible {
+  outline: 3px solid var(--mui-palette-primary-main);
+  outline-offset: 2px;
+}
+
+.row[data-accent='blue'] {
+  --accent: var(--mui-palette-brand-blue);
+}
+
+.row[data-accent='green'] {
+  --accent: var(--mui-palette-brand-green);
+}
+
+.row[data-accent='orange'] {
+  --accent: var(--mui-palette-brand-orange);
+}
+
+.row[data-accent='pink'] {
+  --accent: var(--mui-palette-brand-pink);
+}
+
+.row[data-accent='yellow'] {
+  --accent: var(--mui-palette-brand-yellow);
+}
+
+/* Ink on blue is under 4.5:1, so that row turns light. */
+.row[data-accent='blue']:hover,
+.row[data-accent='blue']:focus-visible {
+  color: var(--mui-palette-brand-paper);
+}
+
+.number {
+  align-self: start;
+  font-variant-numeric: tabular-nums;
+  padding-top: calc(var(--mui-spacing) * 1.25);
+}
+
+.text {
+  display: grid;
+  gap: var(--mui-spacing);
+}
+
+.description {
+  max-width: 46ch;
+}
+
+.arrow {
+  align-items: center;
+  background-color: var(--mui-palette-primary-main);
+  border-radius: 50%;
+  color: var(--mui-palette-primary-contrastText);
+  display: inline-flex;
+  height: 32px;
+  justify-content: center;
+  width: 32px;
+}
+
+@media (min-width: 900px) {
+  .text {
+    align-items: baseline;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .row::before {
+    transition: none;
+  }
+}

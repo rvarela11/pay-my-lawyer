@@ -1,46 +1,83 @@
-.footer {
-  background-color: var(--mui-palette-brand-cream);
+/* The element in the selector outranks Section's .section padding, whatever order the stylesheets load in. */
+footer.footer {
+  padding-block: 0 calc(var(--mui-spacing) * 4);
 }
 
 .inner {
   display: grid;
   gap: calc(var(--mui-spacing) * 5);
+  padding-top: calc(var(--mui-spacing) * 4);
 }
 
-.aboutText {
-  margin-top: 20px;
-  max-width: 46ch;
+.wordmark {
+  max-width: 7ch;
 }
 
-.heading {
-  margin-bottom: calc(var(--mui-spacing) * 1.5);
-}
-
-.link {
-  padding-block: var(--mui-spacing);
-}
-
-.address {
+.contact {
+  align-content: start;
+  display: grid;
   font-style: normal;
+  gap: var(--mui-spacing);
 }
 
-.contactList {
+.contactLink {
   align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  gap: calc(var(--mui-spacing) * 2) calc(var(--mui-spacing) * 3);
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  display: inline-flex;
+  gap: calc(var(--mui-spacing) * 1.5);
+  min-height: 44px;
+}
+
+.badge {
+  align-items: center;
+  background-color: var(--mui-palette-primary-main);
+  border-radius: 50%;
+  color: var(--mui-palette-primary-contrastText);
+  display: inline-flex;
+  flex-shrink: 0;
+  height: 24px;
+  justify-content: center;
+  width: 24px;
 }
 
 .addressLine {
   padding-block: var(--mui-spacing);
 }
 
+.nav {
+  display: grid;
+  gap: calc(var(--mui-spacing) * 4);
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+
+.heading {
+  margin-bottom: var(--mui-spacing);
+}
+
+.linkList {
+  display: grid;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.linkList a {
+  display: inline-block;
+  opacity: 0.75;
+  padding-block: calc(var(--mui-spacing) / 2);
+}
+
+.linkList a:hover {
+  opacity: 1;
+}
+
+.copyright {
+  display: block;
+  margin-top: calc(var(--mui-spacing) * 8);
+}
+
 @media (min-width: 900px) {
   .inner {
-    grid-template-columns: auto auto;
-    justify-content: space-between;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.4fr);
+    gap: calc(var(--mui-spacing) * 6);
   }
 }

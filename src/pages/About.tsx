@@ -1,7 +1,7 @@
+import { PageHero } from '../components/PageHero/PageHero.tsx';
+
 export const About = () => {
   return (
-    <section>
-      <h1>About us</h1>
-    </section>
+    <PageHero label='Who we are' statement='Coming soon' title='About us' />
   );
 };
