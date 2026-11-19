@@ -3,6 +3,10 @@
   margin-inline-end: calc(var(--mui-spacing) * -1);
 }
 
+.body {
+  width: 100%;
+}
+
 /* Labels on the left, values on the right edge, so every value and the total line up. */
 .details {
   column-gap: calc(var(--mui-spacing) * 2);
@@ -14,17 +18,10 @@
 
 .header {
   align-items: center;
-  display: flex;
-  gap: var(--mui-spacing);
   justify-content: space-between;
 }
 
-/* MUI's ListItem is a flex row packed to the start; each owner instead stacks its name row and
-   details in one full-width column, so the icons and values reach the right edge. */
+/* The owner's name row and details fill the item, so the icons and values reach the right edge. */
 .owner {
-  align-items: stretch;
-  display: grid;
-  gap: var(--mui-spacing);
-  grid-template-columns: minmax(0, 1fr);
   padding-block: calc(var(--mui-spacing) * 2);
 }

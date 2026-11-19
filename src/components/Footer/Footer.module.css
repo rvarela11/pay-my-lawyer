@@ -9,11 +9,17 @@ footer.footer {
   max-width: 7ch;
 }
 
+.columns {
+  justify-content: space-between;
+}
+
 .contact {
+  align-items: flex-start;
   font-style: normal;
 }
 
 .contactLink {
+  align-items: center;
   min-height: 44px;
 }
 
@@ -31,6 +37,17 @@ footer.footer {
 
 .addressLine {
   padding-block: var(--mui-spacing);
+}
+
+.fine {
+  margin-top: calc(var(--mui-spacing) * 4);
+}
+
+.legal {
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  row-gap: var(--mui-spacing);
 }
 
 .legalLinks a {

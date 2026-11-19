@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { DateOfBirthField } from '../../../../components/form/DateOfBirthField/DateOfBirthField.tsx';
 import {
   FormGrid,
@@ -9,10 +9,9 @@ import { OwnershipField } from '../../../../components/form/OwnershipField/Owner
 import { SsnField } from '../../../../components/form/SsnField/SsnField.tsx';
 import { StateSelect } from '../../../../components/form/StateSelect/StateSelect.tsx';
 import { DWOLLA_FIELDS } from '../fields.ts';
-import styles from './DwollaAboutScreen.module.css';
 
 export const DwollaAboutScreen = () => (
-  <div className={styles.screen}>
+  <Stack spacing={3} useFlexGap>
     <Typography component='p'>We use this to verify your identity.</Typography>
     <FormGrid>
       <FormGridFullRow>
@@ -75,5 +74,5 @@ export const DwollaAboutScreen = () => (
         slotProps={{ htmlInput: { inputMode: 'numeric' } }}
       />
     </FormGrid>
-  </div>
+  </Stack>
 );

@@ -7,7 +7,9 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import classNames from 'classnames';
 import type { Ref } from 'react';
+import { VisuallyHidden } from '../../../../../../components/VisuallyHidden/VisuallyHidden.tsx';
 import { OwnerActions } from '../OwnerActions/OwnerActions.tsx';
 import { OWNER_LABELS } from '../ownerLabels.ts';
 import type { OwnerRow } from '../toOwnerRows.ts';
@@ -49,7 +51,7 @@ export const OwnersTable = ({
         <TableCell>{OWNER_LABELS.title}</TableCell>
         <TableCell align='right'>{OWNER_LABELS.ownership}</TableCell>
         <TableCell>
-          <span className={styles.visuallyHidden}>{OWNER_LABELS.actions}</span>
+          <VisuallyHidden>{OWNER_LABELS.actions}</VisuallyHidden>
         </TableCell>
       </TableRow>
     </TableHead>
@@ -82,7 +84,10 @@ export const OwnersTable = ({
             {OWNER_LABELS.total}
           </Typography>
         </TableCell>
-        <TableCell align='right' className={`${styles.number} ${styles.total}`}>
+        <TableCell
+          align='right'
+          className={classNames(styles.number, styles.total)}
+        >
           <Typography component='span' variant='subtitle2'>
             {`${total}%`}
           </Typography>

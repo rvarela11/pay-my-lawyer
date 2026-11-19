@@ -7,7 +7,6 @@ import {
   DialogTitle,
 } from '@mui/material';
 import { useRef } from 'react';
-import styles from './RemoveOwnerDialog.module.css';
 
 type Props = {
   name: string;
@@ -51,7 +50,7 @@ export const RemoveOwnerDialog = ({
           Their details will be removed from this application.
         </DialogContentText>
       </DialogContent>
-      <DialogActions className={styles.actions}>
+      <DialogActions>
         <Button color='error' onClick={onConfirm}>
           Remove
         </Button>

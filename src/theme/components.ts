@@ -41,6 +41,20 @@ export const COMPONENTS = {
       },
     },
   },
+  // Dialog buttons sit inside the dialog's 24px padding instead of MUI's tight 8px.
+  MuiDialogActions: {
+    styleOverrides: {
+      root: ({ theme }) => ({ padding: theme.spacing(0, 3, 3) }),
+    },
+  },
+  // The progress bar stops sliding between values for people who reduce motion.
+  MuiLinearProgress: {
+    styleOverrides: {
+      bar: {
+        '@media (prefers-reduced-motion: reduce)': { transition: 'none' },
+      },
+    },
+  },
   MuiLink: { defaultProps: { color: 'inherit', underline: 'hover' } },
   // MUI's idle outline is ~1.5:1 on white; darken it to ink at 70% to meet the 3:1 non-text contrast (WCAG 1.4.11). Hover, focus, error and disabled keep MUI's colors.
   MuiOutlinedInput: {

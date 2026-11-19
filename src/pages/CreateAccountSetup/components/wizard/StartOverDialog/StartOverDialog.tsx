@@ -7,7 +7,6 @@ import {
   DialogTitle,
 } from '@mui/material';
 import { useRef } from 'react';
-import styles from './StartOverDialog.module.css';
 
 type Props = {
   onCancel: () => void;
@@ -40,7 +39,7 @@ export const StartOverDialog = ({ onCancel, onConfirm, open }: Props) => {
           Your answers will be cleared and you&apos;ll start over.
         </DialogContentText>
       </DialogContent>
-      <DialogActions className={styles.actions}>
+      <DialogActions>
         <Button color='error' onClick={onConfirm}>
           Start over
         </Button>

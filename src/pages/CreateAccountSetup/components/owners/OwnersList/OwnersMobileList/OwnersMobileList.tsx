@@ -1,4 +1,4 @@
-import { List, ListItem, Typography } from '@mui/material';
+import { List, ListItem, Stack, Typography } from '@mui/material';
 import type { Ref } from 'react';
 import { OwnerActions } from '../OwnerActions/OwnerActions.tsx';
 import { OwnerDetail } from '../OwnerDetail/OwnerDetail.tsx';
@@ -31,31 +31,41 @@ export const OwnersMobileList = ({
     >
       {rows.map((row) => (
         <ListItem className={styles.owner} disableGutters divider key={row.id}>
-          <div className={styles.header}>
-            <Typography component='p' variant='subtitle1'>
-              {row.name}
-            </Typography>
-            <div className={styles.actions}>
-              <OwnerActions
-                isApplicant={!row.owner}
-                name={row.name}
-                onEdit={() => onEdit(row)}
-                onRemove={() => onRemove(row)}
+          <Stack className={styles.body} spacing={1} useFlexGap>
+            <Stack
+              className={styles.header}
+              direction='row'
+              spacing={1}
+              useFlexGap
+            >
+              <Typography component='p' variant='subtitle1'>
+                {row.name}
+              </Typography>
+              <div className={styles.actions}>
+                <OwnerActions
+                  isApplicant={!row.owner}
+                  name={row.name}
+                  onEdit={() => onEdit(row)}
+                  onRemove={() => onRemove(row)}
+                />
+              </div>
+            </Stack>
+            <dl className={styles.details}>
+              <OwnerDetail
+                label={OWNER_LABELS.ownership}
+                value={`${row.ownership}%`}
               />
-            </div>
-          </div>
-          <dl className={styles.details}>
-            <OwnerDetail
-              label={OWNER_LABELS.ownership}
-              value={`${row.ownership}%`}
-            />
-            <OwnerDetail label={OWNER_LABELS.barNumber} value={row.barNumber} />
-            <OwnerDetail
-              label={OWNER_LABELS.dateOfBirth}
-              value={row.dateOfBirth}
-            />
-            <OwnerDetail label={OWNER_LABELS.title} value={row.title} />
-          </dl>
+              <OwnerDetail
+                label={OWNER_LABELS.barNumber}
+                value={row.barNumber}
+              />
+              <OwnerDetail
+                label={OWNER_LABELS.dateOfBirth}
+                value={row.dateOfBirth}
+              />
+              <OwnerDetail label={OWNER_LABELS.title} value={row.title} />
+            </dl>
+          </Stack>
         </ListItem>
       ))}
     </List>

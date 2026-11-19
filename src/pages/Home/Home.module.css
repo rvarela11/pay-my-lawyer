@@ -1,9 +1,21 @@
-.heroTitle {
-  max-width: 10ch;
+.hero {
+  align-items: flex-end;
+}
+
+.heroAction {
+  margin-top: var(--mui-spacing);
+}
+
+.heroCopy {
+  align-items: flex-start;
 }
 
 .heroText {
   max-width: 32ch;
+}
+
+.heroTitle {
+  max-width: 10ch;
 }
 
 .splitTitle {
