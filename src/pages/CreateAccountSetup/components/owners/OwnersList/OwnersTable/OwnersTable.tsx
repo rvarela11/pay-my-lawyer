@@ -8,10 +8,10 @@ import {
   Typography,
 } from '@mui/material';
 import type { Ref } from 'react';
-import { OwnerActions } from './OwnerActions.tsx';
-import { OWNER_LABELS } from './ownerLabels.ts';
+import { OwnerActions } from '../OwnerActions/OwnerActions.tsx';
+import { OWNER_LABELS } from '../ownerLabels.ts';
+import type { OwnerRow } from '../toOwnerRows.ts';
 import styles from './OwnersTable.module.css';
-import type { OwnerRow } from './toOwnerRows.ts';
 
 type Props = {
   onEdit: (row: OwnerRow) => void;

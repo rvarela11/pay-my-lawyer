@@ -1,13 +1,13 @@
 import { Typography } from '@mui/material';
-import { DateOfBirthField } from '../../../../components/DateOfBirthField/DateOfBirthField.tsx';
+import { DateOfBirthField } from '../../../../components/form/DateOfBirthField/DateOfBirthField.tsx';
 import {
   FormGrid,
   FormGridFullRow,
-} from '../../../../components/FormGrid/FormGrid.tsx';
-import { FormTextField } from '../../../../components/FormTextField/FormTextField.tsx';
-import { OwnershipField } from '../../../../components/OwnershipField/OwnershipField.tsx';
-import { SsnField } from '../../../../components/SsnField/SsnField.tsx';
-import { StateSelect } from '../../../../components/StateSelect/StateSelect.tsx';
+} from '../../../../components/form/FormGrid/FormGrid.tsx';
+import { FormTextField } from '../../../../components/form/FormTextField/FormTextField.tsx';
+import { OwnershipField } from '../../../../components/form/OwnershipField/OwnershipField.tsx';
+import { SsnField } from '../../../../components/form/SsnField/SsnField.tsx';
+import { StateSelect } from '../../../../components/form/StateSelect/StateSelect.tsx';
 import { DWOLLA_FIELDS } from '../fields.ts';
 import styles from './DwollaAboutScreen.module.css';
 

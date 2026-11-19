@@ -7,8 +7,8 @@ import { RemoveOwnerDialog } from '../RemoveOwnerDialog/RemoveOwnerDialog.tsx';
 import { useOwnerDialog } from './hooks/useOwnerDialog.ts';
 import { useRemoveOwnerDialog } from './hooks/useRemoveOwnerDialog.ts';
 import styles from './OwnersList.module.css';
-import { OwnersMobileList } from './OwnersMobileList.tsx';
-import { OwnersTable } from './OwnersTable.tsx';
+import { OwnersMobileList } from './OwnersMobileList/OwnersMobileList.tsx';
+import { OwnersTable } from './OwnersTable/OwnersTable.tsx';
 import {
   type Applicant,
   fullName,

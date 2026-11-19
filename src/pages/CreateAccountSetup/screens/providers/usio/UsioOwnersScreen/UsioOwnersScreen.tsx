@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { PATHS } from '../../../../../../routes/paths.ts';
-import type { Owner } from '../../../../components/OwnerDialog/validation.ts';
-import { OwnersList } from '../../../../components/OwnersList/OwnersList.tsx';
+import type { Owner } from '../../../../components/owners/OwnerDialog/validation.ts';
+import { OwnersList } from '../../../../components/owners/OwnersList/OwnersList.tsx';
 import { USIO_FIELDS } from '../fields.ts';
 import type { UsioValues } from '../validation.ts';
 

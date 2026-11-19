@@ -1,12 +1,12 @@
-import { BusinessTypeSelect } from '../../../../components/BusinessTypeSelect/BusinessTypeSelect.tsx';
-import { EinField } from '../../../../components/EinField/EinField.tsx';
+import { BusinessTypeSelect } from '../../../../components/form/BusinessTypeSelect/BusinessTypeSelect.tsx';
+import { EinField } from '../../../../components/form/EinField/EinField.tsx';
 import {
   FormGrid,
   FormGridFullRow,
-} from '../../../../components/FormGrid/FormGrid.tsx';
-import { FormTextField } from '../../../../components/FormTextField/FormTextField.tsx';
-import { PhoneField } from '../../../../components/PhoneField/PhoneField.tsx';
-import { StateSelect } from '../../../../components/StateSelect/StateSelect.tsx';
+} from '../../../../components/form/FormGrid/FormGrid.tsx';
+import { FormTextField } from '../../../../components/form/FormTextField/FormTextField.tsx';
+import { PhoneField } from '../../../../components/form/PhoneField/PhoneField.tsx';
+import { StateSelect } from '../../../../components/form/StateSelect/StateSelect.tsx';
 import { USIO_FIELDS } from '../fields.ts';
 
 export const UsioBusinessScreen = () => (

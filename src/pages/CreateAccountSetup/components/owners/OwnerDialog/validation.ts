@@ -11,7 +11,7 @@ import {
   SSN_RULE,
   STATE_RULE,
   ZIP_RULE,
-} from '../../screens/providers/rules.ts';
+} from '../../../screens/providers/rules.ts';
 import { OWNER_FIELDS } from './fields.ts';
 
 // One beneficial owner other than the applicant. The dialog passes `remaining` (the % nobody
