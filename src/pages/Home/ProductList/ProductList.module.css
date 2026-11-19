@@ -58,12 +58,6 @@
   --accent: var(--mui-palette-brand-yellow);
 }
 
-/* Ink on blue is under 4.5:1, so that row turns light. */
-.row[data-accent='blue']:hover,
-.row[data-accent='blue']:focus-visible {
-  color: var(--mui-palette-brand-paper);
-}
-
 .number {
   align-self: start;
   font-variant-numeric: tabular-nums;

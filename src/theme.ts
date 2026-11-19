@@ -9,14 +9,15 @@ declare module '@mui/material/styles' {
   }
 }
 
+// The product rows' hover colors are softened to the accent's lightness, so they read as one family.
 const BRAND = {
   accent: '#9dc08b',
-  blue: '#3358ff',
-  green: '#2bb36d',
-  orange: '#ff6a00',
+  blue: '#a9bee8',
+  green: '#93c8b8',
+  orange: '#e8b08a',
   paper: '#fffbf7',
-  pink: '#ff4bac',
-  yellow: '#ffd230',
+  pink: '#e7a6b8',
+  yellow: '#ead38a',
 };
 type Brand = typeof BRAND;
 
