@@ -1,7 +1,5 @@
-/* main takes the space left over on short pages, so the footer stays at the bottom of the window. As a column, it lets a page center itself in that space (FormPage). */
+/* main takes the space left over on short pages, so the footer stays at the bottom of the window. */
 .main {
-  display: flex;
-  flex-direction: column;
   flex-grow: 1;
 }
 

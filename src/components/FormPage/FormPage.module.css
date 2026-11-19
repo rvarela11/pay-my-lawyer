@@ -2,7 +2,8 @@
   margin-top: calc(var(--mui-spacing) * 4);
 }
 
-/* Centers the form in the space between the header and the footer. */
-.page {
-  margin-block: auto;
+/* The same top space on Sign in and Create account, scaled to the window height, so the heading doesn't move when switching between them.
+   The element in the selector outranks Section's .section padding, whatever order the stylesheets load in. */
+section.page {
+  padding-top: clamp(24px, 8svh, 96px);
 }
