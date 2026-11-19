@@ -1,23 +1,54 @@
 .drawerPaper {
+  background-color: var(--mui-palette-background-paper);
   width: 100%;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
 
 .toolbar {
   gap: calc(var(--mui-spacing) * 3);
   justify-content: space-between;
+  min-height: 64px;
   padding-block: var(--mui-spacing);
 }
 
-.closeButton,
-.closeButton:hover {
-  border-width: 2px;
+.closeButton {
+  margin-right: calc(var(--mui-spacing) * -1);
 }
 
 .mobileLink {
-  border-bottom: 1px solid var(--mui-palette-brand-sage);
-  min-height: 48px;
+  border-bottom: 1px solid var(--mui-palette-primary-main);
+  min-height: 64px;
 }
 
-.mobileLink[aria-current='page'] :global(.MuiListItemText-primary) {
-  font-weight: 700;
+.mobileLink:first-child {
+  border-top: 1px solid var(--mui-palette-primary-main);
+}
+
+.mobileLink[aria-current='page'] {
+  background-color: var(--mui-palette-brand-accent);
+}
+
+/* Pinned to the bottom of the menu, within thumb reach; on short screens they follow the links. */
+.actions {
+  display: grid;
+  gap: calc(var(--mui-spacing) * 1.5);
+  margin-top: auto;
+  padding-block: calc(var(--mui-spacing) * 5)
+    max(calc(var(--mui-spacing) * 3), env(safe-area-inset-bottom));
+}
+
+.signIn,
+.signIn:hover {
+  border-color: var(--mui-palette-primary-main);
+  border-width: 2px;
+}
+
+.signIn[aria-current='page'] {
+  background-color: var(--mui-palette-primary-main);
+  color: var(--mui-palette-primary-contrastText);
 }

@@ -1,7 +1,7 @@
+import { PageHero } from '../components/PageHero/PageHero.tsx';
+
 export const Contact = () => {
   return (
-    <section>
-      <h1>Contact us</h1>
-    </section>
+    <PageHero label='Get in touch' statement='Coming soon' title='Contact us' />
   );
 };

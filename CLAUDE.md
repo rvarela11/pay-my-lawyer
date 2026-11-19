@@ -45,12 +45,13 @@ Verify changes with `npx tsc -b && npm run lint && npm test -- --run && npm run 
 
 ## Styling
 
-- Typography comes from MUI (`src/theme.ts` and `Typography` variants). Don't set `font-size`, `font-weight` or `letter-spacing` in CSS; pick a variant, or change the theme. `font-variant-numeric: tabular-nums` is fine for aligning numbers. Exception: the Header's bold current-page nav link.
+- Typography comes from MUI (`src/theme.ts` and `Typography` variants), set in Inter Tight. Don't set `font-size`, `font-weight` or `letter-spacing` in CSS; pick a variant, or change the theme. `font-variant-numeric: tabular-nums` is fine for aligning numbers.
 - CSS Modules with `className`. Read colors and spacing from `var(--mui-palette-*)` and `var(--mui-spacing)`.
-- Don't use CSS Modules `composes`. Share layout through components in `src/components`: `Container` sets the max width and side gutters, and `Section` sets the vertical padding for page sections and the footer (`component='footer'`).
-- Palette only: cream `#EDF1D6`, sage `#9DC08B`, green `#609966`, ink `#40513B`. No gradients.
+- Don't use CSS Modules `composes`. Share layout through components in `src/components`: `Container` sets the max width and side gutters, `Section` sets the vertical padding for page sections and the footer (`component='footer'`), `PageHero` is the accent title panel at the top of every page but Home, and `SectionLabel` is a section's heading with the line that grows as it scrolls in.
+- To override `Section`'s padding, include the element in the selector (`section.hero`, `footer.footer`). A bare class ties with `.section`, and whichever stylesheet loads last wins.
+- Palette only (`BRAND` in `src/theme.ts`): accent Paid green `#9DC08B`, ink `#0D0D0D`, background `#F3F4EE` and surfaces `#FBFCF8`. The Home product rows also fill with apricot `#E8B08A`, rose `#E7A6B8`, seafoam `#93C8B8`, dusty blue `#A9BEE8` and butter `#EAD38A` on hover. No gradients.
 - Button heights come from the theme (`src/theme.ts`): 44px, or 48px with `size='large'`. Don't set `min-height` on a `Button` in CSS.
-- Sage and green fail AA as body text on ink or white. Use them for large text, borders and decoration only.
+- Paid green and the row colors fail AA as text on the off-whites. Use them as fills behind ink text (which passes AA on all of them), or for borders and decoration; never as a text color.
 - Declarations in alphabetical order; literal breakpoints at 600, 900 and 1200px.
 - Meet WCAG 2.1 AA, stay responsive down to 320px, and respect `prefers-reduced-motion`.
 - A page-specific component gets its own folder under the page (`src/pages/Home/PaymentDemo/`).

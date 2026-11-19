@@ -1,4 +1,12 @@
-import { AppBar, Button, Toolbar, useMediaQuery } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import {
+  AppBar,
+  Button,
+  IconButton,
+  Link,
+  Toolbar,
+  useMediaQuery,
+} from '@mui/material';
 import { useState } from 'react';
 import { NavLink } from 'react-router';
 import { NAV_ITEMS } from '../../routes/nav.ts';
@@ -14,6 +22,7 @@ export const Header = () => {
   const open = menuOpen && !desktop;
 
   const handleClose = () => setMenuOpen(false);
+  const handleOpen = () => setMenuOpen(true);
 
   return (
     <AppBar
@@ -31,32 +40,50 @@ export const Header = () => {
             <ul className={styles.navList}>
               {NAV_ITEMS.map(({ label, to, end }) => (
                 <li key={to}>
-                  <Button
+                  <Link
                     className={styles.navLink}
-                    color='inherit'
                     component={NavLink}
                     end={end}
                     to={to}
+                    underline='none'
+                    variant='subtitle1'
                   >
                     {label}
-                  </Button>
+                  </Link>
                 </li>
               ))}
             </ul>
-            <Button component={NavLink} to={PATHS.signIn} variant='contained'>
-              Sign in
-            </Button>
+            <div className={styles.actions}>
+              <Button
+                className={styles.signIn}
+                component={NavLink}
+                to={PATHS.signIn}
+                variant='outlined'
+              >
+                Sign in
+              </Button>
+              <Button
+                color='secondary'
+                component={NavLink}
+                to={PATHS.createAccount}
+                variant='contained'
+              >
+                Create account
+              </Button>
+            </div>
           </nav>
 
-          <Button
+          <IconButton
             aria-controls='mobile-nav'
             aria-expanded={open}
+            aria-label='Menu'
             className={styles.menuButton}
-            onClick={() => setMenuOpen(true)}
-            variant='outlined'
+            edge='end'
+            onClick={handleOpen}
+            size='large'
           >
-            Menu
-          </Button>
+            <MenuIcon />
+          </IconButton>
         </Toolbar>
       </Container>
 

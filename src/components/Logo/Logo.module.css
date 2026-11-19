@@ -1,11 +1,5 @@
 .logo {
-  align-items: center;
-  display: inline-flex;
-  gap: 12px;
-}
-
-.image {
-  display: block;
-  height: calc(var(--mui-spacing) * 7);
-  width: auto;
+  display: inline-block;
+  line-height: 1;
+  max-width: 7ch;
 }

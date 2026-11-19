@@ -31,36 +31,57 @@ export const MobileMenu = ({ onClose, open }: Props) => {
       slotProps={{ paper: { className: styles.drawerPaper } }}
       transitionDuration={reducedMotion ? 0 : undefined}
     >
-      <nav aria-label='Primary' id='mobile-nav'>
+      <nav aria-label='Primary' className={styles.nav} id='mobile-nav'>
         <Container>
           <Toolbar className={styles.toolbar} disableGutters>
             <Logo onClick={onClose} />
-            <Button
-              className={styles.closeButton}
-              onClick={onClose}
-              variant='outlined'
-            >
+            <Button className={styles.closeButton} onClick={onClose}>
               Close
             </Button>
           </Toolbar>
         </Container>
         <Container>
           <List disablePadding>
-            {[...NAV_ITEMS, { label: 'Sign in', to: PATHS.signIn }].map(
-              ({ label, to }) => (
-                <ListItemButton
-                  className={styles.mobileLink}
-                  component={NavLink}
-                  disableGutters
-                  key={to}
-                  onClick={onClose}
-                  to={to}
-                >
-                  <ListItemText primary={label} />
-                </ListItemButton>
-              ),
-            )}
+            {NAV_ITEMS.map(({ label, to }) => (
+              <ListItemButton
+                className={styles.mobileLink}
+                component={NavLink}
+                disableGutters
+                key={to}
+                onClick={onClose}
+                to={to}
+              >
+                <ListItemText
+                  primary={label}
+                  slotProps={{ primary: { variant: 'h3' } }}
+                />
+              </ListItemButton>
+            ))}
           </List>
+        </Container>
+        <Container className={styles.actions}>
+          <Button
+            color='secondary'
+            component={NavLink}
+            fullWidth
+            onClick={onClose}
+            size='large'
+            to={PATHS.createAccount}
+            variant='contained'
+          >
+            Create account
+          </Button>
+          <Button
+            className={styles.signIn}
+            component={NavLink}
+            fullWidth
+            onClick={onClose}
+            size='large'
+            to={PATHS.signIn}
+            variant='outlined'
+          >
+            Sign in
+          </Button>
         </Container>
       </nav>
     </Drawer>

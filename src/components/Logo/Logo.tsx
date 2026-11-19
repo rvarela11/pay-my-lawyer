@@ -1,4 +1,4 @@
-import { Link, Typography } from '@mui/material';
+import { Link } from '@mui/material';
 import { Link as RouterLink } from 'react-router';
 import { PATHS } from '../../routes/paths.ts';
 import styles from './Logo.module.css';
@@ -15,14 +15,8 @@ export const Logo = ({ onClick }: Props) => (
     onClick={onClick}
     to={PATHS.home}
     underline='none'
+    variant='h6'
   >
-    <img
-      alt=''
-      className={styles.image}
-      src={`${import.meta.env.BASE_URL}pay-my-lawyer-logo.png`}
-    />
-    <Typography component='span' variant='h4'>
-      Pay My Lawyer
-    </Typography>
+    Pay My Lawyer
   </Link>
 );
