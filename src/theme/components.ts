@@ -33,18 +33,6 @@ export const COMPONENTS = {
         outlineOffset: 3,
       },
       'main:focus': { outline: 'none' },
-      // Text for screen readers only, like a table caption or an icon column's header.
-      '.visually-hidden': {
-        border: 0,
-        clipPath: 'inset(50%)',
-        height: 1,
-        margin: -1,
-        overflow: 'hidden',
-        padding: 0,
-        position: 'absolute',
-        whiteSpace: 'nowrap',
-        width: 1,
-      },
       // role='list' keeps list semantics in Safari once the bullets are gone.
       "ol[role='list'], ul[role='list']": {
         listStyle: 'none',
@@ -57,6 +45,14 @@ export const COMPONENTS = {
   MuiDialogActions: {
     styleOverrides: {
       root: ({ theme }) => ({ padding: theme.spacing(0, 3, 3) }),
+    },
+  },
+  // The progress bar stops sliding between values for people who reduce motion.
+  MuiLinearProgress: {
+    styleOverrides: {
+      bar: {
+        '@media (prefers-reduced-motion: reduce)': { transition: 'none' },
+      },
     },
   },
   MuiLink: { defaultProps: { color: 'inherit', underline: 'hover' } },

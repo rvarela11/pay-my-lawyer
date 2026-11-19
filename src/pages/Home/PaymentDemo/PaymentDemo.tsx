@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import classNames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
+import { VisuallyHidden } from '../../../components/VisuallyHidden/VisuallyHidden.tsx';
 import {
   COLLECTED_BEFORE,
   DEMO_INVOICE,
@@ -176,14 +177,14 @@ export const PaymentDemo = () => {
             </Typography>
           </div>
           <table className={styles.table}>
-            <caption className='visually-hidden'>Recent invoices</caption>
-            <thead className='visually-hidden'>
+            <VisuallyHidden component='caption'>Recent invoices</VisuallyHidden>
+            <VisuallyHidden component='thead'>
               <tr>
                 <th scope='col'>Client</th>
                 <th scope='col'>Amount</th>
                 <th scope='col'>Status</th>
               </tr>
-            </thead>
+            </VisuallyHidden>
             <tbody>
               <tr className={classNames({ [styles.justPaid]: paid })}>
                 <td>
@@ -238,10 +239,10 @@ export const PaymentDemo = () => {
         </div>
       </section>
 
-      <p className='visually-hidden' role='status'>
+      <VisuallyHidden component='p' role='status'>
         {paid &&
           `Payment received. Invoice ${DEMO_INVOICE.id} now shows as paid. Total collected is ${usd.format(COLLECTED_BEFORE + DEMO_INVOICE.amount)}.`}
-      </p>
+      </VisuallyHidden>
     </div>
   );
 };
