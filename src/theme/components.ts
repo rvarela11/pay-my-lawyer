@@ -91,6 +91,12 @@ export const COMPONENTS = {
       },
     },
   },
+  // Table rules in ink, like the site's other lines (MUI's default is a faint grey).
+  MuiTableCell: {
+    styleOverrides: {
+      root: { borderBottomColor: 'var(--mui-palette-primary-main)' },
+    },
+  },
   MuiToolbar: {
     styleOverrides: {
       root: ({ theme }) => ({

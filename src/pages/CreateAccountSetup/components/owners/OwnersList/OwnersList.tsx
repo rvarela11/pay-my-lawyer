@@ -80,7 +80,7 @@ export const OwnersList = ({
   }, [totalError]);
 
   return (
-    <Stack spacing={3} useFlexGap>
+    <Stack spacing={1.5} useFlexGap>
       {totalError && (
         <Alert ref={alertRef} severity='error' tabIndex={-1}>
           {totalError}

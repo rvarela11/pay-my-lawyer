@@ -2,3 +2,9 @@
 .actions {
   justify-content: flex-end;
 }
+
+/* Holds Remove's place on the applicant's row: a medium IconButton is 40px wide. */
+.slot {
+  flex-shrink: 0;
+  width: 40px;
+}

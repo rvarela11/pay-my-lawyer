@@ -1,3 +1,5 @@
+/* Add owner sits close under the step line instead of on a row of its own. */
 .toolbar {
   justify-content: flex-end;
+  margin-top: calc(var(--mui-spacing) * -2);
 }
