@@ -13,7 +13,10 @@
   white-space: nowrap;
 }
 
+/* A heavier rule above the sum, like an invoice total: the last row's 1px line plus 1px drawn inside these cells.
+   A 2px border-top would leave seams where these cells meet the body's columns. */
 .total {
   border-bottom: none;
+  box-shadow: inset 0 1px 0 var(--mui-palette-primary-main);
   color: var(--mui-palette-text-primary);
 }

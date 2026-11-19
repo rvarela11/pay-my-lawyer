@@ -38,7 +38,6 @@ export const CreateAccountSetup = () => {
 
   const form = forms.getForm(screen, provider);
   const position = screen ? getStagePosition(provider, screen) : null;
-
   // The second click of a double-click (detail 2) would skip the screen that just opened.
   const handleNextClick = (event: MouseEvent<HTMLButtonElement>) => {
     if (event.detail > 1) {
@@ -95,7 +94,7 @@ export const CreateAccountSetup = () => {
             </Typography>
             {provider && position && (
               <Typography className={styles.step} component='p' variant='body2'>
-                Step {position.number} of {position.total}: {position.label}
+                Step {position.number} of {position.total}
               </Typography>
             )}
           </Stack>

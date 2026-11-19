@@ -1166,13 +1166,13 @@ describe('CreateAccountSetup', () => {
     });
 
     it.each([
-      ['Usio', 'Business details', 'Step 1 of 5: Business details'],
-      ['Usio', 'About you', 'Step 1 of 5: Business details'],
-      ['Usio', 'Beneficial owners', 'Step 2 of 5: Beneficial owners'],
-      ['Usio', 'Review & submit', 'Step 3 of 5: Review & submit'],
-      ['Dwolla', 'About you', 'Step 1 of 5: Business details'],
-      ['Dwolla', 'ID documents', 'Step 2 of 5: Ownership & ID'],
-      ['Dwolla', 'Portal', 'Step 5 of 5: Portal'],
+      ['Usio', 'Business details', 'Step 1 of 5'],
+      ['Usio', 'About you', 'Step 1 of 5'],
+      ['Usio', 'Beneficial owners', 'Step 2 of 5'],
+      ['Usio', 'Review & submit', 'Step 3 of 5'],
+      ['Dwolla', 'About you', 'Step 1 of 5'],
+      ['Dwolla', 'ID documents', 'Step 2 of 5'],
+      ['Dwolla', 'Portal', 'Step 5 of 5'],
     ])('%s on %s shows "%s"', async (provider, target, text) => {
       const { user } = renderWizard();
 
@@ -1229,9 +1229,7 @@ describe('CreateAccountSetup', () => {
       await act(() => router.navigate(PATHS.setupDwollaBusiness));
 
       expect(await heading('Business details')).toBeInTheDocument();
-      expect(
-        screen.getByText('Step 1 of 5: Business details'),
-      ).toBeInTheDocument();
+      expect(screen.getByText('Step 1 of 5')).toBeInTheDocument();
     });
 
     it('redirects a screen that is not on the chosen path', async () => {

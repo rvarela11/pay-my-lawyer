@@ -11,7 +11,7 @@ type Props = {
 };
 
 // Icon buttons keep every row one line high; the tooltip shows each button's name. The
-// applicant can't be removed, so their row only has Edit.
+// applicant can't be removed, so their row keeps an empty slot there and every Edit lines up.
 export const OwnerActions = ({
   isApplicant,
   name,
@@ -24,13 +24,19 @@ export const OwnerActions = ({
   return (
     <Stack className={styles.actions} direction='row' spacing={0.5} useFlexGap>
       <Tooltip title={editLabel}>
-        <IconButton aria-label={editLabel} onClick={onEdit}>
+        <IconButton aria-label={editLabel} color='inherit' onClick={onEdit}>
           <EditOutlined />
         </IconButton>
       </Tooltip>
-      {!isApplicant && (
+      {isApplicant ? (
+        <span aria-hidden className={styles.slot} />
+      ) : (
         <Tooltip title={removeLabel}>
-          <IconButton aria-label={removeLabel} onClick={onRemove}>
+          <IconButton
+            aria-label={removeLabel}
+            color='inherit'
+            onClick={onRemove}
+          >
             <DeleteOutlined />
           </IconButton>
         </Tooltip>
