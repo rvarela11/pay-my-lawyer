@@ -4,9 +4,10 @@ section.hero {
 }
 
 .heroPanel {
-  align-items: flex-end;
   background-color: var(--mui-palette-brand-yellow);
   display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   min-height: clamp(420px, calc(100svh - 64px - 2 * max(16px, 1.5625vw)), 900px);
   padding: clamp(20px, 2.5vw, 40px);
 }
@@ -14,6 +15,24 @@ section.hero {
 .heroTitle {
   animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   max-width: 10ch;
+}
+
+.heroText {
+  margin-top: calc(var(--mui-spacing) * 3);
+  max-width: 32ch;
+}
+
+.heroActions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--mui-spacing) * 2) calc(var(--mui-spacing) * 4);
+  margin-top: calc(var(--mui-spacing) * 4);
+}
+
+.heroActions a:focus-visible {
+  outline: 3px solid var(--mui-palette-primary-main);
+  outline-offset: 3px;
 }
 
 @keyframes rise {
@@ -31,10 +50,6 @@ section.hero {
 .stack {
   display: grid;
   gap: clamp(48px, 7.8vw, 112px);
-}
-
-.statement {
-  max-width: 26ch;
 }
 
 .split {
@@ -55,9 +70,11 @@ section.hero {
   max-width: 32rem;
 }
 
+/* Clears the sticky header when "See how it works" jumps here. */
 .dark {
   background-color: var(--mui-palette-primary-main);
   color: var(--mui-palette-brand-paper);
+  scroll-margin-top: 64px;
 }
 
 .darkText {

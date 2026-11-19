@@ -1,5 +1,5 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { Button, Typography } from '@mui/material';
+import { Button, Link, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router';
 import { Container } from '../../components/Container/Container.tsx';
 import { Rule } from '../../components/Rule/Rule.tsx';
@@ -23,17 +23,24 @@ export const Home = () => {
             >
               Legal fees, paid without the chase.
             </Typography>
+            <Typography className={styles.heroText} component='p' variant='h4'>
+              Payment processing, invoicing and client records for law firms, in
+              one place.
+            </Typography>
+            <div className={styles.heroActions}>
+              <Button
+                component={RouterLink}
+                size='large'
+                to={PATHS.createAccount}
+                variant='contained'
+              >
+                Create account
+              </Button>
+              <Link href='#how-it-works' underline='always' variant='subtitle1'>
+                See how it works
+              </Link>
+            </div>
           </div>
-        </Container>
-      </Section>
-
-      <Section aria-labelledby='about-title'>
-        <Container className={styles.stack}>
-          <SectionLabel id='about-title'>Who we are</SectionLabel>
-          <Typography className={styles.statement} component='p' variant='h2'>
-            Pay My Lawyer helps law firms take payments, send invoices and keep
-            client records in one place.
-          </Typography>
         </Container>
       </Section>
 
@@ -53,7 +60,11 @@ export const Home = () => {
         </Container>
       </Section>
 
-      <Section aria-labelledby='demo-title' className={styles.dark}>
+      <Section
+        aria-labelledby='demo-title'
+        className={styles.dark}
+        id='how-it-works'
+      >
         <Container className={styles.stack}>
           <SectionLabel id='demo-title'>See it work</SectionLabel>
           <div className={styles.demoSplit}>
