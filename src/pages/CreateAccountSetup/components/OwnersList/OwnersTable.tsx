@@ -8,8 +8,8 @@ import {
   Typography,
 } from '@mui/material';
 import { OWNER_LABELS } from './ownerLabels.ts';
-import type { OwnerRow } from './ownerRows.ts';
 import styles from './OwnersTable.module.css';
+import type { OwnerRow } from './toOwnerRows.ts';
 
 type Props = {
   rows: OwnerRow[];

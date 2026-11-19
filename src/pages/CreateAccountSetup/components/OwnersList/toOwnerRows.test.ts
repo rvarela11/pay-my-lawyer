@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { describe, expect, it } from 'vitest';
 import { ownerSchema } from '../OwnerDialog/validation.ts';
-import { type Applicant, toOwnerRows, totalOwnership } from './ownerRows.ts';
+import { type Applicant, toOwnerRows, totalOwnership } from './toOwnerRows.ts';
 
 const APPLICANT: Applicant = {
   barNumber: '12345',

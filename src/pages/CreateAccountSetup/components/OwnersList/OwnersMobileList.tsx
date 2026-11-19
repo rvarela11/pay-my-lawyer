@@ -1,8 +1,8 @@
 import { List, ListItem, Typography } from '@mui/material';
 import { OwnerDetail } from './OwnerDetail.tsx';
 import { OWNER_LABELS } from './ownerLabels.ts';
-import type { OwnerRow } from './ownerRows.ts';
 import styles from './OwnersMobileList.module.css';
+import type { OwnerRow } from './toOwnerRows.ts';
 
 type Props = {
   rows: OwnerRow[];

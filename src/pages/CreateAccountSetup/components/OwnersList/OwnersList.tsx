@@ -1,9 +1,9 @@
 import { useMediaQuery } from '@mui/material';
 import type { Owner } from '../OwnerDialog/validation.ts';
-import { type Applicant, toOwnerRows, totalOwnership } from './ownerRows.ts';
 import styles from './OwnersList.module.css';
 import { OwnersMobileList } from './OwnersMobileList.tsx';
 import { OwnersTable } from './OwnersTable.tsx';
+import { type Applicant, toOwnerRows, totalOwnership } from './toOwnerRows.ts';
 
 type Props = {
   applicant: Applicant;
