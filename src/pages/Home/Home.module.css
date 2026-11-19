@@ -18,6 +18,11 @@ section.hero {
 }
 
 .heroCopy {
+  min-width: 0;
+}
+
+.heroText {
+  margin-top: calc(var(--mui-spacing) * 3);
   max-width: 32ch;
 }
 
@@ -74,17 +79,12 @@ section.hero {
   }
 }
 
-/* The headline spans the top; the copy and the demo share the row below it. */
+/* Wording on the left, demo on the right, both resting on the bottom edge. */
 @media (min-width: 1200px) {
   .heroPanel {
     align-items: end;
     column-gap: calc(var(--mui-spacing) * 6);
     grid-template-columns: minmax(0, 1fr) auto;
-  }
-
-  .heroTitle {
-    grid-column: 1 / -1;
-    max-width: 14ch;
   }
 }
 

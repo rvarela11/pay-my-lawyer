@@ -16,15 +16,19 @@ export const Home = () => {
       <Section aria-labelledby='hero-title' className={styles.hero}>
         <Container>
           <div className={styles.heroPanel}>
-            <Typography
-              className={styles.heroTitle}
-              id='hero-title'
-              variant='h1'
-            >
-              Legal fees, paid without the chase.
-            </Typography>
             <div className={styles.heroCopy}>
-              <Typography component='p' variant='h4'>
+              <Typography
+                className={styles.heroTitle}
+                id='hero-title'
+                variant='h1'
+              >
+                Legal fees, paid without the chase.
+              </Typography>
+              <Typography
+                className={styles.heroText}
+                component='p'
+                variant='h4'
+              >
                 Payment processing, invoicing and client records for law firms,
                 in one place.
               </Typography>

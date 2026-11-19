@@ -36,8 +36,9 @@ export const theme = responsiveFontSizes(
       fontFamily: '"Inter Tight", "Helvetica Neue", "Arial", sans-serif',
       fontWeightBold: 600,
       // Grotesk display scale: medium weight, tight leading, slightly negative tracking on the large sizes.
+      // Scales with the viewport so the headline fits beside the payment demo; responsiveFontSizes skips it below.
       h1: {
-        fontSize: '7.5rem',
+        fontSize: 'clamp(4rem, 6.5vw, 7.5rem)',
         fontWeight: 500,
         letterSpacing: '-0.025em',
         lineHeight: 1.05,
@@ -99,4 +100,20 @@ export const theme = responsiveFontSizes(
       },
     },
   }),
+  {
+    variants: [
+      'body1',
+      'body2',
+      'button',
+      'caption',
+      'h2',
+      'h3',
+      'h4',
+      'h5',
+      'h6',
+      'overline',
+      'subtitle1',
+      'subtitle2',
+    ],
+  },
 );
