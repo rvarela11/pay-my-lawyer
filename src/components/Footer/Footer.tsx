@@ -1,8 +1,8 @@
 import { Link, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router';
+import { PATHS } from '../../routes/paths.ts';
 import { Container } from '../Container/Container.tsx';
 import styles from './Footer.module.css';
-import { FOOTER_LINKS } from './links.ts';
 import { Section } from '../Section/Section.tsx';
 
 export const Footer = () => (
@@ -30,38 +30,29 @@ export const Footer = () => (
             1304 E Adams St., Brownsville, TX 78520
           </Typography>
         </address>
-
-        <nav aria-label='Footer' className={styles.nav}>
-          {FOOTER_LINKS.map(({ heading, links }) => (
-            <div key={heading}>
-              <Typography
-                className={styles.heading}
-                component='h2'
-                variant='body2'
-              >
-                {heading}
-              </Typography>
-              <ul className={styles.linkList}>
-                {links.map(({ label, to }) => (
-                  <li key={to}>
-                    <Link component={RouterLink} to={to} variant='body2'>
-                      {label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </nav>
       </div>
 
       <Typography className={styles.eligibility} variant='body2'>
         Services are only offered to licensed attorneys within the United
         States.
       </Typography>
-      <Typography className={styles.copyright} variant='caption'>
-        Copyright © {new Date().getFullYear()} Pay My Lawyer
-      </Typography>
+      <div className={styles.legal}>
+        <Typography variant='caption'>
+          Copyright © {new Date().getFullYear()} Pay My Lawyer
+        </Typography>
+        <ul className={styles.legalLinks}>
+          <li>
+            <Link component={RouterLink} to={PATHS.terms} variant='caption'>
+              Terms of service
+            </Link>
+          </li>
+          <li>
+            <Link component={RouterLink} to={PATHS.privacy} variant='caption'>
+              Privacy policy
+            </Link>
+          </li>
+        </ul>
+      </div>
     </Container>
   </Section>
 );

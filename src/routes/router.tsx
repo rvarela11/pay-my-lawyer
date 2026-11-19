@@ -7,9 +7,11 @@ import { CREATE_ACCOUNT_SETUP_ROUTE } from '../pages/CreateAccountSetup/createAc
 import { ErrorPage } from '../pages/ErrorPage.tsx';
 import { Home } from '../pages/Home/Home.tsx';
 import { NotFound } from '../pages/NotFound.tsx';
+import { Privacy } from '../pages/Privacy.tsx';
 import { Products } from '../pages/Products.tsx';
 import { SignIn } from '../pages/SignIn/SignIn.tsx';
 import { SignInVerify } from '../pages/SignInVerify/SignInVerify.tsx';
+import { Terms } from '../pages/Terms.tsx';
 import { PATHS } from './paths.ts';
 
 export const router = createBrowserRouter(
@@ -27,6 +29,8 @@ export const router = createBrowserRouter(
         CREATE_ACCOUNT_SETUP_ROUTE,
         { path: PATHS.signIn, element: <SignIn /> },
         { path: PATHS.signInVerify, element: <SignInVerify /> },
+        { path: PATHS.terms, element: <Terms /> },
+        { path: PATHS.privacy, element: <Privacy /> },
         { path: '*', element: <NotFound /> },
       ],
     },
