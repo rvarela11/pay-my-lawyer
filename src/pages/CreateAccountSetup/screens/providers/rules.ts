@@ -1,7 +1,7 @@
 import dayjs, { type Dayjs } from 'dayjs';
 import { mixed, string } from 'yup';
-import { BUSINESS_TYPES } from '../../components/form/BusinessTypeSelect/businessTypes.ts';
-import { US_STATES } from '../../components/form/StateSelect/usStates.ts';
+import { BUSINESS_TYPES } from '@/pages/CreateAccountSetup/components/form/BusinessTypeSelect/businessTypes.ts';
+import { US_STATES } from '@/pages/CreateAccountSetup/components/form/StateSelect/usStates.ts';
 
 // Rules shared by every provider's field set. Each starts empty, so nothing shows on load.
 // Empty fields say "<Label> is required"; a wrong format says how to fix it ("Enter a …").

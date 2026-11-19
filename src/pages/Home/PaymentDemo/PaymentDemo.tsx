@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import classNames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
-import { VisuallyHidden } from '../../../components/VisuallyHidden/VisuallyHidden.tsx';
+import { VisuallyHidden } from '@/components/VisuallyHidden/VisuallyHidden.tsx';
 import {
   COLLECTED_BEFORE,
   DEMO_INVOICE,

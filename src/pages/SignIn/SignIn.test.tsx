@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createMemoryRouter, RouterProvider, useLocation } from 'react-router';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { PATHS } from '../../routes/paths.ts';
+import { PATHS } from '@/routes/paths.ts';
 import { SignInVerify } from '../SignInVerify/SignInVerify.tsx';
 import { SignIn } from './SignIn.tsx';
 import { DELAY_MS } from './submitSignIn.ts';

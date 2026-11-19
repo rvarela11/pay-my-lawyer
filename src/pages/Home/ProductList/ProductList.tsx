@@ -1,7 +1,7 @@
 import NorthEastIcon from '@mui/icons-material/NorthEast';
 import { Grid, Link, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router';
-import { PATHS } from '../../../routes/paths.ts';
+import { PATHS } from '@/routes/paths.ts';
 import { PRODUCTS } from '../products.ts';
 import styles from './ProductList.module.css';
 

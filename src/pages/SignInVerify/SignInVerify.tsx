@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
-import { Container } from '../../components/Container/Container.tsx';
-import { Section } from '../../components/Section/Section.tsx';
+import { Container } from '@/components/Container/Container.tsx';
+import { Section } from '@/components/Section/Section.tsx';
 
 export const SignInVerify = () => {
   return (

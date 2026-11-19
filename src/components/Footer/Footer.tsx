@@ -1,6 +1,6 @@
 import { Link, Stack, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router';
-import { PATHS } from '../../routes/paths.ts';
+import { PATHS } from '@/routes/paths.ts';
 import { Container } from '../Container/Container.tsx';
 import styles from './Footer.module.css';
 import { Section } from '../Section/Section.tsx';

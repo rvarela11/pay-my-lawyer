@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { PATHS } from '../../routes/paths.ts';
+import { PATHS } from '@/routes/paths.ts';
 import { CREATE_ACCOUNT_SETUP_ROUTE } from '../CreateAccountSetup/createAccountSetupRoute.tsx';
 import { CreateAccount } from './CreateAccount.tsx';
 import { DELAY_MS } from './submitCreateAccount.ts';

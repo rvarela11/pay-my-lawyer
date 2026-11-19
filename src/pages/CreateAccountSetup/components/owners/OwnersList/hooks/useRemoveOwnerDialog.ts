@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { Owner } from '../../OwnerDialog/validation.ts';
+import type { Owner } from '@/pages/CreateAccountSetup/components/owners/OwnerDialog/validation.ts';
 
 type Options = {
   onRemove: (id: string) => void;
