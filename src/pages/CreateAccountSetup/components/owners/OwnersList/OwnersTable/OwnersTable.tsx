@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import classNames from 'classnames';
 import type { Ref } from 'react';
-import { VisuallyHidden } from '../../../../../../components/VisuallyHidden/VisuallyHidden.tsx';
+import { VisuallyHidden } from '@/components/VisuallyHidden/VisuallyHidden.tsx';
 import { OwnerActions } from '../OwnerActions/OwnerActions.tsx';
 import { OWNER_LABELS } from '../ownerLabels.ts';
 import type { OwnerRow } from '../toOwnerRows.ts';

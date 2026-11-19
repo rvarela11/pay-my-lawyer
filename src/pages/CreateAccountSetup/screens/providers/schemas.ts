@@ -1,4 +1,4 @@
-import { PROVIDER_IDS, type Provider } from '../../ids.ts';
+import { PROVIDER_IDS, type Provider } from '@/pages/CreateAccountSetup/ids.ts';
 import { dwollaSchema } from './dwolla/validation.ts';
 import { usioSchema } from './usio/validation.ts';
 

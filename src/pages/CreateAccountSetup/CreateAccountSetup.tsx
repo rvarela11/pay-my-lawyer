@@ -7,8 +7,8 @@ import {
 } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { Navigate, Outlet, useLocation } from 'react-router';
-import { Container } from '../../components/Container/Container.tsx';
-import { Section } from '../../components/Section/Section.tsx';
+import { Container } from '@/components/Container/Container.tsx';
+import { Section } from '@/components/Section/Section.tsx';
 import { StartOverDialog } from './components/wizard/StartOverDialog/StartOverDialog.tsx';
 import { StepIndicator } from './components/wizard/StepIndicator/StepIndicator.tsx';
 import styles from './CreateAccountSetup.module.css';

@@ -1,6 +1,6 @@
 import { Link } from '@mui/material';
 import { Link as RouterLink } from 'react-router';
-import { PATHS } from '../../routes/paths.ts';
+import { PATHS } from '@/routes/paths.ts';
 import styles from './Logo.module.css';
 
 type Props = {

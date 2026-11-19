@@ -10,9 +10,9 @@ import {
 import { useEffect, useRef } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Link as RouterLink, useNavigate } from 'react-router';
-import { FormPage } from '../../components/FormPage/FormPage.tsx';
-import { PasswordField } from '../../components/PasswordField/PasswordField.tsx';
-import { PATHS } from '../../routes/paths.ts';
+import { FormPage } from '@/components/FormPage/FormPage.tsx';
+import { PasswordField } from '@/components/PasswordField/PasswordField.tsx';
+import { PATHS } from '@/routes/paths.ts';
 import styles from './CreateAccount.module.css';
 import { FIELDS } from './fields.ts';
 import { submitCreateAccount } from './submitCreateAccount.ts';

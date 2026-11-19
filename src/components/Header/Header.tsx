@@ -11,8 +11,8 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { NavLink } from 'react-router';
-import { NAV_ITEMS } from '../../routes/nav.ts';
-import { PATHS } from '../../routes/paths.ts';
+import { NAV_ITEMS } from '@/routes/nav.ts';
+import { PATHS } from '@/routes/paths.ts';
 import { Container } from '../Container/Container.tsx';
 import styles from './Header.module.css';
 import { Logo } from '../Logo/Logo.tsx';

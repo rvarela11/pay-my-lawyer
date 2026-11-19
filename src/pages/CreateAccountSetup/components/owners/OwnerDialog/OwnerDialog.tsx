@@ -8,12 +8,15 @@ import {
 } from '@mui/material';
 import { type SubmitEvent, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { DateOfBirthField } from '../../form/DateOfBirthField/DateOfBirthField.tsx';
-import { FormGrid, FormGridFullRow } from '../../form/FormGrid/FormGrid.tsx';
-import { FormTextField } from '../../form/FormTextField/FormTextField.tsx';
-import { OwnershipField } from '../../form/OwnershipField/OwnershipField.tsx';
-import { SsnField } from '../../form/SsnField/SsnField.tsx';
-import { StateSelect } from '../../form/StateSelect/StateSelect.tsx';
+import { DateOfBirthField } from '@/pages/CreateAccountSetup/components/form/DateOfBirthField/DateOfBirthField.tsx';
+import {
+  FormGrid,
+  FormGridFullRow,
+} from '@/pages/CreateAccountSetup/components/form/FormGrid/FormGrid.tsx';
+import { FormTextField } from '@/pages/CreateAccountSetup/components/form/FormTextField/FormTextField.tsx';
+import { OwnershipField } from '@/pages/CreateAccountSetup/components/form/OwnershipField/OwnershipField.tsx';
+import { SsnField } from '@/pages/CreateAccountSetup/components/form/SsnField/SsnField.tsx';
+import { StateSelect } from '@/pages/CreateAccountSetup/components/form/StateSelect/StateSelect.tsx';
 import { OWNER_FIELDS } from './fields.ts';
 import { type Owner, ownerSchema } from './validation.ts';
 

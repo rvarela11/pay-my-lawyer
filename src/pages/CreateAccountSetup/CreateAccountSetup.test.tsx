@@ -10,7 +10,7 @@ import dayjs from 'dayjs';
 import { act, StrictMode } from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { PATHS } from '../../routes/paths.ts';
+import { PATHS } from '@/routes/paths.ts';
 import { CREATE_ACCOUNT_SETUP_ROUTE } from './createAccountSetupRoute.tsx';
 // The About you screens load on demand. Importing them here loads their code before any test
 // runs, so the first test to reach one doesn't wait on that load.

@@ -9,10 +9,10 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import { NavLink } from 'react-router';
-import { NAV_ITEMS } from '../../../routes/nav.ts';
-import { PATHS } from '../../../routes/paths.ts';
-import { Container } from '../../Container/Container.tsx';
-import { Logo } from '../../Logo/Logo.tsx';
+import { Container } from '@/components/Container/Container.tsx';
+import { Logo } from '@/components/Logo/Logo.tsx';
+import { NAV_ITEMS } from '@/routes/nav.ts';
+import { PATHS } from '@/routes/paths.ts';
 import styles from './MobileMenu.module.css';
 
 type Props = {

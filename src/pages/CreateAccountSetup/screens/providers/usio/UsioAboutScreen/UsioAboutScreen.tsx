@@ -1,13 +1,13 @@
 import { Stack, Typography } from '@mui/material';
-import { DateOfBirthField } from '../../../../components/form/DateOfBirthField/DateOfBirthField.tsx';
+import { DateOfBirthField } from '@/pages/CreateAccountSetup/components/form/DateOfBirthField/DateOfBirthField.tsx';
 import {
   FormGrid,
   FormGridFullRow,
-} from '../../../../components/form/FormGrid/FormGrid.tsx';
-import { FormTextField } from '../../../../components/form/FormTextField/FormTextField.tsx';
-import { OwnershipField } from '../../../../components/form/OwnershipField/OwnershipField.tsx';
-import { SsnField } from '../../../../components/form/SsnField/SsnField.tsx';
-import { StateSelect } from '../../../../components/form/StateSelect/StateSelect.tsx';
+} from '@/pages/CreateAccountSetup/components/form/FormGrid/FormGrid.tsx';
+import { FormTextField } from '@/pages/CreateAccountSetup/components/form/FormTextField/FormTextField.tsx';
+import { OwnershipField } from '@/pages/CreateAccountSetup/components/form/OwnershipField/OwnershipField.tsx';
+import { SsnField } from '@/pages/CreateAccountSetup/components/form/SsnField/SsnField.tsx';
+import { StateSelect } from '@/pages/CreateAccountSetup/components/form/StateSelect/StateSelect.tsx';
 import { USIO_FIELDS } from '../fields.ts';
 
 export const UsioAboutScreen = () => (

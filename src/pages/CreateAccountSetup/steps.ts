@@ -1,4 +1,4 @@
-import { PATHS } from '../../routes/paths.ts';
+import { PATHS } from '@/routes/paths.ts';
 import { FIELDS } from './fields.ts';
 import {
   PROVIDER_IDS,

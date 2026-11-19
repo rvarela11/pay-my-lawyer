@@ -1,12 +1,12 @@
-import { BusinessTypeSelect } from '../../../../components/form/BusinessTypeSelect/BusinessTypeSelect.tsx';
-import { EinField } from '../../../../components/form/EinField/EinField.tsx';
+import { BusinessTypeSelect } from '@/pages/CreateAccountSetup/components/form/BusinessTypeSelect/BusinessTypeSelect.tsx';
+import { EinField } from '@/pages/CreateAccountSetup/components/form/EinField/EinField.tsx';
 import {
   FormGrid,
   FormGridFullRow,
-} from '../../../../components/form/FormGrid/FormGrid.tsx';
-import { FormTextField } from '../../../../components/form/FormTextField/FormTextField.tsx';
-import { PhoneField } from '../../../../components/form/PhoneField/PhoneField.tsx';
-import { StateSelect } from '../../../../components/form/StateSelect/StateSelect.tsx';
+} from '@/pages/CreateAccountSetup/components/form/FormGrid/FormGrid.tsx';
+import { FormTextField } from '@/pages/CreateAccountSetup/components/form/FormTextField/FormTextField.tsx';
+import { PhoneField } from '@/pages/CreateAccountSetup/components/form/PhoneField/PhoneField.tsx';
+import { StateSelect } from '@/pages/CreateAccountSetup/components/form/StateSelect/StateSelect.tsx';
 import { DWOLLA_FIELDS } from '../fields.ts';
 
 export const DwollaBusinessScreen = () => (

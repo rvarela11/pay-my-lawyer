@@ -1,5 +1,5 @@
 import { Navigate, type RouteObject } from 'react-router';
-import { PATHS } from '../../routes/paths.ts';
+import { PATHS } from '@/routes/paths.ts';
 import { CreateAccountSetup } from './CreateAccountSetup.tsx';
 import { PlaceholderScreen } from './screens/PlaceholderScreen/PlaceholderScreen.tsx';
 import { DwollaBusinessScreen } from './screens/providers/dwolla/DwollaBusinessScreen/DwollaBusinessScreen.tsx';

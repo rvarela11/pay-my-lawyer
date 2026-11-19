@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { useNavigate } from 'react-router';
-import { PATHS } from '../../../../../../routes/paths.ts';
-import type { Owner } from '../../../../components/owners/OwnerDialog/validation.ts';
-import { OwnersList } from '../../../../components/owners/OwnersList/OwnersList.tsx';
+import type { Owner } from '@/pages/CreateAccountSetup/components/owners/OwnerDialog/validation.ts';
+import { OwnersList } from '@/pages/CreateAccountSetup/components/owners/OwnersList/OwnersList.tsx';
+import { PATHS } from '@/routes/paths.ts';
 import { DWOLLA_FIELDS } from '../fields.ts';
 import type { DwollaValues } from '../validation.ts';
 

@@ -8,9 +8,9 @@ import {
   Typography,
 } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
-import { FIELDS } from '../../fields.ts';
-import { PROVIDER_IDS, TITLE_ID } from '../../ids.ts';
-import type { ProviderValues } from '../../validation.ts';
+import { FIELDS } from '@/pages/CreateAccountSetup/fields.ts';
+import { PROVIDER_IDS, TITLE_ID } from '@/pages/CreateAccountSetup/ids.ts';
+import type { ProviderValues } from '@/pages/CreateAccountSetup/validation.ts';
 import styles from './ProviderScreen.module.css';
 
 const ERROR_ID = 'provider-error';

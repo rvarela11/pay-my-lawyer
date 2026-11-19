@@ -1,8 +1,8 @@
 import { Button, Grid, Stack, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router';
-import { HeroPanel } from '../../components/HeroPanel/HeroPanel.tsx';
-import { LabeledSection } from '../../components/LabeledSection/LabeledSection.tsx';
-import { PATHS } from '../../routes/paths.ts';
+import { HeroPanel } from '@/components/HeroPanel/HeroPanel.tsx';
+import { LabeledSection } from '@/components/LabeledSection/LabeledSection.tsx';
+import { PATHS } from '@/routes/paths.ts';
 import styles from './Home.module.css';
 import { PaymentDemo } from './PaymentDemo/PaymentDemo.tsx';
 import { ProductList } from './ProductList/ProductList.tsx';

@@ -1,5 +1,5 @@
 import { type InferType, object } from 'yup';
-import { OWNERS_RULE } from '../../../components/owners/OwnerDialog/validation.ts';
+import { OWNERS_RULE } from '@/pages/CreateAccountSetup/components/owners/OwnerDialog/validation.ts';
 import {
   BAR_NUMBER_RULE,
   BUSINESS_ADDRESS_RULE,
