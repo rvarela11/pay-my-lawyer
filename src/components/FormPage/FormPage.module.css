@@ -1,3 +1,8 @@
 .body {
   margin-top: calc(var(--mui-spacing) * 4);
 }
+
+/* Centers the form in the space between the header and the footer. */
+.page {
+  margin-block: auto;
+}
