@@ -1,10 +1,10 @@
 import { List, ListItem, Typography } from '@mui/material';
 import type { Ref } from 'react';
-import { OwnerActions } from './OwnerActions.tsx';
-import { OwnerDetail } from './OwnerDetail.tsx';
-import { OWNER_LABELS } from './ownerLabels.ts';
+import { OwnerActions } from '../OwnerActions/OwnerActions.tsx';
+import { OwnerDetail } from '../OwnerDetail/OwnerDetail.tsx';
+import { OWNER_LABELS } from '../ownerLabels.ts';
+import type { OwnerRow } from '../toOwnerRows.ts';
 import styles from './OwnersMobileList.module.css';
-import type { OwnerRow } from './toOwnerRows.ts';
 
 type Props = {
   listRef: Ref<HTMLUListElement>;

@@ -8,12 +8,12 @@ import {
 } from '@mui/material';
 import { type SubmitEvent, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { DateOfBirthField } from '../DateOfBirthField/DateOfBirthField.tsx';
-import { FormGrid, FormGridFullRow } from '../FormGrid/FormGrid.tsx';
-import { FormTextField } from '../FormTextField/FormTextField.tsx';
-import { OwnershipField } from '../OwnershipField/OwnershipField.tsx';
-import { SsnField } from '../SsnField/SsnField.tsx';
-import { StateSelect } from '../StateSelect/StateSelect.tsx';
+import { DateOfBirthField } from '../../form/DateOfBirthField/DateOfBirthField.tsx';
+import { FormGrid, FormGridFullRow } from '../../form/FormGrid/FormGrid.tsx';
+import { FormTextField } from '../../form/FormTextField/FormTextField.tsx';
+import { OwnershipField } from '../../form/OwnershipField/OwnershipField.tsx';
+import { SsnField } from '../../form/SsnField/SsnField.tsx';
+import { StateSelect } from '../../form/StateSelect/StateSelect.tsx';
 import { OWNER_FIELDS } from './fields.ts';
 import { type Owner, ownerSchema } from './validation.ts';
 
