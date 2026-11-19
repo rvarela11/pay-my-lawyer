@@ -699,6 +699,46 @@ describe('CreateAccountSetup', () => {
       return wizard;
     };
 
+    const fillOwner = async (
+      user: ReturnType<typeof userEvent.setup>,
+      ownership: string,
+      barNumber = '67890',
+    ) => {
+      await paste(user, 'First name', 'Ben');
+      await paste(user, 'Last name', 'Ortiz');
+      await paste(user, 'Job title', 'Partner');
+
+      if (barNumber) {
+        await paste(user, 'Bar Card number', barNumber);
+      }
+
+      await typeDate(user, '02031979');
+      await paste(user, 'Ownership (%)', ownership);
+      await paste(user, 'SSN', '987654321');
+      await paste(user, 'Home address', '3 Elm St');
+      await paste(user, 'City', 'Austin');
+      await choose(user, 'State', 'Texas');
+      await paste(user, 'ZIP code', '78703');
+    };
+
+    const closed = () =>
+      waitFor(() =>
+        expect(screen.queryByRole('dialog')).not.toBeInTheDocument(),
+      );
+
+    const addOwner = async (
+      user: ReturnType<typeof userEvent.setup>,
+      ownership: string,
+      barNumber?: string,
+    ) => {
+      await user.click(screen.getByRole('button', { name: 'Add owner' }));
+      const dialog = await screen.findByRole('dialog', { name: 'Add owner' });
+
+      await fillOwner(user, ownership, barNumber);
+      await user.click(within(dialog).getByRole('button', { name: 'Save' }));
+      await closed();
+    };
+
     it('shows you from About you', async () => {
       await toOwners();
 
@@ -708,6 +748,281 @@ describe('CreateAccountSetup', () => {
       expect(detailValues('Title')).toContain('Owner');
       expect(detailValues('Ownership')).toEqual(['60%']);
       expect(detailValues('Total ownership')).toEqual(['60%']);
+      expect(
+        screen.getByRole('button', { name: 'Edit your details' }),
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByRole('button', { name: /^Remove/ }),
+      ).not.toBeInTheDocument();
+    });
+
+    it('starts Add owner with an empty bar number', async () => {
+      const { user } = await toOwners();
+
+      await user.click(screen.getByRole('button', { name: 'Add owner' }));
+      const dialog = await screen.findByRole('dialog', { name: 'Add owner' });
+
+      expect(within(dialog).getByLabelText('Bar Card number')).toHaveValue('');
+    });
+
+    it("leaves an owner's bar number blank", async () => {
+      const { user } = await toOwners();
+
+      await addOwner(user, '40', '');
+
+      expect(detailValues('Bar Card #')).toContain('—');
+      expect(detailValues('Bar Card #')).toContain('12345');
+    });
+
+    it('adds an owner', async () => {
+      const { user } = await toOwners();
+
+      await addOwner(user, '40');
+
+      expect(screen.getByText('Ben Ortiz')).toBeInTheDocument();
+      expect(screen.getByText('40%')).toBeInTheDocument();
+      expect(detailValues('DOB')).toContain('02/03/1979');
+      expect(detailValues('Bar Card #')).toContain('67890');
+      expect(detailValues('Title')).toContain('Partner');
+      expect(detailValues('Total ownership')).toEqual(['100%']);
+      expect(
+        screen.queryByRole('button', { name: 'Add owner' }),
+      ).not.toBeInTheDocument();
+      expect(screen.queryByText(/987/)).not.toBeInTheDocument();
+    });
+
+    it('saves an owner with Enter without leaving the screen', async () => {
+      const { user } = await toOwners();
+
+      await user.click(screen.getByRole('button', { name: 'Add owner' }));
+      await screen.findByRole('dialog', { name: 'Add owner' });
+      await fillOwner(user, '40');
+      await user.click(screen.getByLabelText('ZIP code'));
+      await user.keyboard('{Enter}');
+      await closed();
+
+      expect(screen.getByText('Ben Ortiz')).toBeInTheDocument();
+      expect(
+        screen.getByRole('heading', { level: 1, name: 'Beneficial owners' }),
+      ).toBeInTheDocument();
+    });
+
+    it('edits an owner', async () => {
+      const { user } = await toOwners();
+
+      await addOwner(user, '30');
+      await user.click(screen.getByRole('button', { name: 'Edit Ben Ortiz' }));
+      const dialog = await screen.findByRole('dialog', {
+        name: 'Edit owner',
+      });
+
+      expect(within(dialog).getByLabelText('First name')).toHaveValue('Ben');
+      expect(within(dialog).getByLabelText('Ownership (%)')).toHaveValue('30');
+
+      await user.clear(within(dialog).getByLabelText('Ownership (%)'));
+      await paste(user, 'Ownership (%)', '40');
+      await user.click(within(dialog).getByRole('button', { name: 'Save' }));
+      await closed();
+
+      expect(screen.getByText('40%')).toBeInTheDocument();
+      expect(detailValues('Total ownership')).toEqual(['100%']);
+    });
+
+    it('saves an owner unchanged at a full total', async () => {
+      const { user } = await toOwners();
+
+      await addOwner(user, '40');
+      await user.click(screen.getByRole('button', { name: 'Edit Ben Ortiz' }));
+      const dialog = await screen.findByRole('dialog', {
+        name: 'Edit owner',
+      });
+
+      await user.click(within(dialog).getByRole('button', { name: 'Save' }));
+      await closed();
+
+      expect(detailValues('Total ownership')).toEqual(['100%']);
+    });
+
+    it('requires a job title for an owner', async () => {
+      const { user } = await toOwners();
+
+      await user.click(screen.getByRole('button', { name: 'Add owner' }));
+      const dialog = await screen.findByRole('dialog', { name: 'Add owner' });
+
+      await user.click(within(dialog).getByRole('button', { name: 'Save' }));
+
+      expect(
+        await within(dialog).findByText('Job title is required'),
+      ).toBeInTheDocument();
+    });
+
+    it('limits an owner to what is left', async () => {
+      const { user } = await toOwners();
+
+      await user.click(screen.getByRole('button', { name: 'Add owner' }));
+      await screen.findByRole('dialog', { name: 'Add owner' });
+      await paste(user, 'Ownership (%)', '41');
+      await user.tab();
+
+      expect(
+        await screen.findByText("Total ownership can't be over 100%"),
+      ).toBeInTheDocument();
+    });
+
+    it("won't save an owner while the total is over 100%", async () => {
+      const { user } = await toOwners();
+
+      await addOwner(user, '40');
+      await clickBack(user);
+      await heading('About you');
+      await user.clear(screen.getByLabelText('Ownership (%)'));
+      await paste(user, 'Ownership (%)', '70');
+      await clickNext(user);
+      await heading('Beneficial owners');
+      await user.click(screen.getByRole('button', { name: 'Edit Ben Ortiz' }));
+      const dialog = await screen.findByRole('dialog', { name: 'Edit owner' });
+
+      await user.click(within(dialog).getByRole('button', { name: 'Save' }));
+
+      expect(
+        await within(dialog).findByText("Total ownership can't be over 100%"),
+      ).toBeInTheDocument();
+      expect(screen.queryByText(/-\d+%|Enter 0%/)).not.toBeInTheDocument();
+    });
+
+    it('removes only the chosen owner', async () => {
+      const { user } = await toOwners();
+
+      await addOwner(user, '10');
+      await addOwner(user, '20');
+      await user.click(
+        screen.getAllByRole('button', { name: 'Remove Ben Ortiz' })[0],
+      );
+      const confirm = await screen.findByRole('alertdialog', {
+        name: 'Remove Ben Ortiz?',
+      });
+
+      await user.click(within(confirm).getByRole('button', { name: 'Remove' }));
+      await waitFor(() =>
+        expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument(),
+      );
+
+      expect(screen.getAllByText('Ben Ortiz')).toHaveLength(1);
+      expect(screen.getByText('20%')).toBeInTheDocument();
+      expect(screen.queryByText('10%')).not.toBeInTheDocument();
+    });
+
+    it('keeps the name in the Remove dialog while it closes', async () => {
+      const { user } = await toOwners();
+
+      await addOwner(user, '40');
+      await user.click(
+        screen.getByRole('button', { name: 'Remove Ben Ortiz' }),
+      );
+      const confirm = await screen.findByRole('alertdialog', {
+        name: 'Remove Ben Ortiz?',
+      });
+
+      await user.click(within(confirm).getByRole('button', { name: 'Remove' }));
+
+      expect(screen.queryByText('Remove ?')).not.toBeInTheDocument();
+      expect(screen.getByText('Remove Ben Ortiz?')).toBeInTheDocument();
+    });
+
+    it('keeps the owner when removal is cancelled', async () => {
+      const { user } = await toOwners();
+
+      await addOwner(user, '40');
+      await user.click(
+        screen.getByRole('button', { name: 'Remove Ben Ortiz' }),
+      );
+      const confirm = await screen.findByRole('alertdialog', {
+        name: 'Remove Ben Ortiz?',
+      });
+
+      await user.click(within(confirm).getByRole('button', { name: 'Keep' }));
+      await waitFor(() =>
+        expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument(),
+      );
+
+      expect(screen.getByText('Ben Ortiz')).toBeInTheDocument();
+    });
+
+    it('blocks a total over 100% on Next', async () => {
+      const { user } = await toOwners();
+
+      await addOwner(user, '40');
+      await clickBack(user);
+      await heading('About you');
+      await user.clear(screen.getByLabelText('Ownership (%)'));
+      await paste(user, 'Ownership (%)', '70');
+      await clickNext(user);
+      await heading('Beneficial owners');
+      await clickNext(user);
+
+      const alert = await screen.findByRole('alert');
+
+      expect(alert).toHaveTextContent(
+        "Total ownership is 110%. It can't be over 100%.",
+      );
+      expect(alert).toHaveFocus();
+      expect(
+        screen.getByRole('heading', { level: 1, name: 'Beneficial owners' }),
+      ).toBeInTheDocument();
+    });
+
+    it('clears the total error once it is fixed in About you', async () => {
+      const { user } = await toOwners();
+
+      await addOwner(user, '40');
+      await clickBack(user);
+      await heading('About you');
+      await user.clear(screen.getByLabelText('Ownership (%)'));
+      await paste(user, 'Ownership (%)', '70');
+      await clickNext(user);
+      await heading('Beneficial owners');
+      await clickNext(user);
+      await screen.findByRole('alert');
+      await user.click(
+        screen.getByRole('button', { name: 'Edit your details' }),
+      );
+      await heading('About you');
+      await user.clear(screen.getByLabelText('Ownership (%)'));
+      await paste(user, 'Ownership (%)', '60');
+      await clickNext(user);
+      await heading('Beneficial owners');
+
+      expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    });
+
+    it('moves focus to Add owner after removing an owner', async () => {
+      const { user } = await toOwners();
+
+      await addOwner(user, '40');
+      await user.click(
+        screen.getByRole('button', { name: 'Remove Ben Ortiz' }),
+      );
+      const confirm = await screen.findByRole('alertdialog', {
+        name: 'Remove Ben Ortiz?',
+      });
+
+      await user.click(within(confirm).getByRole('button', { name: 'Remove' }));
+
+      await waitFor(() =>
+        expect(screen.getByRole('button', { name: 'Add owner' })).toHaveFocus(),
+      );
+    });
+
+    it('moves focus to the list when a save hides Add owner', async () => {
+      const { user } = await toOwners();
+
+      await addOwner(user, '40');
+
+      await waitFor(() =>
+        expect(
+          screen.getByRole('list', { name: 'Beneficial owners' }),
+        ).toHaveFocus(),
+      );
     });
 
     it('goes on with a total under 100%', async () => {
@@ -716,6 +1031,74 @@ describe('CreateAccountSetup', () => {
       await clickNext(user);
 
       expect(await heading(nextHeading)).toBeInTheDocument();
+    });
+
+    it('edit your details goes to About you', async () => {
+      const { user } = await toOwners();
+
+      await user.click(
+        screen.getByRole('button', { name: 'Edit your details' }),
+      );
+
+      expect(await heading('About you')).toBeInTheDocument();
+    });
+
+    it("keeps each provider's owners apart", async () => {
+      const { router, user } = await toOwners();
+      const other = provider === 'Usio' ? 'Dwolla' : 'Usio';
+      const toProviderChoice = async () => {
+        await act(() => router.navigate(-1));
+        await heading('About you');
+        await act(() => router.navigate(-1));
+        await heading('Business details');
+        await act(() => router.navigate(-1));
+      };
+
+      await addOwner(user, '40');
+      await toProviderChoice();
+      await chooseProvider(user, other);
+      await heading('Business details');
+      await fillBusiness(user);
+      await clickNext(user);
+      await fillAbout(user, '60');
+      await clickNext(user);
+      await heading('Beneficial owners');
+
+      expect(screen.queryByText('Ben Ortiz')).not.toBeInTheDocument();
+
+      await toProviderChoice();
+      await chooseProvider(user, provider);
+      await heading('Business details');
+      await clickNext(user);
+      await heading('About you');
+      await clickNext(user);
+      await heading('Beneficial owners');
+
+      expect(screen.getByText('Ben Ortiz')).toBeInTheDocument();
+    });
+
+    it('start over clears owners', async () => {
+      const { user } = await toOwners();
+
+      await addOwner(user, '40');
+      await clickBack(user);
+      await heading('About you');
+      await clickBack(user);
+      await heading('Business details');
+      await clickBack(user);
+      await user.click(
+        await screen.findByRole('button', { name: 'Start over' }),
+      );
+      await chooseProvider(user, provider);
+      await heading('Business details');
+      await fillBusiness(user);
+      await clickNext(user);
+      await fillAbout(user, '60');
+      await clickNext(user);
+      await heading('Beneficial owners');
+
+      expect(screen.queryByText('Ben Ortiz')).not.toBeInTheDocument();
+      expect(detailValues('Total ownership')).toEqual(['60%']);
     });
   });
 
