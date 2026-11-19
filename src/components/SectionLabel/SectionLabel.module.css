@@ -1,3 +1,31 @@
 .label {
   padding-top: calc(var(--mui-spacing) * 1.5);
 }
+
+/* currentColor keeps the line visible on dark backgrounds. */
+.line {
+  background-color: currentColor;
+  height: 2px;
+  transform-origin: left;
+}
+
+/* The line draws left to right as it scrolls from the bottom of the viewport to the middle. Browsers without scroll-driven animations show it whole. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .line {
+      animation: grow linear both;
+      animation-range: cover 0% cover 50%;
+      animation-timeline: view();
+    }
+  }
+}
+
+@keyframes grow {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
