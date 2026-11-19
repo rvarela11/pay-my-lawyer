@@ -57,6 +57,10 @@ export const Footer = () => (
         </nav>
       </div>
 
+      <Typography className={styles.eligibility} variant='body2'>
+        Services are only offered to licensed attorneys within the United
+        States.
+      </Typography>
       <Typography className={styles.copyright} variant='caption'>
         Copyright © {new Date().getFullYear()} Pay My Lawyer
       </Typography>

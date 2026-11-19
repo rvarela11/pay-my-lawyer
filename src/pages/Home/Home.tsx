@@ -1,8 +1,6 @@
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Button, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router';
 import { Container } from '../../components/Container/Container.tsx';
-import { Rule } from '../../components/Rule/Rule.tsx';
 import { Section } from '../../components/Section/Section.tsx';
 import { SectionLabel } from '../../components/SectionLabel/SectionLabel.tsx';
 import { PATHS } from '../../routes/paths.ts';
@@ -61,33 +59,6 @@ export const Home = () => {
               Everything a firm needs to get paid.
             </Typography>
             <ProductList />
-          </div>
-        </Container>
-      </Section>
-
-      <Section aria-labelledby='cta-title' className={styles.cta}>
-        <Container>
-          <Rule />
-          <div className={styles.ctaInner}>
-            <div>
-              <Typography id='cta-title' variant='h2'>
-                Start accepting payments from your clients.
-              </Typography>
-              <Typography className={styles.ctaText} variant='body2'>
-                Services are only offered to licensed attorneys within the
-                United States.
-              </Typography>
-            </div>
-            <Button
-              color='secondary'
-              component={RouterLink}
-              size='large'
-              startIcon={<ArrowForwardIcon />}
-              to={PATHS.createAccount}
-              variant='contained'
-            >
-              Create account
-            </Button>
           </div>
         </Container>
       </Section>

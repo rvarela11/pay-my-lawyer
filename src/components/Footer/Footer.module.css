@@ -70,9 +70,13 @@ footer.footer {
   opacity: 1;
 }
 
+.eligibility {
+  margin-top: calc(var(--mui-spacing) * 8);
+}
+
 .copyright {
   display: block;
-  margin-top: calc(var(--mui-spacing) * 8);
+  margin-top: var(--mui-spacing);
 }
 
 @media (min-width: 900px) {

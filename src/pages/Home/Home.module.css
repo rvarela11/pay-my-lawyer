@@ -60,29 +60,6 @@ section.hero {
   max-width: 14ch;
 }
 
-.cta {
-  background-color: var(--mui-palette-primary-main);
-  color: var(--mui-palette-brand-paper);
-}
-
-.cta :focus-visible {
-  outline: 3px solid var(--mui-palette-brand-yellow);
-  outline-offset: 3px;
-}
-
-.ctaInner {
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  gap: calc(var(--mui-spacing) * 3) calc(var(--mui-spacing) * 6);
-  justify-content: space-between;
-  padding-top: calc(var(--mui-spacing) * 4);
-}
-
-.ctaText {
-  margin-top: calc(var(--mui-spacing) * 1.5);
-}
-
 @media (min-width: 900px) {
   .split {
     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
