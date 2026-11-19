@@ -262,7 +262,7 @@
 
 @keyframes settle {
   from {
-    background-color: var(--mui-palette-brand-yellow);
+    background-color: var(--mui-palette-brand-accent);
   }
 
   to {

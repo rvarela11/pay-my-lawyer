@@ -5,7 +5,7 @@ section.hero {
 
 .panel {
   align-items: flex-end;
-  background-color: var(--mui-palette-brand-yellow);
+  background-color: var(--mui-palette-brand-accent);
   display: flex;
   min-height: clamp(160px, 14vw, 280px);
   padding: calc(var(--mui-spacing) * 4) clamp(16px, 1.5625vw, 32px)

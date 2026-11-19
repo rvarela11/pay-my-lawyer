@@ -6,7 +6,7 @@ footer.footer {
 }
 
 .footer :focus-visible {
-  outline: 3px solid var(--mui-palette-brand-yellow);
+  outline: 3px solid var(--mui-palette-brand-accent);
   outline-offset: 3px;
 }
 

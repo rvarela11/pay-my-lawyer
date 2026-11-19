@@ -10,6 +10,7 @@ declare module '@mui/material/styles' {
 }
 
 const BRAND = {
+  accent: '#9dc08b',
   blue: '#3358ff',
   green: '#2bb36d',
   orange: '#ff6a00',
@@ -27,7 +28,7 @@ export const theme = responsiveFontSizes(
     palette: {
       background: { default: '#f5f0eb', paper: BRAND.paper },
       primary: { main: INK, contrastText: '#fff' },
-      secondary: { main: BRAND.yellow, contrastText: INK },
+      secondary: { main: BRAND.accent, contrastText: INK },
       text: { primary: INK, secondary: INK },
       brand: BRAND,
     },

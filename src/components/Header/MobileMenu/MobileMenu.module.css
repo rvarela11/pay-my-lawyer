@@ -30,7 +30,7 @@
 }
 
 .mobileLink[aria-current='page'] {
-  background-color: var(--mui-palette-brand-yellow);
+  background-color: var(--mui-palette-brand-accent);
 }
 
 /* Pinned to the bottom of the menu, within thumb reach; on short screens they follow the links. */
