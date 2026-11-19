@@ -19,7 +19,7 @@
 
 .phone {
   background-color: var(--mui-palette-brand-paper);
-  border: 2px solid var(--mui-palette-brand-yellow);
+  border: 2px solid var(--mui-palette-primary-main);
   border-radius: calc(var(--mui-spacing) * 3.5);
   color: var(--mui-palette-primary-main);
   display: grid;
@@ -85,7 +85,7 @@
 }
 
 .hint {
-  color: var(--mui-palette-brand-paper);
+  color: var(--mui-palette-primary-main);
   margin-top: calc(var(--mui-spacing) * 2);
   text-align: center;
   width: min(100%, calc(var(--mui-spacing) * 33));
@@ -100,7 +100,7 @@
 }
 
 .connector {
-  border-left: 2px dashed var(--mui-palette-brand-yellow);
+  border-left: 2px dashed var(--mui-palette-primary-main);
   height: calc(var(--mui-spacing) * 7);
   justify-self: center;
   margin-block: calc(var(--mui-spacing) * 2);
@@ -110,9 +110,9 @@
 
 .token {
   align-items: center;
-  background-color: var(--mui-palette-brand-yellow);
+  background-color: var(--mui-palette-primary-main);
   border-radius: 50%;
-  color: var(--mui-palette-primary-main);
+  color: var(--mui-palette-brand-paper);
   display: flex;
   height: 28px;
   justify-content: center;
@@ -292,7 +292,7 @@
   .connector {
     align-self: start;
     border-left: 0;
-    border-top: 2px dashed var(--mui-palette-brand-yellow);
+    border-top: 2px dashed var(--mui-palette-primary-main);
     height: 0;
     margin-block: calc(var(--mui-spacing) * 17) 0;
     margin-inline: var(--mui-spacing);

@@ -1,5 +1,5 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { Button, Link, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router';
 import { Container } from '../../components/Container/Container.tsx';
 import { Rule } from '../../components/Rule/Rule.tsx';
@@ -23,12 +23,13 @@ export const Home = () => {
             >
               Legal fees, paid without the chase.
             </Typography>
-            <Typography className={styles.heroText} component='p' variant='h4'>
-              Payment processing, invoicing and client records for law firms, in
-              one place.
-            </Typography>
-            <div className={styles.heroActions}>
+            <div className={styles.heroCopy}>
+              <Typography component='p' variant='h4'>
+                Payment processing, invoicing and client records for law firms,
+                in one place.
+              </Typography>
               <Button
+                className={styles.heroAction}
                 component={RouterLink}
                 size='large'
                 to={PATHS.createAccount}
@@ -36,9 +37,9 @@ export const Home = () => {
               >
                 Create account
               </Button>
-              <Link href='#how-it-works' underline='always' variant='subtitle1'>
-                See how it works
-              </Link>
+            </div>
+            <div className={styles.heroDemo}>
+              <PaymentDemo />
             </div>
           </div>
         </Container>
@@ -56,28 +57,6 @@ export const Home = () => {
               Everything a firm needs to get paid.
             </Typography>
             <ProductList />
-          </div>
-        </Container>
-      </Section>
-
-      <Section
-        aria-labelledby='demo-title'
-        className={styles.dark}
-        id='how-it-works'
-      >
-        <Container className={styles.stack}>
-          <SectionLabel id='demo-title'>See it work</SectionLabel>
-          <div className={styles.demoSplit}>
-            <div className={styles.demoCopy}>
-              <Typography component='p' variant='h2'>
-                Your client pays. You see it.
-              </Typography>
-              <Typography className={styles.darkText} variant='subtitle1'>
-                Clients pay from their phone by card, bank transfer or check.
-                The payment shows up on your dashboard the moment it clears.
-              </Typography>
-            </div>
-            <PaymentDemo />
           </div>
         </Container>
       </Section>
