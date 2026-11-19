@@ -7,7 +7,7 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import dayjs from 'dayjs';
-import { act } from 'react';
+import { act, StrictMode } from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { PATHS } from '../../routes/paths.ts';
@@ -27,7 +27,12 @@ const renderWizard = (initialPath: string = PATHS.createAccountSetup) => {
   });
   const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
 
-  render(<RouterProvider router={router} />);
+  // StrictMode, as in main.tsx, so the tests see its double-run effects.
+  render(
+    <StrictMode>
+      <RouterProvider router={router} />
+    </StrictMode>,
+  );
 
   return { router, user };
 };
@@ -927,6 +932,24 @@ describe('CreateAccountSetup', () => {
 
       expect(screen.queryByText('Remove ?')).not.toBeInTheDocument();
       expect(screen.getByText('Remove Ben Ortiz?')).toBeInTheDocument();
+    });
+
+    it('puts focus on Keep when the remove dialog opens', async () => {
+      const { user } = await toOwners();
+
+      await addOwner(user, '40');
+      await user.click(
+        screen.getByRole('button', { name: 'Remove Ben Ortiz' }),
+      );
+      const confirm = await screen.findByRole('alertdialog', {
+        name: 'Remove Ben Ortiz?',
+      });
+
+      await waitFor(() =>
+        expect(
+          within(confirm).getByRole('button', { name: 'Keep' }),
+        ).toHaveFocus(),
+      );
     });
 
     it('keeps the owner when removal is cancelled', async () => {
