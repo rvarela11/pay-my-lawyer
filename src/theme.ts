@@ -37,7 +37,6 @@ export const theme = responsiveFontSizes(
       button: { fontWeight: 500, textTransform: 'none' },
       fontFamily: '"Inter Tight", "Helvetica Neue", "Arial", sans-serif',
       fontWeightBold: 600,
-      // Grotesk display scale: medium weight, tight leading, slightly negative tracking on the large sizes.
       // Scales with the viewport so the headline fits beside the payment demo; responsiveFontSizes skips it below.
       h1: {
         fontSize: 'clamp(4rem, 6.5vw, 7.5rem)',
