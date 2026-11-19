@@ -6,6 +6,7 @@ import {
   Link,
   Toolbar,
   useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import { useState } from 'react';
 import { NavLink } from 'react-router';
@@ -18,7 +19,8 @@ import { MobileMenu } from './MobileMenu/MobileMenu.tsx';
 
 export const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const desktop = useMediaQuery('(min-width: 900px)');
+  const theme = useTheme();
+  const desktop = useMediaQuery(theme.breakpoints.up('md'));
   const open = menuOpen && !desktop;
 
   const handleClose = () => setMenuOpen(false);
@@ -37,7 +39,7 @@ export const Header = () => {
           <Logo />
 
           <nav aria-label='Primary' className={styles.desktopNav}>
-            <ul className={styles.navList}>
+            <ul className={styles.navList} role='list'>
               {NAV_ITEMS.map(({ label, to, end }) => (
                 <li key={to}>
                   <Link
@@ -54,12 +56,7 @@ export const Header = () => {
               ))}
             </ul>
             <div className={styles.actions}>
-              <Button
-                className={styles.signIn}
-                component={NavLink}
-                to={PATHS.signIn}
-                variant='outlined'
-              >
+              <Button component={NavLink} to={PATHS.signIn} variant='outlined'>
                 Sign in
               </Button>
               <Button

@@ -16,9 +16,6 @@
 .navList {
   display: flex;
   gap: calc(var(--mui-spacing) * 3);
-  list-style: none;
-  margin: 0;
-  padding: 0;
 }
 
 .actions {
@@ -39,17 +36,6 @@
   border-bottom-color: currentColor;
 }
 
-/* 2px matches the weight of the section rules; the fill marks the current page. */
-.signIn,
-.signIn:hover {
-  border-color: var(--mui-palette-primary-main);
-  border-width: 2px;
-}
-
-.signIn[aria-current='page'] {
-  background-color: var(--mui-palette-primary-main);
-  color: var(--mui-palette-primary-contrastText);
-}
 
 @media (min-width: 900px) {
   .desktopNav {

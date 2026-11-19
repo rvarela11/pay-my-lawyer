@@ -1,5 +1,5 @@
 import Add from '@mui/icons-material/Add';
-import { Alert, Button, useMediaQuery } from '@mui/material';
+import { Alert, Button, useMediaQuery, useTheme } from '@mui/material';
 import { useEffect, useRef } from 'react';
 import { OwnerDialog } from '../OwnerDialog/OwnerDialog.tsx';
 import type { Owner } from '../OwnerDialog/validation.ts';
@@ -38,7 +38,8 @@ export const OwnersList = ({
   owners,
   totalError,
 }: Props) => {
-  const wide = useMediaQuery('(min-width: 600px)');
+  const theme = useTheme();
+  const wide = useMediaQuery(theme.breakpoints.up('sm'));
   const addRef = useRef<HTMLButtonElement>(null);
   const alertRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLUListElement>(null);

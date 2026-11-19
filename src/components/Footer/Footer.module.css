@@ -5,11 +5,6 @@ footer.footer {
   padding-block: clamp(48px, 5vw, 80px) calc(var(--mui-spacing) * 4);
 }
 
-.footer :focus-visible {
-  outline: 3px solid var(--mui-palette-brand-accent);
-  outline-offset: 3px;
-}
-
 .inner {
   display: grid;
   gap: calc(var(--mui-spacing) * 5);
@@ -65,9 +60,6 @@ footer.footer {
 .legalLinks {
   display: flex;
   gap: calc(var(--mui-spacing) * 3);
-  list-style: none;
-  margin: 0;
-  padding: 0;
 }
 
 .legalLinks a {

@@ -40,7 +40,7 @@ export const Footer = () => (
         <Typography variant='caption'>
           Copyright © {new Date().getFullYear()} Pay My Lawyer
         </Typography>
-        <ul className={styles.legalLinks}>
+        <ul className={styles.legalLinks} role='list'>
           <li>
             <Link component={RouterLink} to={PATHS.terms} variant='caption'>
               Terms of service

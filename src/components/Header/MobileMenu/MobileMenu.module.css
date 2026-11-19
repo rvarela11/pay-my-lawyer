@@ -42,13 +42,3 @@
     max(calc(var(--mui-spacing) * 3), env(safe-area-inset-bottom));
 }
 
-.signIn,
-.signIn:hover {
-  border-color: var(--mui-palette-primary-main);
-  border-width: 2px;
-}
-
-.signIn[aria-current='page'] {
-  background-color: var(--mui-palette-primary-main);
-  color: var(--mui-palette-primary-contrastText);
-}

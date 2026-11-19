@@ -45,14 +45,17 @@ Verify changes with `npx tsc -b && npm run lint && npm test -- --run && npm run 
 
 ## Styling
 
-- Typography comes from MUI (`src/theme.ts` and `Typography` variants), set in Inter Tight. Don't set `font-size`, `font-weight` or `letter-spacing` in CSS; pick a variant, or change the theme. `font-variant-numeric: tabular-nums` is fine for aligning numbers.
-- CSS Modules with `className`. Read colors and spacing from `var(--mui-palette-*)` and `var(--mui-spacing)`.
+- `src/theme/` is the one place for shared styling: `palette.ts` (colors), `typography.ts` (type scale), `components.ts` (MUI component overrides and global rules). A look repeated across components belongs there, not copied into several CSS Modules.
+- Typography comes from MUI (`src/theme/typography.ts` and `Typography` variants), set in Inter Tight. Don't set `font-size`, `font-weight` or `letter-spacing` in CSS; pick a variant, or change the theme. `font-variant-numeric: tabular-nums` is fine for aligning numbers.
+- CSS Modules with `className` for a component's own visuals. Read colors and spacing from `var(--mui-palette-*)` and `var(--mui-spacing)`.
+- Global rules go only in `MuiCssBaseline` in `src/theme/components.ts`. It already sets the focus ring (`3px solid currentColor` on links, buttons and `[tabindex]`) and a list reset for `ul`/`ol` with `role='list'`, so don't add either in CSS.
+- Outlined buttons (`variant='outlined'`) are a 2px ink pill that fills in when `aria-current='page'`; that comes from the theme.
 - Don't use CSS Modules `composes`. Share layout through components in `src/components`: `Container` sets the max width and side gutters, `Section` sets the vertical padding for page sections and the footer (`component='footer'`), `PageHero` is the accent title panel at the top of every page but Home, and `SectionLabel` is a section's heading with the line that grows as it scrolls in.
 - To override `Section`'s padding, include the element in the selector (`section.hero`, `footer.footer`). A bare class ties with `.section`, and whichever stylesheet loads last wins.
-- Palette only (`BRAND` in `src/theme.ts`): accent Paid green `#9DC08B`, ink `#0D0D0D`, background `#F3F4EE` and surfaces `#FBFCF8`. The Home product rows also fill with apricot `#E8B08A`, rose `#E7A6B8`, seafoam `#93C8B8`, dusty blue `#A9BEE8` and butter `#EAD38A` on hover. No gradients.
-- Button heights come from the theme (`src/theme.ts`): 44px, or 48px with `size='large'`. Don't set `min-height` on a `Button` in CSS.
+- Palette only (`BRAND` in `src/theme/palette.ts`): accent Paid green `#9DC08B`, ink `#0D0D0D`, background `#F3F4EE` and surfaces `#FBFCF8`. The Home product rows also fill with apricot `#E8B08A`, rose `#E7A6B8`, seafoam `#93C8B8`, dusty blue `#A9BEE8` and butter `#EAD38A` on hover. No gradients.
+- Button heights come from the theme (`src/theme/components.ts`): 44px, or 48px with `size='large'`. Don't set `min-height` on a `Button` in CSS.
 - Paid green and the row colors fail AA as text on the off-whites. Use them as fills behind ink text (which passes AA on all of them), or for borders and decoration; never as a text color.
-- Declarations in alphabetical order; literal breakpoints at 600, 900 and 1200px.
+- Declarations in alphabetical order. Breakpoints are MUI's `sm`, `md` and `lg`: CSS writes them as literal 600, 900 and 1200px (CSS Modules can't read the theme), and JS reads `theme.breakpoints.up(…)` instead of writing pixel values.
 - Meet WCAG 2.1 AA, stay responsive down to 320px, and respect `prefers-reduced-motion`.
 - A page-specific component gets its own folder under the page (`src/pages/Home/PaymentDemo/`).
 - When a page grows, group its files by role: `screens/` (one per route), `components/`, `hooks/` and `data/` (JSON files and fetch/storage boundaries). Config files (`fields.ts`, `validation.ts`) stay at the page root (see `src/pages/CreateAccountSetup/`). Once `components/` holds more than a handful of folders, group it too: `form/` (inputs and form layout), `wizard/` (the multi-step chrome) and one folder per feature the screens share (`owners/`).
@@ -74,4 +77,4 @@ All meta, Open Graph and JSON-LD tags are static in `index.html` (link-preview c
 
 ## Rules
 
-Ask before adding dependencies or global styles.
+Ask before adding dependencies or global styles (global styles live in `MuiCssBaseline`).
