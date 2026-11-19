@@ -1,0 +1,42 @@
+/* The element in the selector outranks Section's .section padding, whatever order the stylesheets load in. */
+section.hero {
+  padding-block: max(16px, 1.5625vw) 0;
+}
+
+.panel {
+  align-content: end;
+  background-color: var(--mui-palette-brand-accent);
+  display: grid;
+  min-height: clamp(160px, 14vw, 280px);
+  padding: clamp(20px, 2.5vw, 40px);
+}
+
+.fullHeight {
+  min-height: clamp(
+    420px,
+    calc(100svh - 64px - 2 * max(16px, 1.5625vw)),
+    900px
+  );
+}
+
+.panel h1 {
+  animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel h1 {
+    animation: none;
+  }
+}

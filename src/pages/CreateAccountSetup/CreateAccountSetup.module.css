@@ -1,9 +1,3 @@
-.column {
-  margin-inline: auto;
-  max-width: 40rem;
-  min-width: 0;
-}
-
 .title:focus {
   outline: none;
 }

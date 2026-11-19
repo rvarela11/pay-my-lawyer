@@ -1,32 +1,5 @@
-/* The element in the selector outranks Section's .section padding, whatever order the stylesheets load in. */
-section.hero {
-  padding-block: max(16px, 1.5625vw) 0;
-}
-
-.panel {
-  align-items: flex-end;
-  background-color: var(--mui-palette-brand-accent);
-  display: flex;
-  min-height: clamp(160px, 14vw, 280px);
-  padding: calc(var(--mui-spacing) * 4) clamp(16px, 1.5625vw, 32px)
-    clamp(16px, 2vw, 32px);
-}
-
 .title {
-  animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   overflow-wrap: anywhere;
-}
-
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-
-  to {
-    opacity: 1;
-    transform: none;
-  }
 }
 
 .intro {
@@ -42,10 +15,4 @@ section.hero {
   text-decoration-thickness: 2px;
   text-underline-offset: 0.12em;
   white-space: nowrap;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .title {
-    animation: none;
-  }
 }

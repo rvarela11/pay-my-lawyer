@@ -36,7 +36,6 @@
   border-bottom-color: currentColor;
 }
 
-
 @media (min-width: 900px) {
   .desktopNav {
     align-items: center;

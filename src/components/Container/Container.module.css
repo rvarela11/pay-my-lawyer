@@ -1,6 +1,19 @@
 .container {
+  --gutter: max(16px, 1.5625vw);
   margin-inline: auto;
-  max-width: 1920px;
-  padding-inline: max(16px, 1.5625vw);
+  padding-inline: var(--gutter);
   width: 100%;
+}
+
+/* Form pages: the content is 28rem (narrow) or 40rem (medium) wide; the gutters sit outside it. */
+.medium {
+  max-width: calc(40rem + 2 * var(--gutter));
+}
+
+.narrow {
+  max-width: calc(28rem + 2 * var(--gutter));
+}
+
+.wide {
+  max-width: 1920px;
 }
