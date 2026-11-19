@@ -1,3 +1,10 @@
 .body {
   margin-top: calc(var(--mui-spacing) * 4);
 }
+
+/* The same top space on Sign in and Create account, scaled to the window height, so the heading doesn't move when switching between them.
+   The bottom stays small: main already fills the space down to the footer, and a taller bottom made Create account scroll on laptop screens.
+   The element in the selector outranks Section's .section padding, whatever order the stylesheets load in. */
+section.page {
+  padding-block: clamp(24px, 8svh, 96px) clamp(24px, 4svh, 48px);
+}
