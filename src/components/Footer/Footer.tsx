@@ -3,13 +3,11 @@ import { Link as RouterLink } from 'react-router';
 import { Container } from '../Container/Container.tsx';
 import styles from './Footer.module.css';
 import { FOOTER_LINKS } from './links.ts';
-import { Rule } from '../Rule/Rule.tsx';
 import { Section } from '../Section/Section.tsx';
 
 export const Footer = () => (
   <Section className={styles.footer} component='footer'>
     <Container>
-      <Rule />
       <div className={styles.inner}>
         <Typography className={styles.wordmark} component='p' variant='h2'>
           Pay My Lawyer

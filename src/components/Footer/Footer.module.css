@@ -1,12 +1,18 @@
 /* The element in the selector outranks Section's .section padding, whatever order the stylesheets load in. */
 footer.footer {
-  padding-block: calc(var(--mui-spacing) * 3) calc(var(--mui-spacing) * 4);
+  background-color: var(--mui-palette-primary-main);
+  color: var(--mui-palette-brand-paper);
+  padding-block: clamp(48px, 5vw, 80px) calc(var(--mui-spacing) * 4);
+}
+
+.footer :focus-visible {
+  outline: 3px solid var(--mui-palette-brand-yellow);
+  outline-offset: 3px;
 }
 
 .inner {
   display: grid;
   gap: calc(var(--mui-spacing) * 5);
-  padding-top: calc(var(--mui-spacing) * 4);
 }
 
 .wordmark {
@@ -29,9 +35,9 @@ footer.footer {
 
 .badge {
   align-items: center;
-  background-color: var(--mui-palette-primary-main);
+  background-color: var(--mui-palette-brand-paper);
   border-radius: 50%;
-  color: var(--mui-palette-primary-contrastText);
+  color: var(--mui-palette-primary-main);
   display: inline-flex;
   flex-shrink: 0;
   height: 24px;
