@@ -82,7 +82,7 @@ footer.footer {
 
 @media (min-width: 900px) {
   .inner {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) auto;
     gap: calc(var(--mui-spacing) * 6);
   }
 }
