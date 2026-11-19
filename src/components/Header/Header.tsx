@@ -4,6 +4,7 @@ import {
   Button,
   IconButton,
   Link,
+  Stack,
   Toolbar,
   useMediaQuery,
   useTheme,
@@ -35,11 +36,24 @@ export const Header = () => {
       position='sticky'
     >
       <Container>
-        <Toolbar className={styles.toolbar} disableGutters>
+        <Toolbar disableGutters>
           <Logo />
 
-          <nav aria-label='Primary' className={styles.desktopNav}>
-            <ul className={styles.navList} role='list'>
+          <Stack
+            aria-label='Primary'
+            component='nav'
+            direction='row'
+            spacing={4}
+            sx={{ alignItems: 'center', display: { md: 'flex', xs: 'none' } }}
+            useFlexGap
+          >
+            <Stack
+              component='ul'
+              direction='row'
+              role='list'
+              spacing={3}
+              useFlexGap
+            >
               {NAV_ITEMS.map(({ label, to, end }) => (
                 <li key={to}>
                   <Link
@@ -54,8 +68,13 @@ export const Header = () => {
                   </Link>
                 </li>
               ))}
-            </ul>
-            <div className={styles.actions}>
+            </Stack>
+            <Stack
+              direction='row'
+              spacing={1.5}
+              sx={{ alignItems: 'center' }}
+              useFlexGap
+            >
               <Button component={NavLink} to={PATHS.signIn} variant='outlined'>
                 Sign in
               </Button>
@@ -67,17 +86,17 @@ export const Header = () => {
               >
                 Create account
               </Button>
-            </div>
-          </nav>
+            </Stack>
+          </Stack>
 
           <IconButton
             aria-controls='mobile-nav'
             aria-expanded={open}
             aria-label='Menu'
-            className={styles.menuButton}
             edge='end'
             onClick={handleOpen}
             size='large'
+            sx={{ display: { md: 'none' } }}
           >
             <MenuIcon />
           </IconButton>

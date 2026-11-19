@@ -64,4 +64,15 @@ export const COMPONENTS = {
       },
     },
   },
+  // The header and mobile menu bars: logo on the left, actions on the right.
+  MuiToolbar: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        gap: theme.spacing(3),
+        justifyContent: 'space-between',
+        minHeight: 64,
+        paddingBlock: theme.spacing(1),
+      }),
+    },
+  },
 } satisfies ThemeOptions['components'];

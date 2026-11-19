@@ -1,5 +1,5 @@
 import NorthEastIcon from '@mui/icons-material/NorthEast';
-import { Link, Typography } from '@mui/material';
+import { Grid, Link, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router';
 import { PATHS } from '../../../routes/paths.ts';
 import { PRODUCTS } from '../products.ts';
@@ -27,14 +27,23 @@ export const ProductList = () => (
           >
             {String(index + 1).padStart(2, '0')}
           </Typography>
-          <span className={styles.text}>
-            <Typography component='h3' variant='h3'>
-              {name}
-            </Typography>
-            <Typography className={styles.description} component='span'>
-              {description}
-            </Typography>
-          </span>
+          <Grid
+            component='span'
+            container
+            spacing={1}
+            sx={{ alignItems: { md: 'baseline' } }}
+          >
+            <Grid component='span' size={{ md: 6, xs: 12 }}>
+              <Typography component='h3' variant='h3'>
+                {name}
+              </Typography>
+            </Grid>
+            <Grid component='span' size={{ md: 6, xs: 12 }}>
+              <Typography className={styles.description} component='span'>
+                {description}
+              </Typography>
+            </Grid>
+          </Grid>
           <span aria-hidden className={styles.arrow}>
             <NorthEastIcon fontSize='small' />
           </span>

@@ -1,10 +1,8 @@
 import { Typography } from '@mui/material';
 import type { ReactNode } from 'react';
-import { Container } from '../Container/Container.tsx';
 import { HeroPanel } from '../HeroPanel/HeroPanel.tsx';
+import { LabeledSection } from '../LabeledSection/LabeledSection.tsx';
 import styles from './PageHero.module.css';
-import { Section } from '../Section/Section.tsx';
-import { SectionLabel } from '../SectionLabel/SectionLabel.tsx';
 
 type Props = {
   label: string;
@@ -20,13 +18,10 @@ export const PageHero = ({ label, statement, title }: Props) => (
       </Typography>
     </HeroPanel>
 
-    <Section aria-labelledby='page-label'>
-      <Container className={styles.intro}>
-        <SectionLabel id='page-label'>{label}</SectionLabel>
-        <Typography className={styles.statement} component='p' variant='h2'>
-          {statement}
-        </Typography>
-      </Container>
-    </Section>
+    <LabeledSection id='page-label' label={label}>
+      <Typography className={styles.statement} component='p' variant='h2'>
+        {statement}
+      </Typography>
+    </LabeledSection>
   </>
 );

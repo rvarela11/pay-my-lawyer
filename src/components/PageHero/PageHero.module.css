@@ -2,11 +2,6 @@
   overflow-wrap: anywhere;
 }
 
-.intro {
-  display: grid;
-  gap: clamp(48px, 7.8vw, 112px);
-}
-
 .statement {
   max-width: 38ch;
 }

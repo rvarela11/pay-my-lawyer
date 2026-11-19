@@ -2,28 +2,6 @@
   background-color: var(--mui-palette-background-paper);
 }
 
-.toolbar {
-  gap: calc(var(--mui-spacing) * 3);
-  justify-content: space-between;
-  min-height: 64px;
-  padding-block: var(--mui-spacing);
-}
-
-.desktopNav {
-  display: none;
-}
-
-.navList {
-  display: flex;
-  gap: calc(var(--mui-spacing) * 3);
-}
-
-.actions {
-  align-items: center;
-  display: flex;
-  gap: calc(var(--mui-spacing) * 1.5);
-}
-
 .navLink {
   border-bottom: 2px solid transparent;
   display: inline-block;
@@ -34,16 +12,4 @@
 .navLink:hover,
 .navLink[aria-current='page'] {
   border-bottom-color: currentColor;
-}
-
-@media (min-width: 900px) {
-  .desktopNav {
-    align-items: center;
-    display: flex;
-    gap: calc(var(--mui-spacing) * 4);
-  }
-
-  .menuButton {
-    display: none;
-  }
 }

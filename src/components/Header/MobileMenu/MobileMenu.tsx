@@ -4,6 +4,7 @@ import {
   List,
   ListItemButton,
   ListItemText,
+  Stack,
   Toolbar,
   useMediaQuery,
 } from '@mui/material';
@@ -31,9 +32,14 @@ export const MobileMenu = ({ onClose, open }: Props) => {
       slotProps={{ paper: { className: styles.drawerPaper } }}
       transitionDuration={reducedMotion ? 0 : undefined}
     >
-      <nav aria-label='Primary' className={styles.nav} id='mobile-nav'>
+      <Stack
+        aria-label='Primary'
+        className={styles.nav}
+        component='nav'
+        id='mobile-nav'
+      >
         <Container>
-          <Toolbar className={styles.toolbar} disableGutters>
+          <Toolbar disableGutters>
             <Logo onClick={onClose} />
             <Button className={styles.closeButton} onClick={onClose}>
               Close
@@ -60,29 +66,31 @@ export const MobileMenu = ({ onClose, open }: Props) => {
           </List>
         </Container>
         <Container className={styles.actions}>
-          <Button
-            color='secondary'
-            component={NavLink}
-            fullWidth
-            onClick={onClose}
-            size='large'
-            to={PATHS.createAccount}
-            variant='contained'
-          >
-            Create account
-          </Button>
-          <Button
-            component={NavLink}
-            fullWidth
-            onClick={onClose}
-            size='large'
-            to={PATHS.signIn}
-            variant='outlined'
-          >
-            Sign in
-          </Button>
+          <Stack spacing={1.5} useFlexGap>
+            <Button
+              color='secondary'
+              component={NavLink}
+              fullWidth
+              onClick={onClose}
+              size='large'
+              to={PATHS.createAccount}
+              variant='contained'
+            >
+              Create account
+            </Button>
+            <Button
+              component={NavLink}
+              fullWidth
+              onClick={onClose}
+              size='large'
+              to={PATHS.signIn}
+              variant='outlined'
+            >
+              Sign in
+            </Button>
+          </Stack>
         </Container>
-      </nav>
+      </Stack>
     </Drawer>
   );
 };

@@ -1,4 +1,4 @@
-import { Link, Typography } from '@mui/material';
+import { Link, Stack, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router';
 import { PATHS } from '../../routes/paths.ts';
 import { Container } from '../Container/Container.tsx';
@@ -8,51 +8,97 @@ import { Section } from '../Section/Section.tsx';
 export const Footer = () => (
   <Section className={styles.footer} component='footer'>
     <Container>
-      <div className={styles.inner}>
+      <Stack
+        direction={{ md: 'row', xs: 'column' }}
+        spacing={{ md: 6, xs: 5 }}
+        sx={{ justifyContent: 'space-between' }}
+        useFlexGap
+      >
         <Typography className={styles.wordmark} component='p' variant='h2'>
           Pay My Lawyer
         </Typography>
 
-        <address className={styles.contact}>
-          <Link className={styles.contactLink} href='mailto:ceo@paymylawyer.cc'>
+        <Stack
+          className={styles.contact}
+          component='address'
+          spacing={1}
+          sx={{ alignItems: 'flex-start' }}
+          useFlexGap
+        >
+          <Stack
+            className={styles.contactLink}
+            component={Link}
+            direction='row'
+            href='mailto:ceo@paymylawyer.cc'
+            spacing={1.5}
+            sx={{ alignItems: 'center' }}
+            useFlexGap
+          >
             <span aria-hidden className={styles.badge}>
               E
             </span>
             ceo@paymylawyer.cc
-          </Link>
-          <Link className={styles.contactLink} href='tel:+19564666918'>
+          </Stack>
+          <Stack
+            className={styles.contactLink}
+            component={Link}
+            direction='row'
+            href='tel:+19564666918'
+            spacing={1.5}
+            sx={{ alignItems: 'center' }}
+            useFlexGap
+          >
             <span aria-hidden className={styles.badge}>
               P
             </span>
             956-466-6918
-          </Link>
+          </Stack>
           <Typography className={styles.addressLine} variant='body2'>
             1304 E Adams St., Brownsville, TX 78520
           </Typography>
-        </address>
-      </div>
+        </Stack>
+      </Stack>
 
-      <Typography className={styles.eligibility} variant='body2'>
-        Services are only offered to licensed attorneys within the United
-        States.
-      </Typography>
-      <div className={styles.legal}>
-        <Typography variant='caption'>
-          Copyright © {new Date().getFullYear()} Pay My Lawyer
+      <Stack spacing={1} sx={{ mt: 4 }} useFlexGap>
+        <Typography variant='body2'>
+          Services are only offered to licensed attorneys within the United
+          States.
         </Typography>
-        <ul className={styles.legalLinks} role='list'>
-          <li>
-            <Link component={RouterLink} to={PATHS.terms} variant='caption'>
-              Terms of service
-            </Link>
-          </li>
-          <li>
-            <Link component={RouterLink} to={PATHS.privacy} variant='caption'>
-              Privacy policy
-            </Link>
-          </li>
-        </ul>
-      </div>
+        <Stack
+          direction='row'
+          spacing={3}
+          sx={{
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+            rowGap: 1,
+          }}
+          useFlexGap
+        >
+          <Typography variant='caption'>
+            Copyright © {new Date().getFullYear()} Pay My Lawyer
+          </Typography>
+          <Stack
+            className={styles.legalLinks}
+            component='ul'
+            direction='row'
+            role='list'
+            spacing={3}
+            useFlexGap
+          >
+            <li>
+              <Link component={RouterLink} to={PATHS.terms} variant='caption'>
+                Terms of service
+              </Link>
+            </li>
+            <li>
+              <Link component={RouterLink} to={PATHS.privacy} variant='caption'>
+                Privacy policy
+              </Link>
+            </li>
+          </Stack>
+        </Stack>
+      </Stack>
     </Container>
   </Section>
 );

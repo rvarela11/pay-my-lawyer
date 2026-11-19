@@ -100,9 +100,7 @@ export const PaymentDemo = () => {
           <Typography component='p' variant='h6'>
             {DEMO_INVOICE.firm}
           </Typography>
-          <Typography variant='body2'>
-            Invoice {DEMO_INVOICE.id}
-          </Typography>
+          <Typography variant='body2'>Invoice {DEMO_INVOICE.id}</Typography>
           <Typography className={styles.amount} component='p' variant='h4'>
             {amount}
           </Typography>
