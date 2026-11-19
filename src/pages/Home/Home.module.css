@@ -1,53 +1,11 @@
-.heroPanel {
-  gap: calc(var(--mui-spacing) * 5);
-}
-
 .heroTitle {
   max-width: 10ch;
 }
 
-.heroCopy {
-  min-width: 0;
-}
-
 .heroText {
-  margin-top: calc(var(--mui-spacing) * 3);
   max-width: 32ch;
-}
-
-.heroAction {
-  margin-top: calc(var(--mui-spacing) * 4);
-}
-
-.heroDemo {
-  min-width: 0;
-}
-
-.stack {
-  display: grid;
-  gap: clamp(48px, 7.8vw, 112px);
-}
-
-.split {
-  display: grid;
-  gap: calc(var(--mui-spacing) * 5);
 }
 
 .splitTitle {
   max-width: 14ch;
-}
-
-@media (min-width: 900px) {
-  .split {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-  }
-}
-
-/* Wording on the left, demo on the right, both resting on the bottom edge. */
-@media (min-width: 1200px) {
-  .heroPanel {
-    align-items: end;
-    column-gap: calc(var(--mui-spacing) * 6);
-    grid-template-columns: minmax(0, 1fr) auto;
-  }
 }
