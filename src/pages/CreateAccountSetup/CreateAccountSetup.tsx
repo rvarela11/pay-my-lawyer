@@ -73,59 +73,57 @@ export const CreateAccountSetup = () => {
 
   return (
     <Section aria-labelledby={TITLE_ID}>
-      <Container>
-        <div className={styles.column}>
-          <FormProvider {...form}>
-            {provider && position && (
-              <StepIndicator
-                labels={STAGES[provider].map((stage) => stage.label)}
-                number={position.number}
-                total={position.total}
-              />
-            )}
-            <Typography
-              className={styles.title}
-              component='h1'
-              id={TITLE_ID}
-              ref={titleRef}
-              tabIndex={-1}
-              variant='h4'
-            >
-              {SCREENS[screen].title}
-            </Typography>
-            {provider && position && (
-              <Typography className={styles.step} component='p' variant='body2'>
-                Step {position.number} of {position.total}: {position.label}
-              </Typography>
-            )}
-            <form className={styles.form} noValidate onSubmit={handleSubmit}>
-              <Outlet />
-              <div className={styles.actions}>
-                {screen !== SCREEN_IDS.provider && (
-                  <Button onClick={goBack} size='large' variant='outlined'>
-                    Back
-                  </Button>
-                )}
-                {screen !== SCREEN_IDS.portal && (
-                  <Button
-                    className={styles.next}
-                    onClick={handleNextClick}
-                    size='large'
-                    type='submit'
-                    variant='contained'
-                  >
-                    Next
-                  </Button>
-                )}
-              </div>
-            </form>
-            <StartOverDialog
-              onCancel={handleStartOverCancel}
-              onConfirm={handleStartOver}
-              open={isStartOverOpen}
+      <Container size='medium'>
+        <FormProvider {...form}>
+          {provider && position && (
+            <StepIndicator
+              labels={STAGES[provider].map((stage) => stage.label)}
+              number={position.number}
+              total={position.total}
             />
-          </FormProvider>
-        </div>
+          )}
+          <Typography
+            className={styles.title}
+            component='h1'
+            id={TITLE_ID}
+            ref={titleRef}
+            tabIndex={-1}
+            variant='h4'
+          >
+            {SCREENS[screen].title}
+          </Typography>
+          {provider && position && (
+            <Typography className={styles.step} component='p' variant='body2'>
+              Step {position.number} of {position.total}: {position.label}
+            </Typography>
+          )}
+          <form className={styles.form} noValidate onSubmit={handleSubmit}>
+            <Outlet />
+            <div className={styles.actions}>
+              {screen !== SCREEN_IDS.provider && (
+                <Button onClick={goBack} size='large' variant='outlined'>
+                  Back
+                </Button>
+              )}
+              {screen !== SCREEN_IDS.portal && (
+                <Button
+                  className={styles.next}
+                  onClick={handleNextClick}
+                  size='large'
+                  type='submit'
+                  variant='contained'
+                >
+                  Next
+                </Button>
+              )}
+            </div>
+          </form>
+          <StartOverDialog
+            onCancel={handleStartOverCancel}
+            onConfirm={handleStartOver}
+            open={isStartOverOpen}
+          />
+        </FormProvider>
       </Container>
     </Section>
   );

@@ -1,19 +1,8 @@
-/* The element in the selector outranks Section's .section padding, whatever order the stylesheets load in. */
-section.hero {
-  padding-block: max(16px, 1.5625vw) 0;
-}
-
 .heroPanel {
-  align-content: end;
-  background-color: var(--mui-palette-brand-accent);
-  display: grid;
   gap: calc(var(--mui-spacing) * 5);
-  min-height: clamp(420px, calc(100svh - 64px - 2 * max(16px, 1.5625vw)), 900px);
-  padding: clamp(20px, 2.5vw, 40px);
 }
 
 .heroTitle {
-  animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   max-width: 10ch;
 }
 
@@ -32,18 +21,6 @@ section.hero {
 
 .heroDemo {
   min-width: 0;
-}
-
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-
-  to {
-    opacity: 1;
-    transform: none;
-  }
 }
 
 .stack {
@@ -72,11 +49,5 @@ section.hero {
     align-items: end;
     column-gap: calc(var(--mui-spacing) * 6);
     grid-template-columns: minmax(0, 1fr) auto;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .heroTitle {
-    animation: none;
   }
 }

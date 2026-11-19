@@ -41,4 +41,3 @@
   padding-block: calc(var(--mui-spacing) * 5)
     max(calc(var(--mui-spacing) * 3), env(safe-area-inset-bottom));
 }
-

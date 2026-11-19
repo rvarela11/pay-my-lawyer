@@ -62,90 +62,88 @@ export const SignIn = () => {
 
   return (
     <Section aria-labelledby='sign-in-title'>
-      <Container>
-        <div className={styles.column}>
-          <Typography component='h1' id='sign-in-title' variant='h4'>
-            Sign in
-          </Typography>
-          <Typography className={styles.subtitle} component='p'>
-            New to Pay My Lawyer?{' '}
-            <Link
-              component={RouterLink}
-              to={PATHS.createAccount}
-              underline='always'
-            >
-              Create an account
-            </Link>
-          </Typography>
-
-          {serverError && (
-            <Alert
-              className={styles.alert}
-              ref={alertRef}
-              severity='error'
-              tabIndex={-1}
-            >
-              {serverError.message}
-            </Alert>
-          )}
-
-          <form
-            className={styles.form}
-            noValidate
-            onSubmit={handleSubmit(handleSignIn)}
+      <Container size='narrow'>
+        <Typography component='h1' id='sign-in-title' variant='h4'>
+          Sign in
+        </Typography>
+        <Typography className={styles.subtitle} component='p'>
+          New to Pay My Lawyer?{' '}
+          <Link
+            component={RouterLink}
+            to={PATHS.createAccount}
+            underline='always'
           >
-            <Controller
-              control={control}
-              name={FIELDS.email}
-              render={({ field: { ref, ...field }, fieldState: { error } }) => (
-                <TextField
-                  {...field}
-                  autoComplete='email'
-                  error={!!error}
-                  fullWidth
-                  helperText={error?.message}
-                  inputRef={ref}
-                  label='Email'
-                  type='email'
-                />
-              )}
-            />
-            <Controller
-              control={control}
-              name={FIELDS.password}
-              render={({ field: { ref, ...field }, fieldState: { error } }) => (
-                <PasswordField
-                  {...field}
-                  autoComplete='current-password'
-                  error={!!error}
-                  fullWidth
-                  helperText={error?.message}
-                  inputRef={ref}
-                  label='Password'
-                />
-              )}
-            />
-            <Link
-              className={styles.forgotPassword}
-              component={RouterLink}
-              to={PATHS.forgotPassword}
-              underline='always'
-              variant='body2'
-            >
-              Forgot password?
-            </Link>
-            <Button
-              fullWidth
-              loading={isSubmitting}
-              loadingPosition='start'
-              size='large'
-              type='submit'
-              variant='contained'
-            >
-              Sign in
-            </Button>
-          </form>
-        </div>
+            Create an account
+          </Link>
+        </Typography>
+
+        {serverError && (
+          <Alert
+            className={styles.alert}
+            ref={alertRef}
+            severity='error'
+            tabIndex={-1}
+          >
+            {serverError.message}
+          </Alert>
+        )}
+
+        <form
+          className={styles.form}
+          noValidate
+          onSubmit={handleSubmit(handleSignIn)}
+        >
+          <Controller
+            control={control}
+            name={FIELDS.email}
+            render={({ field: { ref, ...field }, fieldState: { error } }) => (
+              <TextField
+                {...field}
+                autoComplete='email'
+                error={!!error}
+                fullWidth
+                helperText={error?.message}
+                inputRef={ref}
+                label='Email'
+                type='email'
+              />
+            )}
+          />
+          <Controller
+            control={control}
+            name={FIELDS.password}
+            render={({ field: { ref, ...field }, fieldState: { error } }) => (
+              <PasswordField
+                {...field}
+                autoComplete='current-password'
+                error={!!error}
+                fullWidth
+                helperText={error?.message}
+                inputRef={ref}
+                label='Password'
+              />
+            )}
+          />
+          <Link
+            className={styles.forgotPassword}
+            component={RouterLink}
+            to={PATHS.forgotPassword}
+            underline='always'
+            variant='body2'
+          >
+            Forgot password?
+          </Link>
+          <Button
+            fullWidth
+            loading={isSubmitting}
+            loadingPosition='start'
+            size='large'
+            type='submit'
+            variant='contained'
+          >
+            Sign in
+          </Button>
+        </form>
       </Container>
     </Section>
   );

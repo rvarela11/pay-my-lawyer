@@ -2,6 +2,13 @@ import classNames from 'classnames';
 import type { ComponentPropsWithoutRef } from 'react';
 import styles from './Container.module.css';
 
-export const Container = ({ className, ...props }: ComponentPropsWithoutRef<'div'>) => (
-  <div className={classNames(styles.container, className)} {...props} />
+type Props = ComponentPropsWithoutRef<'div'> & {
+  size?: 'medium' | 'narrow' | 'wide';
+};
+
+export const Container = ({ className, size = 'wide', ...props }: Props) => (
+  <div
+    className={classNames(styles.container, styles[size], className)}
+    {...props}
+  />
 );

@@ -1,6 +1,7 @@
 import { Button, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router';
 import { Container } from '../../components/Container/Container.tsx';
+import { HeroPanel } from '../../components/HeroPanel/HeroPanel.tsx';
 import { Section } from '../../components/Section/Section.tsx';
 import { SectionLabel } from '../../components/SectionLabel/SectionLabel.tsx';
 import { PATHS } from '../../routes/paths.ts';
@@ -11,41 +12,33 @@ import { ProductList } from './ProductList/ProductList.tsx';
 export const Home = () => {
   return (
     <>
-      <Section aria-labelledby='hero-title' className={styles.hero}>
-        <Container>
-          <div className={styles.heroPanel}>
-            <div className={styles.heroCopy}>
-              <Typography
-                className={styles.heroTitle}
-                id='hero-title'
-                variant='h1'
-              >
-                Legal fees, paid without the chase.
-              </Typography>
-              <Typography
-                className={styles.heroText}
-                component='p'
-                variant='h4'
-              >
-                Payment processing, invoicing and client records for law firms,
-                in one place.
-              </Typography>
-              <Button
-                className={styles.heroAction}
-                component={RouterLink}
-                size='large'
-                to={PATHS.createAccount}
-                variant='contained'
-              >
-                Create account
-              </Button>
-            </div>
-            <div className={styles.heroDemo}>
-              <PaymentDemo />
-            </div>
-          </div>
-        </Container>
-      </Section>
+      <HeroPanel
+        aria-labelledby='hero-title'
+        fullHeight
+        panelClassName={styles.heroPanel}
+      >
+        <div className={styles.heroCopy}>
+          <Typography className={styles.heroTitle} id='hero-title' variant='h1'>
+            Legal fees, paid without the chase.
+          </Typography>
+          <Typography className={styles.heroText} component='p' variant='h4'>
+            Payment processing, invoicing and client records for law firms, in
+            one place.
+          </Typography>
+          <Button
+            className={styles.heroAction}
+            component={RouterLink}
+            size='large'
+            to={PATHS.createAccount}
+            variant='contained'
+          >
+            Create account
+          </Button>
+        </div>
+        <div className={styles.heroDemo}>
+          <PaymentDemo />
+        </div>
+      </HeroPanel>
 
       <Section aria-labelledby='products-title'>
         <Container className={styles.stack}>
