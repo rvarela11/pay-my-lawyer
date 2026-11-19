@@ -2,8 +2,13 @@ import type { ThemeOptions } from '@mui/material/styles';
 import type {} from '@mui/x-date-pickers/themeAugmentation';
 
 // MUI's idle outline is ~1.5:1 on white; draw it in ink like the site's other borders (and above the 3:1 non-text contrast, WCAG 1.4.11).
-// Hover, focus, error and disabled keep MUI's colors. Read by COMPONENTS while the module loads, so it comes first.
+// With an ink outline at rest, MUI's focused outline (ink, 2px) is only a little thicker, so a focused field also gets the
+// site's focus ring. Hover, error and disabled keep MUI's colors. Read by COMPONENTS while the module loads, so it comes first.
 const inkOutline = (outline: string) => ({
+  '&.Mui-focused': {
+    outline: '3px solid var(--mui-palette-primary-main)',
+    outlineOffset: 2,
+  },
   [`&:not(:hover, .Mui-disabled, .Mui-error, .Mui-focused) ${outline}`]: {
     borderColor: 'var(--mui-palette-primary-main)',
   },
