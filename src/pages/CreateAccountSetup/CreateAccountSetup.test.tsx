@@ -1167,11 +1167,11 @@ describe('CreateAccountSetup', () => {
 
     it.each([
       ['Usio', 'Business details', 'Step 1 of 5'],
-      ['Usio', 'About you', 'Step 1 of 5: Business details'],
+      ['Usio', 'About you', 'Step 1 of 5'],
       ['Usio', 'Beneficial owners', 'Step 2 of 5'],
       ['Usio', 'Review & submit', 'Step 3 of 5'],
-      ['Dwolla', 'About you', 'Step 1 of 5: Business details'],
-      ['Dwolla', 'ID documents', 'Step 2 of 5: Ownership & ID'],
+      ['Dwolla', 'About you', 'Step 1 of 5'],
+      ['Dwolla', 'ID documents', 'Step 2 of 5'],
       ['Dwolla', 'Portal', 'Step 5 of 5'],
     ])('%s on %s shows "%s"', async (provider, target, text) => {
       const { user } = renderWizard();

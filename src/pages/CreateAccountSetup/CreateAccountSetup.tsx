@@ -38,12 +38,6 @@ export const CreateAccountSetup = () => {
 
   const form = forms.getForm(screen, provider);
   const position = screen ? getStagePosition(provider, screen) : null;
-  // Name the stage only when the heading doesn't already ("About you" sits in Business details).
-  const stageName =
-    screen && position && position.label !== SCREENS[screen].title
-      ? `: ${position.label}`
-      : '';
-
   // The second click of a double-click (detail 2) would skip the screen that just opened.
   const handleNextClick = (event: MouseEvent<HTMLButtonElement>) => {
     if (event.detail > 1) {
@@ -101,7 +95,6 @@ export const CreateAccountSetup = () => {
             {provider && position && (
               <Typography className={styles.step} component='p' variant='body2'>
                 Step {position.number} of {position.total}
-                {stageName}
               </Typography>
             )}
           </Stack>
