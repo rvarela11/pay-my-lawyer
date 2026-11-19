@@ -21,7 +21,7 @@ export const Footer = () => (
         <Stack
           className={styles.contact}
           component='address'
-          spacing={1}
+          spacing={0}
           useFlexGap
         >
           <Stack

@@ -1,3 +1,9 @@
 .section {
   padding-block: calc(var(--mui-spacing) * 3) clamp(80px, 9vw, 132px);
 }
+
+/* Sign in, Create account and the setup wizard: the same top space, scaled to the window height, so the heading stays put through sign-up.
+   The bottom stays small because main already fills the space down to the footer. */
+.form {
+  padding-block: clamp(24px, 8svh, 96px) clamp(24px, 4svh, 48px);
+}

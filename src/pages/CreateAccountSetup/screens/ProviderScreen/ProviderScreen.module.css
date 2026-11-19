@@ -16,15 +16,15 @@
 /* The whole row is the radio's label, so clicking anywhere selects it. */
 .option {
   align-items: flex-start;
-  border: 1px solid rgb(var(--mui-palette-text-primaryChannel) / 0.7);
-  border-radius: var(--mui-shape-borderRadius);
+  border: 1px solid var(--mui-palette-primary-main);
   margin: 0;
   padding: calc(var(--mui-spacing) * 2) calc(var(--mui-spacing) * 2)
     calc(var(--mui-spacing) * 2) calc(var(--mui-spacing) * 1);
 }
 
+/* The chosen option fills with the accent, like the site's other selected and primary elements. */
 .option:has(input:checked) {
-  background-color: var(--mui-palette-background-paper);
+  background-color: var(--mui-palette-brand-accent);
   border-color: var(--mui-palette-primary-main);
   box-shadow: inset 0 0 0 1px var(--mui-palette-primary-main);
 }
@@ -37,7 +37,6 @@
 
 .later {
   align-items: flex-start;
-  border-radius: var(--mui-shape-borderRadius);
   margin: calc(var(--mui-spacing) * 1) 0 0;
   padding-inline-end: calc(var(--mui-spacing) * 2);
 }
