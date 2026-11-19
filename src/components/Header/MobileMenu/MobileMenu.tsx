@@ -72,7 +72,6 @@ export const MobileMenu = ({ onClose, open }: Props) => {
             Create account
           </Button>
           <Button
-            className={styles.signIn}
             component={NavLink}
             fullWidth
             onClick={onClose}

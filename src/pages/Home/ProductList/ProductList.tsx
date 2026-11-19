@@ -9,7 +9,7 @@ import styles from './ProductList.module.css';
 const ACCENTS = ['orange', 'pink', 'green', 'blue', 'yellow'] as const;
 
 export const ProductList = () => (
-  <ol className={styles.list}>
+  <ol className={styles.list} role='list'>
     {PRODUCTS.map(({ description, id, name }, index) => (
       <li key={id}>
         <Link

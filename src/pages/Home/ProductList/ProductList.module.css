@@ -1,8 +1,5 @@
 .list {
   border-bottom: 1px solid var(--mui-palette-primary-main);
-  list-style: none;
-  margin: 0;
-  padding: 0;
 }
 
 .row {
@@ -31,11 +28,6 @@
 .row:hover::before,
 .row:focus-visible::before {
   transform: scaleY(1);
-}
-
-.row:focus-visible {
-  outline: 3px solid var(--mui-palette-primary-main);
-  outline-offset: 2px;
 }
 
 .row[data-accent='blue'] {
