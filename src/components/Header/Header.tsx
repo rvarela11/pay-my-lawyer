@@ -1,3 +1,4 @@
+import MenuIcon from '@mui/icons-material/Menu';
 import {
   AppBar,
   Button,
@@ -77,9 +78,11 @@ export const Header = () => {
             aria-expanded={open}
             aria-label='Menu'
             className={styles.menuButton}
+            edge='end'
             onClick={handleOpen}
+            size='large'
           >
-            <span aria-hidden className={styles.menuLines} />
+            <MenuIcon />
           </IconButton>
         </Toolbar>
       </Container>

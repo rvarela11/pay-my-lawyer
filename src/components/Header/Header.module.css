@@ -51,21 +51,6 @@
   color: var(--mui-palette-primary-contrastText);
 }
 
-/* Two rules, like a folded menu; the button stays 48px for touch. */
-.menuButton {
-  border-radius: 0;
-  height: 48px;
-  margin-right: -12px;
-  width: 64px;
-}
-
-.menuLines {
-  border-block: 2px solid currentColor;
-  display: block;
-  height: 10px;
-  width: 40px;
-}
-
 @media (min-width: 900px) {
   .desktopNav {
     align-items: center;
