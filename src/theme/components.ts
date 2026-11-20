@@ -5,7 +5,9 @@ import type {} from '@mui/x-date-pickers/themeAugmentation';
 // With an ink outline at rest, MUI's focused outline (2px) is barely different, so focus thickens it to 3px instead. An outside
 // focus ring would cross the floating label. Hover, error and disabled keep MUI's colors. Read by COMPONENTS while the module
 // loads, so it comes first.
+// The fill is the surface color, so a field reads as a box to type in, not just a line drawn on the page.
 const inkOutline = (outline: string) => ({
+  backgroundColor: 'var(--mui-palette-background-paper)',
   [`&.Mui-focused ${outline}`]: { borderWidth: 3 },
   [`&:not(:hover, .Mui-disabled, .Mui-error, .Mui-focused) ${outline}`]: {
     borderColor: 'var(--mui-palette-primary-main)',
