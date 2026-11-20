@@ -8,7 +8,6 @@ import { useOwnerDialog } from './hooks/useOwnerDialog.ts';
 import { useRemoveOwnerDialog } from './hooks/useRemoveOwnerDialog.ts';
 import { OwnerCard } from './OwnerCard/OwnerCard.tsx';
 import { OWNER_LABELS } from './ownerLabels.ts';
-import { OwnershipBar } from './OwnershipBar/OwnershipBar.tsx';
 import styles from './OwnersList.module.css';
 import {
   type Applicant,
@@ -114,17 +113,14 @@ export const OwnersList = ({
           />
         ))}
       </Stack>
-      {/* The sum, under the cards' percentages. The bar above it shows how much is assigned. */}
-      <Stack spacing={1} useFlexGap>
-        <OwnershipBar track value={total} />
-        <Stack className={styles.total} component='dl' direction='row'>
-          <Typography component='dt' variant='subtitle2'>
-            {OWNER_LABELS.total}
-          </Typography>
-          <Typography className={styles.sum} component='dd' variant='subtitle2'>
-            {`${total}%`}
-          </Typography>
-        </Stack>
+      {/* The sum, under the cards' percentages. */}
+      <Stack className={styles.total} component='dl' direction='row'>
+        <Typography component='dt' variant='subtitle2'>
+          {OWNER_LABELS.total}
+        </Typography>
+        <Typography className={styles.sum} component='dd' variant='subtitle2'>
+          {`${total}%`}
+        </Typography>
       </Stack>
       <OwnerDialog
         onCancel={ownerDialog.close}

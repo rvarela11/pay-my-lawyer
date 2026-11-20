@@ -1,6 +1,5 @@
 import { Card, CardActions, CardHeader } from '@mui/material';
 import { OWNER_LABELS } from '../ownerLabels.ts';
-import { OwnershipBar } from '../OwnershipBar/OwnershipBar.tsx';
 import type { OwnerRow } from '../toOwnerRows.ts';
 import { OwnerActions } from './OwnerActions/OwnerActions.tsx';
 import styles from './OwnerCard.module.css';
@@ -12,7 +11,7 @@ type Props = {
   row: OwnerRow;
 };
 
-// One owner: name and ownership on top, title and Bar Card # below, then the actions and a bar as wide as their share.
+// One owner: name and ownership on top, title and Bar Card # below, then the actions.
 export const OwnerCard = ({ onEdit, onRemove, row }: Props) => (
   <Card className={styles.card} component='li' variant='outlined'>
     <CardHeader
@@ -54,6 +53,5 @@ export const OwnerCard = ({ onEdit, onRemove, row }: Props) => (
         onRemove={() => onRemove(row)}
       />
     </CardActions>
-    <OwnershipBar value={row.ownership} />
   </Card>
 );
