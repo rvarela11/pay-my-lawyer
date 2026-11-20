@@ -38,7 +38,12 @@ export const OwnersMobileList = ({
               spacing={1}
               useFlexGap
             >
-              <Typography component='p' variant='subtitle1'>
+              <Typography
+                className={styles.name}
+                component='p'
+                title={row.name}
+                variant='subtitle1'
+              >
                 {row.name}
               </Typography>
               <div className={styles.actions}>
@@ -58,10 +63,6 @@ export const OwnersMobileList = ({
               <OwnerDetail
                 label={OWNER_LABELS.barNumber}
                 value={row.barNumber}
-              />
-              <OwnerDetail
-                label={OWNER_LABELS.dateOfBirth}
-                value={row.dateOfBirth}
               />
               <OwnerDetail label={OWNER_LABELS.title} value={row.title} />
             </dl>

@@ -33,24 +33,24 @@ export const OwnersTable = ({
 }: Props) => (
   <Table
     aria-label={OWNER_LABELS.list}
+    className={styles.table}
     ref={tableRef}
     size='small'
     tabIndex={-1}
   >
     <TableHead>
       <TableRow>
-        <TableCell>{OWNER_LABELS.name}</TableCell>
         <TableCell className={styles.nowrap}>
           {OWNER_LABELS.barNumber}
         </TableCell>
-        <TableCell className={styles.nowrap}>
-          <abbr className={styles.abbr} title={OWNER_LABELS.dateOfBirthFull}>
-            {OWNER_LABELS.dateOfBirth}
-          </abbr>
+        <TableCell>{OWNER_LABELS.name}</TableCell>
+        <TableCell className={styles.titleColumn}>
+          {OWNER_LABELS.title}
         </TableCell>
-        <TableCell>{OWNER_LABELS.title}</TableCell>
-        <TableCell align='right'>{OWNER_LABELS.ownership}</TableCell>
-        <TableCell>
+        <TableCell align='right' className={styles.ownershipColumn}>
+          {OWNER_LABELS.ownership}
+        </TableCell>
+        <TableCell className={styles.actionsColumn}>
           <VisuallyHidden>{OWNER_LABELS.actions}</VisuallyHidden>
         </TableCell>
       </TableRow>
@@ -58,10 +58,21 @@ export const OwnersTable = ({
     <TableBody>
       {rows.map((row) => (
         <TableRow key={row.id}>
-          <TableCell>{row.name}</TableCell>
-          <TableCell className={styles.nowrap}>{row.barNumber}</TableCell>
-          <TableCell className={styles.nowrap}>{row.dateOfBirth}</TableCell>
-          <TableCell>{row.title}</TableCell>
+          <TableCell>
+            <span className={styles.clamp} title={row.barNumber}>
+              {row.barNumber}
+            </span>
+          </TableCell>
+          <TableCell>
+            <span className={styles.clamp} title={row.name}>
+              {row.name}
+            </span>
+          </TableCell>
+          <TableCell>
+            <span className={styles.clamp} title={row.title}>
+              {row.title}
+            </span>
+          </TableCell>
           <TableCell align='right' className={styles.number}>
             {`${row.ownership}%`}
           </TableCell>
@@ -79,7 +90,7 @@ export const OwnersTable = ({
     {/* The total sits under the Ownership column it adds up. */}
     <TableFooter>
       <TableRow>
-        <TableCell className={styles.total} colSpan={4}>
+        <TableCell className={styles.total} colSpan={3}>
           <Typography component='span' variant='subtitle2'>
             {OWNER_LABELS.total}
           </Typography>

@@ -1,11 +1,13 @@
 import { type InferType, object } from 'yup';
 import { OWNERS_RULE } from '@/pages/CreateAccountSetup/components/owners/OwnerDialog/validation.ts';
 import {
+  ADDRESS_LINE_2_RULE,
   BAR_NUMBER_RULE,
   BUSINESS_ADDRESS_RULE,
   BUSINESS_TYPE_RULE,
   CITY_RULE,
   DATE_OF_BIRTH_RULE,
+  DBA_RULE,
   EIN_RULE,
   EMAIL_RULE,
   FIRST_NAME_RULE,
@@ -13,7 +15,6 @@ import {
   JOB_TITLE_RULE,
   LAST_NAME_RULE,
   LEGAL_BUSINESS_NAME_RULE,
-  OPTIONAL_TEXT_RULE,
   OWNERSHIP_RULE,
   PHONE_RULE,
   SSN_RULE,
@@ -25,17 +26,17 @@ import { DWOLLA_FIELDS } from './fields.ts';
 
 export const dwollaSchema = object({
   [DWOLLA_FIELDS.address1]: BUSINESS_ADDRESS_RULE,
-  [DWOLLA_FIELDS.address2]: OPTIONAL_TEXT_RULE,
+  [DWOLLA_FIELDS.address2]: ADDRESS_LINE_2_RULE,
   [DWOLLA_FIELDS.barNumber]: BAR_NUMBER_RULE,
   [DWOLLA_FIELDS.businessType]: BUSINESS_TYPE_RULE,
   [DWOLLA_FIELDS.city]: CITY_RULE,
   [DWOLLA_FIELDS.dateOfBirth]: DATE_OF_BIRTH_RULE,
-  [DWOLLA_FIELDS.dba]: OPTIONAL_TEXT_RULE,
+  [DWOLLA_FIELDS.dba]: DBA_RULE,
   [DWOLLA_FIELDS.ein]: EIN_RULE,
   [DWOLLA_FIELDS.email]: EMAIL_RULE,
   [DWOLLA_FIELDS.firstName]: FIRST_NAME_RULE,
   [DWOLLA_FIELDS.homeAddress1]: HOME_ADDRESS_RULE,
-  [DWOLLA_FIELDS.homeAddress2]: OPTIONAL_TEXT_RULE,
+  [DWOLLA_FIELDS.homeAddress2]: ADDRESS_LINE_2_RULE,
   [DWOLLA_FIELDS.homeCity]: CITY_RULE,
   [DWOLLA_FIELDS.homeState]: STATE_RULE,
   [DWOLLA_FIELDS.homeZip]: ZIP_RULE,

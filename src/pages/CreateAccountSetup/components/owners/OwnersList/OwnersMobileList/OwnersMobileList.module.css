@@ -21,6 +21,17 @@
   justify-content: space-between;
 }
 
+/* A long name wraps to at most 2 lines and ends in an ellipsis instead of pushing the icons off the card. */
+.name {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  line-clamp: 2;
+  min-width: 0;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
 /* The owner's name row and details fill the item, so the icons and values reach the right edge. */
 .owner {
   padding-block: calc(var(--mui-spacing) * 2);

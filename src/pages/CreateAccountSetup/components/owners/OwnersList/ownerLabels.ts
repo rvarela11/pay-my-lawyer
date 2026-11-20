@@ -2,8 +2,6 @@
 export const OWNER_LABELS = {
   actions: 'Actions',
   barNumber: 'Bar Card #',
-  dateOfBirth: 'DOB',
-  dateOfBirthFull: 'Date of birth',
   list: 'Beneficial owners',
   name: 'Name',
   ownership: 'Ownership',

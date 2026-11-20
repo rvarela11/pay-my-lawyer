@@ -1,11 +1,13 @@
 import { type InferType, object } from 'yup';
 import { OWNERS_RULE } from '@/pages/CreateAccountSetup/components/owners/OwnerDialog/validation.ts';
 import {
+  ADDRESS_LINE_2_RULE,
   BAR_NUMBER_RULE,
   BUSINESS_ADDRESS_RULE,
   BUSINESS_TYPE_RULE,
   CITY_RULE,
   DATE_OF_BIRTH_RULE,
+  DBA_RULE,
   EIN_RULE,
   EMAIL_RULE,
   FIRST_NAME_RULE,
@@ -13,7 +15,6 @@ import {
   JOB_TITLE_RULE,
   LAST_NAME_RULE,
   LEGAL_BUSINESS_NAME_RULE,
-  OPTIONAL_TEXT_RULE,
   OWNERSHIP_RULE,
   PHONE_RULE,
   SSN_RULE,
@@ -25,17 +26,17 @@ import { USIO_FIELDS } from './fields.ts';
 
 export const usioSchema = object({
   [USIO_FIELDS.address1]: BUSINESS_ADDRESS_RULE,
-  [USIO_FIELDS.address2]: OPTIONAL_TEXT_RULE,
+  [USIO_FIELDS.address2]: ADDRESS_LINE_2_RULE,
   [USIO_FIELDS.barNumber]: BAR_NUMBER_RULE,
   [USIO_FIELDS.businessType]: BUSINESS_TYPE_RULE,
   [USIO_FIELDS.city]: CITY_RULE,
   [USIO_FIELDS.dateOfBirth]: DATE_OF_BIRTH_RULE,
-  [USIO_FIELDS.dba]: OPTIONAL_TEXT_RULE,
+  [USIO_FIELDS.dba]: DBA_RULE,
   [USIO_FIELDS.ein]: EIN_RULE,
   [USIO_FIELDS.email]: EMAIL_RULE,
   [USIO_FIELDS.firstName]: FIRST_NAME_RULE,
   [USIO_FIELDS.homeAddress1]: HOME_ADDRESS_RULE,
-  [USIO_FIELDS.homeAddress2]: OPTIONAL_TEXT_RULE,
+  [USIO_FIELDS.homeAddress2]: ADDRESS_LINE_2_RULE,
   [USIO_FIELDS.homeCity]: CITY_RULE,
   [USIO_FIELDS.homeState]: STATE_RULE,
   [USIO_FIELDS.homeZip]: ZIP_RULE,

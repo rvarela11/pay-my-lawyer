@@ -13,7 +13,12 @@ export const OwnerDetail = ({ label, value, variant = 'body2' }: Props) => (
     <Typography className={styles.term} component='dt' variant={variant}>
       {label}
     </Typography>
-    <Typography className={styles.value} component='dd' variant={variant}>
+    <Typography
+      className={styles.value}
+      component='dd'
+      title={value}
+      variant={variant}
+    >
       {value}
     </Typography>
   </>

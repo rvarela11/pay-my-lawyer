@@ -2,9 +2,15 @@
   color: var(--mui-palette-text-secondary);
 }
 
+/* A long value wraps to at most 2 lines and ends in an ellipsis; the title shows it in full, and Edit shows every field. */
 .value {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
   font-variant-numeric: tabular-nums;
+  line-clamp: 2;
   margin: 0;
+  overflow: hidden;
   overflow-wrap: anywhere;
   text-align: right;
 }

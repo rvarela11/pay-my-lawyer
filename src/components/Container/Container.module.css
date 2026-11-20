@@ -5,9 +5,9 @@
   width: 100%;
 }
 
-/* Form pages: the content is 28rem (narrow) or 40rem (medium) wide; the gutters sit outside it. */
+/* Form pages: the content is 28rem (narrow) or 45rem (medium) wide; the gutters sit outside it. */
 .medium {
-  max-width: calc(40rem + 2 * var(--gutter));
+  max-width: calc(45rem + 2 * var(--gutter));
 }
 
 .narrow {

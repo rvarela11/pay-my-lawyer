@@ -1,12 +1,13 @@
 import { array, type InferType, object, string } from 'yup';
 import {
+  ADDRESS_LINE_2_RULE,
   CITY_RULE,
   DATE_OF_BIRTH_RULE,
   FIRST_NAME_RULE,
   HOME_ADDRESS_RULE,
   JOB_TITLE_RULE,
   LAST_NAME_RULE,
-  OPTIONAL_TEXT_RULE,
+  OPTIONAL_BAR_NUMBER_RULE,
   OWNERSHIP_RULE,
   SSN_RULE,
   STATE_RULE,
@@ -17,11 +18,11 @@ import { OWNER_FIELDS } from './fields.ts';
 // One beneficial owner other than the applicant. The dialog passes `remaining` (the % nobody
 // else owns) as the Yup context, so an owner can't push the total over 100%.
 export const ownerSchema = object({
-  [OWNER_FIELDS.barNumber]: OPTIONAL_TEXT_RULE,
+  [OWNER_FIELDS.barNumber]: OPTIONAL_BAR_NUMBER_RULE,
   [OWNER_FIELDS.dateOfBirth]: DATE_OF_BIRTH_RULE,
   [OWNER_FIELDS.firstName]: FIRST_NAME_RULE,
   [OWNER_FIELDS.homeAddress1]: HOME_ADDRESS_RULE,
-  [OWNER_FIELDS.homeAddress2]: OPTIONAL_TEXT_RULE,
+  [OWNER_FIELDS.homeAddress2]: ADDRESS_LINE_2_RULE,
   [OWNER_FIELDS.homeCity]: CITY_RULE,
   [OWNER_FIELDS.homeState]: STATE_RULE,
   [OWNER_FIELDS.homeZip]: ZIP_RULE,
