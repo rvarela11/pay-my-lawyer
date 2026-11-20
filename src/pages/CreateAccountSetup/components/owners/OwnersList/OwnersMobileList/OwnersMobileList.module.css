@@ -21,6 +21,12 @@
   justify-content: space-between;
 }
 
+/* A long name wraps instead of pushing the icons off the card. */
+.name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
 /* The owner's name row and details fill the item, so the icons and values reach the right edge. */
 .owner {
   padding-block: calc(var(--mui-spacing) * 2);

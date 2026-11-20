@@ -38,7 +38,11 @@ export const OwnersMobileList = ({
               spacing={1}
               useFlexGap
             >
-              <Typography component='p' variant='subtitle1'>
+              <Typography
+                className={styles.name}
+                component='p'
+                variant='subtitle1'
+              >
                 {row.name}
               </Typography>
               <div className={styles.actions}>

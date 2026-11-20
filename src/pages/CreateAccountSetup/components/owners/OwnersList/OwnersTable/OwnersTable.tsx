@@ -33,24 +33,27 @@ export const OwnersTable = ({
 }: Props) => (
   <Table
     aria-label={OWNER_LABELS.list}
+    className={styles.table}
     ref={tableRef}
     size='small'
     tabIndex={-1}
   >
     <TableHead>
       <TableRow>
-        <TableCell>{OWNER_LABELS.name}</TableCell>
+        <TableCell className={styles.nameColumn}>{OWNER_LABELS.name}</TableCell>
         <TableCell className={styles.nowrap}>
           {OWNER_LABELS.barNumber}
         </TableCell>
-        <TableCell className={styles.nowrap}>
+        <TableCell className={classNames(styles.nowrap, styles.dateColumn)}>
           <abbr className={styles.abbr} title={OWNER_LABELS.dateOfBirthFull}>
             {OWNER_LABELS.dateOfBirth}
           </abbr>
         </TableCell>
         <TableCell>{OWNER_LABELS.title}</TableCell>
-        <TableCell align='right'>{OWNER_LABELS.ownership}</TableCell>
-        <TableCell>
+        <TableCell align='right' className={styles.ownershipColumn}>
+          {OWNER_LABELS.ownership}
+        </TableCell>
+        <TableCell className={styles.actionsColumn}>
           <VisuallyHidden>{OWNER_LABELS.actions}</VisuallyHidden>
         </TableCell>
       </TableRow>
@@ -58,10 +61,16 @@ export const OwnersTable = ({
     <TableBody>
       {rows.map((row) => (
         <TableRow key={row.id}>
-          <TableCell>{row.name}</TableCell>
-          <TableCell className={styles.nowrap}>{row.barNumber}</TableCell>
+          <TableCell className={styles.truncate} title={row.name}>
+            {row.name}
+          </TableCell>
+          <TableCell className={styles.truncate} title={row.barNumber}>
+            {row.barNumber}
+          </TableCell>
           <TableCell className={styles.nowrap}>{row.dateOfBirth}</TableCell>
-          <TableCell>{row.title}</TableCell>
+          <TableCell className={styles.truncate} title={row.title}>
+            {row.title}
+          </TableCell>
           <TableCell align='right' className={styles.number}>
             {`${row.ownership}%`}
           </TableCell>

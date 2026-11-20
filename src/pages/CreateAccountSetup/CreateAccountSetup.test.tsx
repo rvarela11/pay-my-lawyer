@@ -325,6 +325,20 @@ describe('CreateAccountSetup', () => {
       );
     });
 
+    it.each([
+      ['Legal business name', 'Enter at least 5 characters', 'Firm'],
+      ['Legal business name', 'Enter 50 characters or fewer', 'L'.repeat(51)],
+      ['Doing business as (optional)', 'Enter at least 2 characters', 'D'],
+      ['City', 'Enter 38 characters or fewer', 'C'.repeat(39)],
+    ])('limits %s: %s', async (label, message, value) => {
+      const { user } = await toBusiness();
+
+      await paste(user, label, value);
+      await user.tab();
+
+      expect(screen.getByLabelText(label)).toHaveAccessibleDescription(message);
+    });
+
     it('formats the phone and EIN as you type', async () => {
       const { user } = await toBusiness();
 
@@ -465,6 +479,20 @@ describe('CreateAccountSetup', () => {
       expect(
         screen.getByLabelText('Bar Card number'),
       ).toHaveAccessibleDescription('Bar Card number is required');
+    });
+
+    it.each([
+      ['First name', 'Enter at least 2 characters', 'A'],
+      ['Last name', 'Enter 50 characters or fewer', 'N'.repeat(51)],
+      ['Job title', 'Enter 50 characters or fewer', 'T'.repeat(51)],
+      ['Bar Card number', 'Enter 40 characters or fewer', '1'.repeat(41)],
+    ])('limits %s: %s', async (label, message, value) => {
+      const { user } = await toAbout();
+
+      await paste(user, label, value);
+      await user.tab();
+
+      expect(screen.getByLabelText(label)).toHaveAccessibleDescription(message);
     });
 
     it('treats a Bar Card number of only spaces as missing', async () => {

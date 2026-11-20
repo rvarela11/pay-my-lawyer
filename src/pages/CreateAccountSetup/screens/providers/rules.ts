@@ -5,15 +5,30 @@ import { US_STATES } from '@/pages/CreateAccountSetup/components/form/StateSelec
 
 // Rules shared by every provider's field set. Each starts empty, so nothing shows on load.
 // Empty fields say "<Label> is required"; a wrong format says how to fix it ("Enter a …").
+// Lengths follow Usio's Enrollment API (https://enroll.usiopay.com/documentation/), the only provider that publishes
+// limits; Dwolla's schema states none. The Bar Card number is our own field.
+
+// Read by the rules below while the module loads, so they come first.
+const atLeast = (min: number) => `Enter at least ${min} characters`;
+const atMost = (max: number) => `Enter ${max} characters or fewer`;
+
+export const ADDRESS_LINE_2_RULE = string()
+  .trim()
+  .default('')
+  .max(50, atMost(50));
+
 export const BAR_NUMBER_RULE = string()
   .trim()
   .default('')
-  .required('Bar Card number is required');
+  .required('Bar Card number is required')
+  .max(40, atMost(40));
 
 export const BUSINESS_ADDRESS_RULE = string()
   .trim()
   .default('')
-  .required('Address is required');
+  .required('Address is required')
+  .min(2, atLeast(2))
+  .max(50, atMost(50));
 
 export const BUSINESS_TYPE_RULE = string()
   .default('')
@@ -23,7 +38,16 @@ export const BUSINESS_TYPE_RULE = string()
 export const CITY_RULE = string()
   .trim()
   .default('')
-  .required('City is required');
+  .required('City is required')
+  .min(2, atLeast(2))
+  .max(38, atMost(38));
+
+// Optional, but 2 to 50 characters once filled in.
+export const DBA_RULE = string()
+  .trim()
+  .default('')
+  .test('min', atLeast(2), (value) => !value || value.length >= 2)
+  .max(50, atMost(50));
 
 // Checked in order: empty, then a real date, then 18 or older (a birthday today counts).
 // An unfinished date reaches the form as null, like an empty one, so one message covers both.
@@ -47,34 +71,48 @@ export const EMAIL_RULE = string()
   .trim()
   .default('')
   .required('Email is required')
-  .email('Enter a valid email');
+  .email('Enter a valid email')
+  .max(50, atMost(50));
 
 export const FIRST_NAME_RULE = string()
   .trim()
   .default('')
-  .required('First name is required');
+  .required('First name is required')
+  .min(2, atLeast(2))
+  .max(50, atMost(50));
 
 export const HOME_ADDRESS_RULE = string()
   .trim()
   .default('')
-  .required('Home address is required');
+  .required('Home address is required')
+  .min(2, atLeast(2))
+  .max(50, atMost(50));
 
 export const JOB_TITLE_RULE = string()
   .trim()
   .default('')
-  .required('Job title is required');
+  .required('Job title is required')
+  .max(50, atMost(50));
 
 export const LAST_NAME_RULE = string()
   .trim()
   .default('')
-  .required('Last name is required');
+  .required('Last name is required')
+  .min(2, atLeast(2))
+  .max(50, atMost(50));
 
 export const LEGAL_BUSINESS_NAME_RULE = string()
   .trim()
   .default('')
-  .required('Legal business name is required');
+  .required('Legal business name is required')
+  .min(5, atLeast(5))
+  .max(50, atMost(50));
 
-export const OPTIONAL_TEXT_RULE = string().trim().default('');
+// The owner dialog's Bar Card number is optional.
+export const OPTIONAL_BAR_NUMBER_RULE = string()
+  .trim()
+  .default('')
+  .max(40, atMost(40));
 
 export const OWNERSHIP_RULE = string()
   .trim()
@@ -113,6 +151,7 @@ export const STATE_RULE = string()
 
 export const WEBSITE_RULE = string()
   .default('')
+  .max(50, atMost(50))
   .test(
     'website',
     'Enter a web address, like https://yourfirm.com',

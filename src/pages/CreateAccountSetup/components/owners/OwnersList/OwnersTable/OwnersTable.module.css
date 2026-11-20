@@ -1,3 +1,39 @@
+/* Fixed columns keep the table inside the form however long a value is; Name, Bar Card # and Title share what's left.
+   Tighter side padding than MUI's 16px leaves those three room for typical values. */
+.table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.table th,
+.table td {
+  padding-inline: var(--mui-spacing);
+}
+
+/* Edit and Remove: two 40px icon buttons and the gap between them. */
+.actionsColumn {
+  width: 100px;
+}
+
+.dateColumn {
+  width: 96px;
+}
+
+.nameColumn {
+  width: 26%;
+}
+
+.ownershipColumn {
+  width: 96px;
+}
+
+/* Long values end in an ellipsis; the cell's title shows the full value on hover, and Edit shows every field. */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 /* Browsers underline abbr[title] with dots; a column header doesn't need it. */
 .abbr {
   text-decoration: none;
