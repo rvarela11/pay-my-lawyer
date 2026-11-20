@@ -44,7 +44,9 @@ export const OwnersTable = ({
           {OWNER_LABELS.barNumber}
         </TableCell>
         <TableCell>{OWNER_LABELS.name}</TableCell>
-        <TableCell>{OWNER_LABELS.title}</TableCell>
+        <TableCell className={styles.titleColumn}>
+          {OWNER_LABELS.title}
+        </TableCell>
         <TableCell align='right' className={styles.ownershipColumn}>
           {OWNER_LABELS.ownership}
         </TableCell>
