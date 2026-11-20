@@ -64,10 +64,6 @@ export const OwnersMobileList = ({
                 label={OWNER_LABELS.barNumber}
                 value={row.barNumber}
               />
-              <OwnerDetail
-                label={OWNER_LABELS.dateOfBirth}
-                value={row.dateOfBirth}
-              />
               <OwnerDetail label={OWNER_LABELS.title} value={row.title} />
             </dl>
           </Stack>

@@ -814,7 +814,6 @@ describe('CreateAccountSetup', () => {
 
       expect(screen.getByText('Ben Ortiz')).toBeInTheDocument();
       expect(screen.getByText('40%')).toBeInTheDocument();
-      expect(detailValues('DOB')).toContain('02/03/1979');
       expect(detailValues('Bar Card #')).toContain('67890');
       expect(detailValues('Title')).toContain('Partner');
       expect(detailValues('Total ownership')).toEqual(['100%']);

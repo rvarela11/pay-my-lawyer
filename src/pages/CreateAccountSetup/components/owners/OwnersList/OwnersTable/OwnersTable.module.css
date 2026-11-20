@@ -1,4 +1,4 @@
-/* Fixed columns keep the table inside the form however long a value is; Bar Card #, Name and Title share what's left. */
+/* Fixed columns keep the table inside the form however long a value is; Bar Card #, Name and Title split what's left equally. */
 .table {
   table-layout: fixed;
   width: 100%;
@@ -7,18 +7,6 @@
 /* Edit and Remove: two 40px icon buttons, the gap between them and the cell's padding. */
 .actionsColumn {
   width: 116px;
-}
-
-.barNumberColumn {
-  width: 18%;
-}
-
-.dateColumn {
-  width: 112px;
-}
-
-.nameColumn {
-  width: 18%;
 }
 
 .ownershipColumn {
@@ -34,11 +22,6 @@
   line-clamp: 2;
   overflow: hidden;
   overflow-wrap: anywhere;
-}
-
-/* Browsers underline abbr[title] with dots; a column header doesn't need it. */
-.abbr {
-  text-decoration: none;
 }
 
 .nowrap {

@@ -40,17 +40,10 @@ export const OwnersTable = ({
   >
     <TableHead>
       <TableRow>
-        <TableCell
-          className={classNames(styles.nowrap, styles.barNumberColumn)}
-        >
+        <TableCell className={styles.nowrap}>
           {OWNER_LABELS.barNumber}
         </TableCell>
-        <TableCell className={styles.nameColumn}>{OWNER_LABELS.name}</TableCell>
-        <TableCell className={classNames(styles.nowrap, styles.dateColumn)}>
-          <abbr className={styles.abbr} title={OWNER_LABELS.dateOfBirthFull}>
-            {OWNER_LABELS.dateOfBirth}
-          </abbr>
-        </TableCell>
+        <TableCell>{OWNER_LABELS.name}</TableCell>
         <TableCell>{OWNER_LABELS.title}</TableCell>
         <TableCell align='right' className={styles.ownershipColumn}>
           {OWNER_LABELS.ownership}
@@ -73,7 +66,6 @@ export const OwnersTable = ({
               {row.name}
             </span>
           </TableCell>
-          <TableCell className={styles.nowrap}>{row.dateOfBirth}</TableCell>
           <TableCell>
             <span className={styles.clamp} title={row.title}>
               {row.title}
@@ -96,7 +88,7 @@ export const OwnersTable = ({
     {/* The total sits under the Ownership column it adds up. */}
     <TableFooter>
       <TableRow>
-        <TableCell className={styles.total} colSpan={4}>
+        <TableCell className={styles.total} colSpan={3}>
           <Typography component='span' variant='subtitle2'>
             {OWNER_LABELS.total}
           </Typography>
