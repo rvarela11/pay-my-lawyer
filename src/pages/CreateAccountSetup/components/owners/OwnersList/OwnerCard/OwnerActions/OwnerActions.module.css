@@ -1,0 +1,5 @@
+/* Less side padding than the theme's, so each label starts on the details' left edge. */
+.action {
+  min-width: 0;
+  padding-inline: var(--mui-spacing);
+}

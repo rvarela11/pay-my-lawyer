@@ -3,3 +3,23 @@
   justify-content: flex-end;
   margin-top: calc(var(--mui-spacing) * -2);
 }
+
+.sum {
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+}
+
+/* Inset by the cards' border and padding (OwnerCard's --pad), so the sum sits under their percentages.
+   A 2px ink rule above it, like an invoice total. */
+.total {
+  border-top: 2px solid var(--mui-palette-primary-main);
+  justify-content: space-between;
+  margin: 0;
+  padding: var(--mui-spacing) calc(var(--mui-spacing) * 2 + 1px) 0;
+}
+
+@media (min-width: 600px) {
+  .total {
+    padding-inline: calc(var(--mui-spacing) * 3 + 1px);
+  }
+}

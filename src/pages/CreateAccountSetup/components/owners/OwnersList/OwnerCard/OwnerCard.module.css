@@ -1,0 +1,43 @@
+/* The percentage ends on the card's padding, so it lines up with the total under the cards, and keeps a gap from a long name. */
+.action {
+  margin: 0 0 0 calc(var(--mui-spacing) * 2);
+}
+
+/* The buttons' own 8px side padding and ~12px of space under their labels count toward the card's padding, so the labels
+   line up with the details and sit as far from the bottom edge as the name sits from the top. */
+.actions {
+  flex-wrap: wrap;
+  gap: var(--mui-spacing);
+  padding: calc(var(--mui-spacing) / 2) calc(var(--pad) - var(--mui-spacing))
+    calc(var(--pad) - 12px);
+}
+
+/* One padding on every side: 16px on phones, 24px from 600px. OwnersList's total uses the same values. */
+.card {
+  --pad: calc(var(--mui-spacing) * 2);
+}
+
+@media (min-width: 600px) {
+  .card {
+    --pad: calc(var(--mui-spacing) * 3);
+  }
+}
+
+/* Lets the name and details shrink, so long values end in an ellipsis instead of pushing the percentage out. */
+.content {
+  min-width: 0;
+}
+
+.header {
+  padding: var(--pad) var(--pad) 0;
+}
+
+.name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ownership {
+  margin: 0;
+}

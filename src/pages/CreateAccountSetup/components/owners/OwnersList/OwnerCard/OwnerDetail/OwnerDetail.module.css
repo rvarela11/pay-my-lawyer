@@ -1,0 +1,13 @@
+.term {
+  flex-shrink: 0;
+}
+
+/* A long value stays on one line and ends in an ellipsis; the title shows it in full, and Edit shows every field. */
+.value {
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

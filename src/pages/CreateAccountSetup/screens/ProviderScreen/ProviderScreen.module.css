@@ -13,9 +13,10 @@
   gap: calc(var(--mui-spacing) * 2);
 }
 
-/* The whole row is the radio's label, so clicking anywhere selects it. */
+/* The whole row is the radio's label, so clicking anywhere selects it. Filled with the surface color, like the text fields. */
 .option {
   align-items: flex-start;
+  background-color: var(--mui-palette-background-paper);
   border: 1px solid var(--mui-palette-primary-main);
   margin: 0;
   padding: calc(var(--mui-spacing) * 2) calc(var(--mui-spacing) * 2)

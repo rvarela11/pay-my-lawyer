@@ -780,7 +780,7 @@ describe('CreateAccountSetup', () => {
       expect(detailValues('Bar Card #')).toContain('12345');
       expect(detailValues('Title')).toContain('Owner');
       expect(detailValues('Ownership')).toEqual(['60%']);
-      expect(detailValues('Total ownership')).toEqual(['60%']);
+      expect(detailValues('Total')).toEqual(['60%']);
       expect(
         screen.getByRole('button', { name: 'Edit your details' }),
       ).toBeInTheDocument();
@@ -816,7 +816,7 @@ describe('CreateAccountSetup', () => {
       expect(screen.getByText('40%')).toBeInTheDocument();
       expect(detailValues('Bar Card #')).toContain('67890');
       expect(detailValues('Title')).toContain('Partner');
-      expect(detailValues('Total ownership')).toEqual(['100%']);
+      expect(detailValues('Total')).toEqual(['100%']);
       expect(
         screen.queryByRole('button', { name: 'Add owner' }),
       ).not.toBeInTheDocument();
@@ -857,7 +857,7 @@ describe('CreateAccountSetup', () => {
       await closed();
 
       expect(screen.getByText('40%')).toBeInTheDocument();
-      expect(detailValues('Total ownership')).toEqual(['100%']);
+      expect(detailValues('Total')).toEqual(['100%']);
     });
 
     it('saves an owner unchanged at a full total', async () => {
@@ -872,7 +872,7 @@ describe('CreateAccountSetup', () => {
       await user.click(within(dialog).getByRole('button', { name: 'Save' }));
       await closed();
 
-      expect(detailValues('Total ownership')).toEqual(['100%']);
+      expect(detailValues('Total')).toEqual(['100%']);
     });
 
     it('requires a job title for an owner', async () => {
@@ -1148,7 +1148,7 @@ describe('CreateAccountSetup', () => {
       await heading('Beneficial owners');
 
       expect(screen.queryByText('Ben Ortiz')).not.toBeInTheDocument();
-      expect(detailValues('Total ownership')).toEqual(['60%']);
+      expect(detailValues('Total')).toEqual(['60%']);
     });
   });
 
