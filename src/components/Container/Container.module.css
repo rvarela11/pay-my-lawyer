@@ -5,7 +5,11 @@
   width: 100%;
 }
 
-/* Form pages: the content is 28rem (narrow) or 40rem (medium) wide; the gutters sit outside it. */
+/* Content widths, with the gutters outside them: 28rem (narrow) and 40rem (medium) for forms, 60rem (large) for tables. */
+.large {
+  max-width: calc(60rem + 2 * var(--gutter));
+}
+
 .medium {
   max-width: calc(40rem + 2 * var(--gutter));
 }

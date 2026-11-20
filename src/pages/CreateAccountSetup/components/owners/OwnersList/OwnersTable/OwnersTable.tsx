@@ -40,10 +40,12 @@ export const OwnersTable = ({
   >
     <TableHead>
       <TableRow>
-        <TableCell className={styles.nameColumn}>{OWNER_LABELS.name}</TableCell>
-        <TableCell className={styles.nowrap}>
+        <TableCell
+          className={classNames(styles.nowrap, styles.barNumberColumn)}
+        >
           {OWNER_LABELS.barNumber}
         </TableCell>
+        <TableCell className={styles.nameColumn}>{OWNER_LABELS.name}</TableCell>
         <TableCell className={classNames(styles.nowrap, styles.dateColumn)}>
           <abbr className={styles.abbr} title={OWNER_LABELS.dateOfBirthFull}>
             {OWNER_LABELS.dateOfBirth}
@@ -61,15 +63,21 @@ export const OwnersTable = ({
     <TableBody>
       {rows.map((row) => (
         <TableRow key={row.id}>
-          <TableCell className={styles.truncate} title={row.name}>
-            {row.name}
+          <TableCell>
+            <span className={styles.clamp} title={row.barNumber}>
+              {row.barNumber}
+            </span>
           </TableCell>
-          <TableCell className={styles.truncate} title={row.barNumber}>
-            {row.barNumber}
+          <TableCell>
+            <span className={styles.clamp} title={row.name}>
+              {row.name}
+            </span>
           </TableCell>
           <TableCell className={styles.nowrap}>{row.dateOfBirth}</TableCell>
-          <TableCell className={styles.truncate} title={row.title}>
-            {row.title}
+          <TableCell>
+            <span className={styles.clamp} title={row.title}>
+              {row.title}
+            </span>
           </TableCell>
           <TableCell align='right' className={styles.number}>
             {`${row.ownership}%`}
