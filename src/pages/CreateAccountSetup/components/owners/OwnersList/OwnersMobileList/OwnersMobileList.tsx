@@ -41,6 +41,7 @@ export const OwnersMobileList = ({
               <Typography
                 className={styles.name}
                 component='p'
+                title={row.name}
                 variant='subtitle1'
               >
                 {row.name}

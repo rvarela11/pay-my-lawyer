@@ -21,9 +21,14 @@
   justify-content: space-between;
 }
 
-/* A long name wraps instead of pushing the icons off the card. */
+/* A long name wraps to at most 2 lines and ends in an ellipsis instead of pushing the icons off the card. */
 .name {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  line-clamp: 2;
   min-width: 0;
+  overflow: hidden;
   overflow-wrap: anywhere;
 }
 
