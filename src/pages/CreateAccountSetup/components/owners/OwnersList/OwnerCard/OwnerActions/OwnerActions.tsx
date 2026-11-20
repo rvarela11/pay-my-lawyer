@@ -1,4 +1,4 @@
-import { Button, CardActions } from '@mui/material';
+import { Button } from '@mui/material';
 import styles from './OwnerActions.module.css';
 
 type Props = {
@@ -16,7 +16,7 @@ export const OwnerActions = ({
   onEdit,
   onRemove,
 }: Props) => (
-  <CardActions className={styles.actions} disableSpacing>
+  <>
     <Button
       aria-label={isApplicant ? 'Edit your details' : `Edit ${name}`}
       className={styles.action}
@@ -33,5 +33,5 @@ export const OwnerActions = ({
         Remove
       </Button>
     )}
-  </CardActions>
+  </>
 );

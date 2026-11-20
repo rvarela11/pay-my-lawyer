@@ -1,0 +1,24 @@
+.bar {
+  height: 4px;
+}
+
+.fill {
+  background-color: var(--mui-palette-brand-accent);
+  height: 100%;
+  position: relative;
+}
+
+/* A 2px ink rule under the fill: the line above the total, with the unassigned share left bare. */
+.track {
+  position: relative;
+}
+
+.track::before {
+  background-color: var(--mui-palette-primary-main);
+  bottom: 0;
+  content: '';
+  height: 2px;
+  left: 0;
+  position: absolute;
+  right: 0;
+}
