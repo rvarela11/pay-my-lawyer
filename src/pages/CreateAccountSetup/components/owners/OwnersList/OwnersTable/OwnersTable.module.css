@@ -1,28 +1,34 @@
-/* Fixed columns keep the table inside the form however long a value is; Bar Card #, Name and Title share what's left. */
+/* Fixed columns keep the table inside the form however long a value is; Bar Card #, Name and Title share what's left.
+   Tighter side padding than MUI's 16px gives those three room in the wizard's 40rem column. */
 .table {
   table-layout: fixed;
   width: 100%;
 }
 
+.table th,
+.table td {
+  padding-inline: var(--mui-spacing);
+}
+
 /* Edit and Remove: two 40px icon buttons, the gap between them and the cell's padding. */
 .actionsColumn {
-  width: 116px;
+  width: 100px;
 }
 
 .barNumberColumn {
-  width: 22%;
+  width: 18%;
 }
 
 .dateColumn {
-  width: 112px;
+  width: 96px;
 }
 
 .nameColumn {
-  width: 22%;
+  width: 18%;
 }
 
 .ownershipColumn {
-  width: 112px;
+  width: 96px;
 }
 
 /* Long values wrap to at most 2 lines and end in an ellipsis; the title shows the full value on hover, and Edit shows

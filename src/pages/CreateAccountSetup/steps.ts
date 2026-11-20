@@ -18,13 +18,7 @@ import {
 } from './screens/providers/usio/fields.ts';
 
 // fields: the names Next checks, in the form the screen belongs to.
-// wide: a table screen, laid out wider than the form screens so its columns have room.
-type Screen = {
-  fields: readonly string[];
-  path: string;
-  title: string;
-  wide?: boolean;
-};
+type Screen = { fields: readonly string[]; path: string; title: string };
 
 export type Stage = { label: string; screens: readonly ScreenId[] };
 
@@ -54,7 +48,6 @@ export const SCREENS: Record<ScreenId, Screen> = {
     fields: DWOLLA_OWNERS_FIELDS,
     path: PATHS.setupDwollaOwners,
     title: 'Beneficial owners',
-    wide: true,
   },
   [SCREEN_IDS.ids]: { fields: [], path: PATHS.setupIds, title: 'ID documents' },
   [SCREEN_IDS.portal]: { fields: [], path: PATHS.setupPortal, title: 'Portal' },
@@ -82,7 +75,6 @@ export const SCREENS: Record<ScreenId, Screen> = {
     fields: USIO_OWNERS_FIELDS,
     path: PATHS.setupUsioOwners,
     title: 'Beneficial owners',
-    wide: true,
   },
 };
 

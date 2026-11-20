@@ -72,7 +72,7 @@ export const CreateAccountSetup = () => {
 
   return (
     <Section aria-labelledby={TITLE_ID} spacing='form'>
-      <Container size={SCREENS[screen].wide ? 'large' : 'medium'}>
+      <Container size='medium'>
         <FormProvider {...form}>
           {provider && position && (
             <StepIndicator

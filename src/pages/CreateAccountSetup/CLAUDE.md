@@ -3,7 +3,7 @@
 ## How it flows
 
 - `CreateAccountSetup.tsx` is the layout. It renders the step indicator, the current screen (`<Outlet />`) inside one `<form>`, and Back/Next.
-- The provider choice (`ProviderScreen`, its own small form in `validation.ts`) picks the path. `steps.ts` defines every screen in `SCREENS` (path, title, the fields Next checks, and `wide` for table screens such as Beneficial owners, laid out at 60rem instead of 40rem) and each provider's order in `STAGES`. Order always comes from `STAGES`, never from numbers.
+- The provider choice (`ProviderScreen`, its own small form in `validation.ts`) picks the path. `steps.ts` defines every screen in `SCREENS` (path, title, the fields Next checks) and each provider's order in `STAGES`. Order always comes from `STAGES`, never from numbers.
 - Each provider with a form has its own React Hook Form, created in `hooks/useSetupForms.ts` from `PROVIDER_SCHEMAS` (`screens/providers/schemas.ts`), so providers never share a field. The forms live in the layout, so answers survive switching providers back and forth. "Later" has no form.
 - Next (`hooks/useWizardNavigation.ts`) validates only the current screen's `fields` with `trigger`, marks them touched, then moves on and records the furthest screen reached. Opening a screen past that redirects to the furthest one. Back to the provider choice with answers opens the Start over dialog.
 - Progress is in memory only (`hooks/useSetupProgress.ts`): every visit starts at the provider choice. No resume, by design.
