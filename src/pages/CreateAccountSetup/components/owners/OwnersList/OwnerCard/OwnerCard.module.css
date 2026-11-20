@@ -1,0 +1,23 @@
+/* The percentage ends on the card's padding, so it lines up with the total under the cards, and keeps a gap from a long name. */
+.action {
+  margin: 0 0 0 calc(var(--mui-spacing) * 2);
+}
+
+/* Lets the name and details shrink, so long values end in an ellipsis instead of pushing the percentage out. */
+.content {
+  min-width: 0;
+}
+
+.header {
+  padding-bottom: calc(var(--mui-spacing) / 2);
+}
+
+.name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ownership {
+  margin: 0;
+}

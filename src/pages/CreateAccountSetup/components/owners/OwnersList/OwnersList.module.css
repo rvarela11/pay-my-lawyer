@@ -3,3 +3,15 @@
   justify-content: flex-end;
   margin-top: calc(var(--mui-spacing) * -2);
 }
+
+.sum {
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+}
+
+/* Inset by the cards' border and padding, so the sum sits under their percentages. */
+.total {
+  justify-content: space-between;
+  margin: 0;
+  padding-inline: calc(var(--mui-spacing) * 2 + 1px);
+}

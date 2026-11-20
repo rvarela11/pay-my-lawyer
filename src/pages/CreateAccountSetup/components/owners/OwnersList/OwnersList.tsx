@@ -1,14 +1,14 @@
 import Add from '@mui/icons-material/Add';
-import { Alert, Button, Stack, useMediaQuery, useTheme } from '@mui/material';
+import { Alert, Button, Stack, Typography } from '@mui/material';
 import { useEffect, useRef } from 'react';
 import { OwnerDialog } from '../OwnerDialog/OwnerDialog.tsx';
 import type { Owner } from '../OwnerDialog/validation.ts';
 import { RemoveOwnerDialog } from '../RemoveOwnerDialog/RemoveOwnerDialog.tsx';
 import { useOwnerDialog } from './hooks/useOwnerDialog.ts';
 import { useRemoveOwnerDialog } from './hooks/useRemoveOwnerDialog.ts';
+import { OwnerCard } from './OwnerCard/OwnerCard.tsx';
+import { OWNER_LABELS } from './ownerLabels.ts';
 import styles from './OwnersList.module.css';
-import { OwnersMobileList } from './OwnersMobileList/OwnersMobileList.tsx';
-import { OwnersTable } from './OwnersTable/OwnersTable.tsx';
 import {
   type Applicant,
   fullName,
@@ -27,8 +27,8 @@ type Props = {
   totalError?: string;
 };
 
-// The Beneficial owners list every provider shows: the applicant and the owners as a table
-// (or cards on narrow screens), the total, and the Add/Edit and Remove dialogs. The provider's
+// The Beneficial owners list every provider shows: a card for the applicant and each owner,
+// the total, and the Add/Edit and Remove dialogs. The provider's
 // screen owns the form and saves what this list hands back.
 export const OwnersList = ({
   applicant,
@@ -38,12 +38,9 @@ export const OwnersList = ({
   owners,
   totalError,
 }: Props) => {
-  const theme = useTheme();
-  const wide = useMediaQuery(theme.breakpoints.up('sm'));
   const addRef = useRef<HTMLButtonElement>(null);
   const alertRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<HTMLUListElement>(null);
-  const tableRef = useRef<HTMLTableElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
 
   const rows = toOwnerRows(applicant, owners);
   const total = totalOwnership(rows);
@@ -55,7 +52,7 @@ export const OwnersList = ({
   // falling back to the top of the page.
   const handleDialogClosed = () => {
     if (document.activeElement === document.body) {
-      (addRef.current ?? tableRef.current ?? cardsRef.current)?.focus();
+      (addRef.current ?? listRef.current)?.focus();
     }
   };
 
@@ -98,23 +95,33 @@ export const OwnersList = ({
           </Button>
         </Stack>
       )}
-      {wide ? (
-        <OwnersTable
-          onEdit={handleEdit}
-          onRemove={handleRemove}
-          rows={rows}
-          tableRef={tableRef}
-          total={total}
-        />
-      ) : (
-        <OwnersMobileList
-          listRef={cardsRef}
-          onEdit={handleEdit}
-          onRemove={handleRemove}
-          rows={rows}
-          total={total}
-        />
-      )}
+      <Stack
+        aria-label={OWNER_LABELS.list}
+        component='ul'
+        ref={listRef}
+        role='list'
+        spacing={1.5}
+        tabIndex={-1}
+        useFlexGap
+      >
+        {rows.map((row) => (
+          <OwnerCard
+            key={row.id}
+            onEdit={handleEdit}
+            onRemove={handleRemove}
+            row={row}
+          />
+        ))}
+      </Stack>
+      {/* Under the cards' percentages, which it adds up. */}
+      <Stack className={styles.total} component='dl' direction='row'>
+        <Typography component='dt' variant='subtitle1'>
+          {OWNER_LABELS.total}
+        </Typography>
+        <Typography className={styles.sum} component='dd' variant='subtitle1'>
+          {`${total}%`}
+        </Typography>
+      </Stack>
       <OwnerDialog
         onCancel={ownerDialog.close}
         onClosed={handleDialogClosed}

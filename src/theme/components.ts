@@ -43,6 +43,12 @@ export const COMPONENTS = {
       },
     ],
   },
+  // Outlined cards (the beneficial owners) take an ink border, like the dialogs, instead of MUI's faint grey.
+  MuiCard: {
+    styleOverrides: {
+      root: { borderColor: 'var(--mui-palette-primary-main)' },
+    },
+  },
   MuiCssBaseline: {
     styleOverrides: {
       // currentColor keeps the ring visible on light and dark backgrounds. Text fields keep MUI's own focus border.

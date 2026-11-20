@@ -1,0 +1,12 @@
+/* Buttons wrap to a new line on narrow screens instead of shrinking their 44px touch targets. */
+.actions {
+  flex-wrap: wrap;
+  gap: var(--mui-spacing);
+  padding: 0 var(--mui-spacing) var(--mui-spacing);
+}
+
+/* Less side padding than the theme's, so each label starts on the details' left edge. */
+.action {
+  min-width: 0;
+  padding-inline: var(--mui-spacing);
+}

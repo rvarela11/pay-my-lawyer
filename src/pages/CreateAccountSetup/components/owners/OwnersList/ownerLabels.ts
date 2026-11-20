@@ -1,11 +1,8 @@
-// The owners list's labels, shared by the desktop table and the mobile list.
+// The owners list's labels.
 export const OWNER_LABELS = {
-  actions: 'Actions',
   barNumber: 'Bar Card #',
   list: 'Beneficial owners',
-  name: 'Name',
   ownership: 'Ownership',
   title: 'Title',
   total: 'Total',
-  totalOwnership: 'Total ownership',
 } as const;
