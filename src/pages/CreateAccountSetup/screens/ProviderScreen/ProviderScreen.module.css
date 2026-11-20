@@ -29,10 +29,11 @@
   box-shadow: inset 0 0 0 1px var(--mui-palette-primary-main);
 }
 
+/* Matches the site's focus ring (3px, 3px away), drawn on the row since the radio itself is small. */
 .option:has(input:focus-visible),
 .later:has(input:focus-visible) {
-  outline: 2px solid var(--mui-palette-primary-main);
-  outline-offset: 2px;
+  outline: 3px solid var(--mui-palette-primary-main);
+  outline-offset: 3px;
 }
 
 .later {
