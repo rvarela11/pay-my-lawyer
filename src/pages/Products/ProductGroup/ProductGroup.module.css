@@ -1,0 +1,9 @@
+/* The groups are parts of one list, so they sit closer than separate page sections. The last keeps Section's full space before the footer.
+   The element in the selector outranks Section's .section padding, whatever order the stylesheets load in. */
+section.group:not(:last-child) {
+  padding-bottom: clamp(40px, 4.5vw, 66px);
+}
+
+.statement {
+  max-width: 14ch;
+}

@@ -1,0 +1,26 @@
+/* Spaced like the product list on Home, with the same number style. Each row opens with a line in its product's color, the fill its
+   Home row takes on hover; ink lines mark sections, color lines mark products. Pastels fade at hairline weights, so the line is two
+   spacing units thick.
+   The scroll margin clears the sticky header (about 66px) with room to spare when a link jumps here. */
+.row {
+  border-top: calc(var(--mui-spacing) * 2) solid var(--accent);
+  padding: calc(var(--mui-spacing) * 3) calc(var(--mui-spacing) * 1.5);
+  scroll-margin-top: calc(var(--mui-spacing) * 12);
+}
+
+.number {
+  flex: 0 0 2.5ch;
+  font-variant-numeric: tabular-nums;
+  padding-top: calc(var(--mui-spacing) * 1.25);
+}
+
+.text {
+  flex-grow: 1;
+}
+
+/* Side by side, the description lines up with the name, as on Home. */
+@media (min-width: 900px) {
+  .text {
+    align-items: baseline;
+  }
+}
