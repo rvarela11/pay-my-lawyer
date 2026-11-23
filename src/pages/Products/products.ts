@@ -1,4 +1,4 @@
-import type { ProductAccent } from '@/theme/palette.ts';
+import { PRODUCT_ACCENTS, type ProductAccent } from '@/theme/palette.ts';
 
 export type Product = {
   accent: ProductAccent;
@@ -30,7 +30,7 @@ type ProductGroupId = (typeof PRODUCT_GROUPS)[number]['id'];
 
 export const PRODUCTS: Product[] = [
   {
-    accent: 'orange',
+    accent: PRODUCT_ACCENTS.orange,
     description: 'Accept cash, card, check or digital transfers in one app.',
     details:
       'Log every payment a client makes in one record, however they pay.',
@@ -39,7 +39,7 @@ export const PRODUCTS: Product[] = [
     name: 'Payment processing',
   },
   {
-    accent: 'pink',
+    accent: PRODUCT_ACCENTS.pink,
     description: 'Send invoices to clients and track what has been paid.',
     details:
       'Create an invoice, email it to your client and follow up on anything still owed.',
@@ -48,7 +48,7 @@ export const PRODUCTS: Product[] = [
     name: 'Billing and invoicing',
   },
   {
-    accent: 'green',
+    accent: PRODUCT_ACCENTS.green,
     description: 'Keep client details and payment history in one place.',
     details:
       'Pull up how to reach a client and what they’ve paid before you call or meet them.',
@@ -57,7 +57,7 @@ export const PRODUCTS: Product[] = [
     name: 'Client records',
   },
   {
-    accent: 'blue',
+    accent: PRODUCT_ACCENTS.blue,
     description: 'Schedule meetings and court dates, and charge for paid ones.',
     details:
       'Keep client meetings and court dates on one calendar, and invoice the appointments that need payment.',
@@ -66,7 +66,7 @@ export const PRODUCTS: Product[] = [
     name: 'Appointment calendar',
   },
   {
-    accent: 'yellow',
+    accent: PRODUCT_ACCENTS.yellow,
     description: 'Refer cases to trusted attorneys and receive referrals back.',
     details:
       'Send cases you can’t take to attorneys in the Pay My Lawyer network, so your clients still get the right lawyer.',
