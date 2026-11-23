@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router';
 
 // The browser looks for the hash target before React renders the page, so scroll to it once it exists.
-// Web fonts can rewrap the text above it after the first paint, so wait for them first or the target lands under the header.
+// Inter Tight loads with font-display: swap, so the text above rewraps when it arrives and pushes the target under the
+// header. Wait for fonts first; they're still loading here even when cached.
 export const useScrollToHash = () => {
   const { hash } = useLocation();
 
