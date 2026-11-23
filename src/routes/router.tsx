@@ -8,7 +8,7 @@ import { ErrorPage } from '../pages/ErrorPage.tsx';
 import { Home } from '../pages/Home/Home.tsx';
 import { NotFound } from '../pages/NotFound.tsx';
 import { Privacy } from '../pages/Privacy.tsx';
-import { Products } from '../pages/Products.tsx';
+import { Products } from '../pages/Products/Products.tsx';
 import { SignIn } from '../pages/SignIn/SignIn.tsx';
 import { SignInVerify } from '../pages/SignInVerify/SignInVerify.tsx';
 import { Terms } from '../pages/Terms.tsx';

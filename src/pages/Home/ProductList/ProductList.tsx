@@ -1,21 +1,18 @@
 import NorthEastIcon from '@mui/icons-material/NorthEast';
 import { Grid, Link, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router';
+import { PRODUCTS } from '@/pages/Products/products.ts';
 import { PATHS } from '@/routes/paths.ts';
-import { PRODUCTS } from '../products.ts';
 import styles from './ProductList.module.css';
-
-// Each row fills with its own accent on hover, in this order.
-const ACCENTS = ['orange', 'pink', 'green', 'blue', 'yellow'] as const;
 
 export const ProductList = () => (
   <ol className={styles.list} role='list'>
-    {PRODUCTS.map(({ description, id, name }, index) => (
+    {PRODUCTS.map(({ accent, description, id, name }, index) => (
       <li key={id}>
         <Link
           className={styles.row}
           component={RouterLink}
-          data-accent={ACCENTS[index % ACCENTS.length]}
+          data-accent={accent}
           to={`${PATHS.products}#${id}`}
           underline='none'
         >
