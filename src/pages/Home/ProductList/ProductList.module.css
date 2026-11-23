@@ -30,26 +30,6 @@
   transform: scaleY(1);
 }
 
-.row[data-accent='blue'] {
-  --accent: var(--mui-palette-brand-blue);
-}
-
-.row[data-accent='green'] {
-  --accent: var(--mui-palette-brand-green);
-}
-
-.row[data-accent='orange'] {
-  --accent: var(--mui-palette-brand-orange);
-}
-
-.row[data-accent='pink'] {
-  --accent: var(--mui-palette-brand-pink);
-}
-
-.row[data-accent='yellow'] {
-  --accent: var(--mui-palette-brand-yellow);
-}
-
 .number {
   align-self: start;
   font-variant-numeric: tabular-nums;

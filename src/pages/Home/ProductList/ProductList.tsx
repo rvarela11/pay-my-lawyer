@@ -3,6 +3,7 @@ import { Grid, Link, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router';
 import { PRODUCTS } from '@/pages/Products/products.ts';
 import { PATHS } from '@/routes/paths.ts';
+import { productAccentStyle } from '@/theme/palette.ts';
 import styles from './ProductList.module.css';
 
 export const ProductList = () => (
@@ -12,7 +13,7 @@ export const ProductList = () => (
         <Link
           className={styles.row}
           component={RouterLink}
-          data-accent={accent}
+          style={productAccentStyle(accent)}
           to={`${PATHS.products}#${id}`}
           underline='none'
         >

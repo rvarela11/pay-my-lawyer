@@ -1,5 +1,6 @@
 import { Grid, Stack, Typography } from '@mui/material';
 import type { Product } from '@/pages/Products/products.ts';
+import { productAccentStyle } from '@/theme/palette.ts';
 import styles from './ProductRow.module.css';
 
 type Props = Pick<
@@ -22,10 +23,10 @@ export const ProductRow = ({
     aria-labelledby={`${id}-name`}
     className={styles.row}
     component='article'
-    data-accent={accent}
     direction='row'
     id={id}
     spacing={2}
+    style={productAccentStyle(accent)}
     useFlexGap
   >
     <Typography

@@ -1,8 +1,7 @@
-// The product's brand color: its line on Products and its Home row's fill on hover.
-type Accent = 'blue' | 'green' | 'orange' | 'pink' | 'yellow';
+import type { ProductAccent } from '@/theme/palette.ts';
 
 export type Product = {
-  accent: Accent;
+  accent: ProductAccent;
   description: string;
   details: string;
   group: ProductGroupId;

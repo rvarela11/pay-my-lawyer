@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import type { ThemeOptions } from '@mui/material/styles';
 
 declare module '@mui/material/styles' {
@@ -9,15 +10,28 @@ declare module '@mui/material/styles' {
   }
 }
 
-// The product rows' hover colors are softened to the accent's lightness, so they read as one family.
-const BRAND = {
-  accent: '#9dc08b',
+// Lets an element set the --accent its CSS Module reads, without a cast.
+declare module 'react' {
+  interface CSSProperties {
+    '--accent'?: string;
+  }
+}
+
+// Each product's color: its Home row's fill on hover and its line on Products.
+// Softened to the accent's lightness, so they read as one family.
+const PRODUCT_ACCENTS = {
   blue: '#a9bee8',
   green: '#93c8b8',
   orange: '#e8b08a',
-  paper: '#fbfcf8',
   pink: '#e7a6b8',
   yellow: '#ead38a',
+};
+export type ProductAccent = keyof typeof PRODUCT_ACCENTS;
+
+const BRAND = {
+  accent: '#9dc08b',
+  paper: '#fbfcf8',
+  ...PRODUCT_ACCENTS,
 };
 type Brand = typeof BRAND;
 
@@ -30,3 +44,8 @@ export const PALETTE = {
   secondary: { contrastText: INK, main: BRAND.accent },
   text: { primary: INK, secondary: INK },
 } satisfies ThemeOptions['palette'];
+
+// Sets --accent to a product's color, read from the theme's CSS variables.
+export const productAccentStyle = (accent: ProductAccent): CSSProperties => ({
+  '--accent': `var(--mui-palette-brand-${accent})`,
+});
